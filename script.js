@@ -3,6 +3,8 @@ var context = canvas.getContext('2d');
 var emmeasure = context.measureText("M").width;
 var spacemeasure = context.measureText(" ").width;
 
+$('.panel').height($('#textBox').height());
+
 document.getElementById('textBox').onkeyup = draw;
 
 function draw() {
