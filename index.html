@@ -31,7 +31,7 @@
 </head>
 <body>
 
-  <div class="navbar navbar-inverse">
+  <div class="navbar navbar-info">
     <div class="col-lg-8 col-lg-offset-2">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse">
@@ -56,30 +56,28 @@
       <div class="jumbotron">
         <h1>Storming.ME</h1>
         <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-        <p><a class="btn btn-primary btn-lg">I'm ready to storm!</a></p>
+        <p><a class="btn btn-info btn-lg">I'm ready to storm!</a></p>
       </div>
     </div>
   </div>
 
   <div class="col-lg-8 col-lg-offset-2">
-    <div class="row">
-      <div class="col-lg-6">
-        <form class="form-horizontal">
-          <div class="form-group">
-            <div class="col-lg-10">
-              <div class="form-control-wrapper"><textarea class="form-control empty" rows="10" id="textBox" placeholder="Enter your tweet text here..."></textarea><span class="material-input"></span></div>
-            </div>
-          </div>
-        </form>
-      </div>
-
-      <div class="col-lg-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">Preview</div>
-          <div class="panel-body">
-              <canvas id="e" style="border: 1px solid black;"></canvas>
-          </div>
+    <form class="form-horizontal">
+      <h3>Step 1. Enter tweet text.</h3>
+      <div class="form-group">
+        <div class="col-lg-10">
+          <div class="form-control-wrapper"><textarea class="form-control empty textBox" rows="10" id="inputSuccess" placeholder="Enter your tweet text here..."></textarea><span class="material-input"></span></div>
         </div>
+      </div>
+    </form>
+
+    <h3>Step 2. Preview the image.</h3>
+    <div class="panel panel-default">
+      <div class="panel-heading">Preview</div>
+      <div class="panel-body">
+          <canvas id="e" style="border: 1px solid black;"></canvas>
+          <br>
+          <a href="javascript:void(0)" class="btn btn-info">Tweet<div class="ripple-wrapper"></div></a>
       </div>
     </div>
   </div>

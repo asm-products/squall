@@ -1,3 +1,11 @@
+body {
+  font-size: 16px;
+}
+
 .greeting {
   margin-bottom: 50px;
+}
+
+#e {
+  margin: 0 auto;
 }

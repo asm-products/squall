@@ -3,18 +3,18 @@ var context = canvas.getContext('2d');
 var emmeasure = context.measureText("M").width;
 var spacemeasure = context.measureText(" ").width;
 
-$('.panel').height($('#textBox').height());
+$('#e').width($('.textBox').width() - 30);
 
-document.getElementById('textBox').onkeyup = draw;
+document.getElementsByClassName('textBox')[0].onkeyup = draw;
 
 function draw() {
     var lines = fragmentText(this.value, canvas.width * 0.9), // 10% padding
-        font_size = 22; // px
-    context.font = "Bold " + font_size + "px Arial";
+        font_size = 16; // px
+    context.font = font_size + "px Roboto";
     context.save();
     context.clearRect(0, 0, canvas.width, canvas.height);
     lines.forEach(function(line, i) {
-        context.fillText(line, 20, (i + 1) * font_size); // assume font height.
+        context.fillText(line, 20, (i + 1) * (font_size + 8)); // assume font height.
     });
     context.restore();
 }
