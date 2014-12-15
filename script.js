@@ -3,22 +3,7 @@ var context = canvas.getContext('2d');
 var emmeasure = context.measureText("M").width;
 var spacemeasure = context.measureText(" ").width;
 
-var message = "";
-
-// $('#textBox').keyup(function(e) {
-//     drawString(context, e.target.value, 20, 30, '#333',0, 'Calibri', '16')
-// });
-
 document.getElementById('textBox').onkeyup = draw;
-
-
-// function textBoxChanged(e) {
-//     context.clearRect(0, 0, canvas.width, canvas.height);
-//     var target = e.target;
-//     message = target.value;
-//     // drawScreen();
-// }
-
 
 function draw() {
     var lines = fragmentText(this.value, canvas.width * 0.9), // 10% padding
@@ -125,26 +110,3 @@ function fragmentText(text, maxWidth) {
 
     return lines;
 }
-
-// function drawScreen() {
-//     var words = message.split(' ');
-//     console.log(words);
-//     var line = '';
-
-//     for(var n = 0; n < words.length; n++) {
-//       var testLine = line + words[n] + ' ';
-//       var metrics = context.measureText(testLine);
-//       var testWidth = metrics.width;
-//       if (testWidth > maxWidth && n > 0) {
-//         context.fillText(line, x, y);
-//         line = words[n] + ' ';
-//         y += lineHeight;
-//       } else {
-//         line = testLine;
-//       }
-//     }
-//     context.fillText(line, x, y);
-
-//     var img = canvas.toDataURL("image/png");
-//     $('#h').html('<img src="'+img+'"/>');
-// }
