@@ -62,22 +62,14 @@
   </div>
 
   <div class="col-lg-8 col-lg-offset-2">
-    <form class="form-horizontal">
-      <h3>Step 1. Enter tweet text.</h3>
-      <div class="form-group">
-        <div class="col-lg-10">
-          <div class="form-control-wrapper"><textarea class="form-control empty textBox" rows="10" id="inputSuccess" placeholder="Enter your tweet text here..."></textarea><span class="material-input"></span></div>
-        </div>
-      </div>
-    </form>
-
-    <h3>Step 2. Preview the image.</h3>
     <div class="panel panel-default">
-      <div class="panel-heading">Preview</div>
+      <div class="panel-heading">Compose tweet here</div>
       <div class="panel-body">
-          <canvas id="e" style="border: 1px solid black;"></canvas>
-          <br>
-          <a href="javascript:void(0)" class="btn btn-info">Tweet<div class="ripple-wrapper"></div></a>
+          <div class="textBox" contenteditable="true" data-ph="Enter your tweet here" tabindex="1" autofocus></div>
+          <div class="col-lg-4 col-lg-offset-7">
+            <button class="btn btn-default">Clear Text</button>
+            <a href="javascript:void(0)" class="btn btn-info pull-right">Tweet Image<div class="ripple-wrapper"></div></a>
+          </div>
       </div>
     </div>
   </div>
