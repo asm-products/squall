@@ -66,6 +66,7 @@
       <div class="panel-heading">Compose tweet here</div>
       <div class="panel-body">
           <div class="textBox" contenteditable="true" data-ph="Enter your tweet here" tabindex="1" autofocus></div>
+          <img id="image"/>
           <div class="col-lg-4 col-lg-offset-7">
             <button class="btn btn-default">Clear Text</button>
             <a href="javascript:void(0)" class="btn btn-info pull-right">Tweet Image<div class="ripple-wrapper"></div></a>
@@ -74,7 +75,7 @@
     </div>
   </div>
 
-
+  <canvas id="textCanvas" style="display: none;"></canvas>
   <script src="/jquery.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
