@@ -13,6 +13,7 @@ window.onresize = draw;
 function draw() {
     var lines = fragmentText($('.textBox').text(), canvas.width * 0.8),
         font_size = 18;
+    $('#textCanvas').attr('height', lines.length * (font_size + 5) + 20);
     context.font = font_size + "px sans-serif";
     context.save();
     context.clearRect(0, 0, canvas.width, canvas.height);
