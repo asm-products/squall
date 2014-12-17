@@ -44,46 +44,48 @@ function fragmentText(text, maxWidth) {
     var word = words[w];
     var measure = context.measureText(word).width;
 
-    var edgewords = (function(word, maxWidth) {
-      var wlen = word.length;
-      if (wlen == 0) return [];
-      if (wlen == 1) return [word];
+    if (measure > maxWidth) {
+      var edgewords = (function(word, maxWidth) {
+        var wlen = word.length;
+        if (wlen == 0) return [];
+        if (wlen == 1) return [word];
 
-      var awords = [], cword = "", cmeasure = 0, letters = [];
+        var awords = [], cword = "", cmeasure = 0, letters = [];
 
-      for (var l = 0; l < wlen; l++) {
-        letters.push({
-          "letter": word[l],
-          "measure": context.measureText(word[l]).width
-        });
-      }
-
-      for (var ml in letters) {
-        var metaletter = letters[ml];
-
-        if (cmeasure + metaletter.measure > maxWidth) {
-          awords.push({
-            "word": cword,
-            "len": cword.length,
-            "measure": cmeasure
+        for (var l = 0; l < wlen; l++) {
+          letters.push({
+            "letter": word[l],
+            "measure": context.measureText(word[l]).width
           });
-          cword = "";
-          cmeasure = 0;
         }
 
-        cword += metaletter.letter;
-        cmeasure += metaletter.measure;
-      }
-      awords.push({
-        "word": cword,
-        "len": cword.length,
-        "measure": cmeasure
-      });
-      return awords;
-    })(word, maxWidth);
+        for (var ml in letters) {
+          var metaletter = letters[ml];
 
-    for (var ew in edgewords) {
-      metawords.push(edgewords[ew]);
+          if (cmeasure + metaletter.measure > maxWidth) {
+            awords.push({
+              "word": cword,
+              "len": cword.length,
+              "measure": cmeasure
+            });
+            cword = "";
+            cmeasure = 0;
+          }
+
+          cword += metaletter.letter;
+          cmeasure += metaletter.measure;
+        }
+        awords.push({
+          "word": cword,
+          "len": cword.length,
+          "measure": cmeasure
+        });
+        return awords;
+      })(word, maxWidth);
+
+      for (var ew in edgewords) {
+        metawords.push(edgewords[ew]);
+      }
     } else {
       metawords.push({
         "word": word,
@@ -123,3 +125,10 @@ function fragmentText(text, maxWidth) {
 
   return lines;
 }
+
+
+$('.tweet-button').click(function() {
+  $.post('/tweet', { image: $('#image').attr('src') }, function(data) {
+    console.log(data);
+  });
+});
