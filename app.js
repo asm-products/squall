@@ -5,10 +5,17 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var constants = require('./config/constants.js');
+require('./models/users.js');
 
 var routes = require('./routes/index');
+var login = require('./routes/login.js');
 
 var app = express();
+
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
+var rtg = require('url').parse(constants.RedisURL);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,9 +28,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    store: new RedisStore({
+        port: rtg.port,
+        hostname: rtg.hostname
+    }),
+    secret: 'OhYouKnowWhatItIsDontYou',
+    resave: true,
+    saveUninitialized: true
+}));
+
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/login', login);
+
+require('./config/pass.js');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
