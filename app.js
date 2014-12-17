@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-mongoose.set('debug', true);
 var constants = require('./config/constants.js');
 var passport = require('passport');
 
@@ -36,7 +35,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect(constants.MongoURL);
+mongoose.connect(constants.MongoURL, { server: { auto_reconnect: true } });
 
 require('./models/users.js');
 require('./config/pass.js')(passport);

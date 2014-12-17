@@ -7,12 +7,14 @@ module.exports = function (passport) {
 
   passport.serializeUser(function (user, done) {
     console.log('serializing: ' + user.username);
-    done(null, user);
+    done(null, user._id);
   });
 
   passport.deserializeUser(function(id, done) {
     console.log('deserializing: ' + id);
-    done(null, id);
+    Users.findById(id, function (err, user) {
+      done(err, user);
+    });
   });
 
   // Logic for twitter strategy

@@ -3,8 +3,18 @@ var router = express.Router();
 var passport = require('passport');
 var constants = require('./../config/constants.js');
 
+function isAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/');
+}
+
 /* GET home page. */
 router.get('/', function(req, res) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/dashboard');
+  }
   res.render('index', { title: 'Express' });
 });
 
@@ -17,7 +27,7 @@ router.get(constants.Twitter.CALLBACK,
     })
 );
 
-router.get('/dashboard', function(req, res) {
+router.get('/dashboard', isAuthenticated, function(req, res) {
   res.render('dashboard');
 });
 
