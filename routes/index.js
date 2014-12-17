@@ -51,7 +51,6 @@ router.post('/tweet', isAuthenticated, function(req, res) {
     json: true
   }, function (err, response, body) {
     console.log(body);
-    // body = JSON.parse(body);
     var T = new twit({
       consumer_key: constants.Twitter.KEY,
       consumer_secret: constants.Twitter.SECRET,
@@ -59,8 +58,9 @@ router.post('/tweet', isAuthenticated, function(req, res) {
       access_token_secret: req.user.access_token_secret
     });
 
-    T.post('statuses/update', { status: 'Testing', media_ids:  body.media_id_string}, function(err, data, response) {
-      // data = JSON.parse(data);
+    T.post('statuses/update', {
+      status: 'Testing',
+      media_ids: body.media_id_string}, function(err, data, response) {
       console.log(data.id_str);
     });
   });
