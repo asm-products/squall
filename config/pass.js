@@ -1,11 +1,10 @@
-var passport = require('passport');
 var TwitterStrategy = require('passport-twitter').Strategy;
 
 // bring in the schema for user
 var Users = require('mongoose').model('Users'),
     Constants = require('./constants');
 
-module.exports = function () {
+module.exports = function (passport) {
 
   passport.serializeUser(function (user, done) {
     console.log('serializing: ' + user.username);
@@ -23,7 +22,8 @@ module.exports = function () {
   passport.use(new TwitterStrategy({
     consumerKey : Constants.Twitter.KEY,
     consumerSecret : Constants.Twitter.SECRET,
-    callbackURL: Constants.Twitter.CALLBACK
+    callbackURL: Constants.Twitter.CALLBACK,
+    passReqToCallback: true
   }, function(token, tokenSecret, profile, done) {
     console.log('twitter authentication for ' + profile.username);
 
