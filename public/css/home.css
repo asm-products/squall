@@ -1,0 +1,21 @@
+body {
+  padding-top: 50px;
+}
+
+.header {
+  margin: 40px 0 30px 0;
+}
+
+.icon {
+  font-size: 100pt;
+  margin-bottom: 20px;
+}
+
+.panel-body {
+  text-align: center
+}
+
+.footer {
+  margin-top: 80px;
+  text-align: center;
+}

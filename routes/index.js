@@ -12,10 +12,10 @@ function isAuthenticated(req, res, next) {
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  if (req.isAuthenticated()) {
-    return res.redirect('/dashboard');
-  }
-  res.render('index', { title: 'Express' });
+  // if (req.isAuthenticated()) {
+  //   return res.redirect('/dashboard');
+  // }
+  res.render('index');
 });
 
 router.get('/login', passport.authenticate('twitter'));

@@ -1,80 +1,56 @@
-doctype html(lang='en')
-head
-  title Storming.ME
-  meta(charset='UTF-8')
-  meta(name='description', content='Hacking The Tweetstorm... With Pictures of Text.')
+extends layout
 
-  // Twitter cards
-  meta(name='twitter:card', content='summary_large_image')
-  meta(name='twitter:image', content='')
-  meta(name='twitter:title', content='Storming.ME')
-  meta(name='twitter:description', content='Hacking The Tweetstorm... With Pictures of Text.')
-  meta(name='twitter:creator', content='@KaranGoel')
-
-  // Facebook open graph
-  meta(property='og:locale', content='en_US')
-  meta(property='og:type', content='website')
-  meta(property='og:image', content='')
-  meta(property='og:title', content='Storming.ME')
-  meta(property='og:description', content='Hacking The Tweetstorm... With Pictures of Text.')
-  meta(property='og:url', content='')
-  meta(property='og:site_name', content='')
-
-  link(href='//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
-  link(href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css', rel='stylesheet')
-  link(href='//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.1/css/ripples.min.css', rel='stylesheet')
-  link(href='//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.1/css/material-wfont.min.css', rel='stylesheet')
+block content
   link(href='/css/style.css', rel='stylesheet')
 
-  body
-    .navbar.navbar-info
-      .col-lg-8.col-lg-offset-2
-        .navbar-header
-          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-inverse-collapse')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.navbar-brand(href='javascript:void(0)')
-            | Storming.ME
-            .ripple-wrapper
-        .navbar-collapse.collapse.navbar-inverse-collapse
-          ul.nav.navbar-nav.navbar-right
-            li
-              a(href='https://twitter.com/intent/tweet?text=griddit+-+orgasmic+reddit+interface&url=http://karan.github.io/griddit&via=TheKaranGoel', target='_blank')
-                span.fa.fa-twitter.fa-2x
-            li
-              a(href='http://github.com/karan/griddit', target='_blank')
-                span.fa.fa-github.fa-2x
-
-    .col-lg-8.col-lg-offset-2.greeting
-      .bs-component
-        .jumbotron
-          h1 Storming.ME
-          p
-            | This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
-          p
-            a.btn.btn-info.btn-lg I&apos;m ready to storm!
-
+  .navbar.navbar-info
     .col-lg-8.col-lg-offset-2
-      .panel.panel-default
-        .panel-heading Compose tweet here
-        .panel-body
-          .textBox(contenteditable='true', data-ph='Enter your tweet here', tabindex='1', autofocus='')
-          img#image
-          .col-lg-4.col-lg-offset-7
-            button.btn.btn-default Clear Text
-            a.btn.btn-info.pull-right(href='javascript:void(0)')
-              | Tweet Image
-              .ripple-wrapper
+      .navbar-header
+        button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-inverse-collapse')
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href='javascript:void(0)')
+          | Storming.ME
+          .ripple-wrapper
+      .navbar-collapse.collapse.navbar-inverse-collapse
+        ul.nav.navbar-nav.navbar-right
+          li
+            a(href='https://twitter.com/intent/tweet?text=griddit+-+orgasmic+reddit+interface&url=http://karan.github.io/griddit&via=TheKaranGoel', target='_blank')
+              span.fa.fa-twitter.fa-2x
+          li
+            a(href='http://github.com/karan/griddit', target='_blank')
+              span.fa.fa-github.fa-2x
 
-    canvas#textCanvas(style='display: none;')
+  .col-lg-8.col-lg-offset-2.greeting
+    .bs-component
+      .jumbotron
+        h1 Storming.ME
+        p
+          | This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
+        p
+          a.btn.btn-info.btn-lg I&apos;m ready to storm!
 
-    script(src='/js/jquery.js')
-    script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
-    script(src='//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.1/css/ripples.min.css')
-    script(src='//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.1/js/material.min.js')
-    script(src='/script.js')
-    script.
-      $(document).ready(function() {
-        $.material.init();
-      });
+  .col-lg-8.col-lg-offset-2
+    .panel.panel-default
+      .panel-heading Compose tweet here
+      .panel-body
+        .textBox(contenteditable='true', data-ph='Enter your tweet here', tabindex='1', autofocus='')
+        img#image
+        .col-lg-4.col-lg-offset-7
+          button.btn.btn-default Clear Text
+          a.btn.btn-info.pull-right(href='javascript:void(0)')
+            | Tweet Image
+            .ripple-wrapper
+
+  canvas#textCanvas(style='display: none;')
+
+  script(src='/js/jquery.js')
+  script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.1/css/ripples.min.css')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.1/js/material.min.js')
+  script(src='/script.js')
+  script.
+    $(document).ready(function() {
+      $.material.init();
+    });
