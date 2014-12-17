@@ -19,21 +19,21 @@ block content
             a(href='https://twitter.com/intent/tweet?text=griddit+-+orgasmic+reddit+interface&url=http://karan.github.io/griddit&via=TheKaranGoel', target='_blank')
               span.fa.fa-twitter.fa-2x
           li
-            a(href='http://github.com/karan/griddit', target='_blank')
+            a(href='http://github.com/karan/Storming', target='_blank')
               span.fa.fa-github.fa-2x
 
   .col-lg-8.col-lg-offset-2.greeting
     .bs-component
-      .jumbotron
-        h1 Storming.ME
+      .alert.alert-dismissable
+        button.close(type="button", data-dismiss="alert") ×
+        h4 Getting Started
         p
-          | This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
-        p
-          a.btn.btn-info.btn-lg I&apos;m ready to storm!
+          | Welcome to your dashboard. To get started, simple compose a tweet below. 
+          | The editor is a live preview of what your final image will look like. 
+          | When ready, click the Tweet button and your tweet will be posted.
 
   .col-lg-8.col-lg-offset-2
     .panel.panel-default
-      .panel-heading Compose tweet here
       .panel-body
         .textBox(contenteditable='true', data-ph='Enter your tweet here', tabindex='1', autofocus='')
         img#image
