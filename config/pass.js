@@ -1,33 +1,30 @@
 var TwitterStrategy = require('passport-twitter').Strategy;
 
-// bring in the schema for user
-var Users = require('mongoose').model('Users'),
-    Constants = require('./constants');
+var Users = require('./../models/users'),
+    constants = require('./constants');
 
 module.exports = function (passport) {
 
   passport.serializeUser(function (user, done) {
     console.log('serializing: ' + user.username);
-    done(null, user._id);
+    done(null, user);
   });
 
   passport.deserializeUser(function(id, done) {
     console.log('deserializing: ' + id);
-    User.findById(id, function (err, user) {
-      done(err, user);
-    });
+    done(null, id);
   });
 
   // Logic for twitter strategy
   passport.use(new TwitterStrategy({
-    consumerKey : Constants.Twitter.KEY,
-    consumerSecret : Constants.Twitter.SECRET,
-    callbackURL: Constants.Twitter.CALLBACK,
-    passReqToCallback: true
+    consumerKey : constants.Twitter.KEY,
+    consumerSecret : constants.Twitter.SECRET,
+    callbackURL: constants.Twitter.CALLBACK
   }, function(token, tokenSecret, profile, done) {
     console.log('twitter authentication for ' + profile.username);
 
-    User.findOne({twId : profile.id}, function(err, oldUser) {
+
+    Users.findOne({ twId : profile.id }, function(err, oldUser) {
       if (oldUser) {
         // found existing user
         return done(null, oldUser);
@@ -39,7 +36,7 @@ module.exports = function (passport) {
       }
 
       // If user doesn't exist create a new one
-      var newUser = new User({
+      var newUser = new Users({
         twId: profile.id,
         username: profile.username,
         photo: profile.photos[0].value || '',
@@ -47,6 +44,7 @@ module.exports = function (passport) {
         access_token_secret: tokenSecret
       }).save(function(err, newUser) {
         if (err) throw err;
+        console.log("saved and done");
         return done(null, newUser);
       });
     });

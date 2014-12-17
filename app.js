@@ -6,13 +6,11 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+mongoose.set('debug', true);
 var constants = require('./config/constants.js');
 var passport = require('passport');
 
-require('./models/users.js');
-
 var routes = require('./routes/index');
-var login = require('./routes/login.js');
 
 var app = express();
 
@@ -25,23 +23,26 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser('OhSoYouWantToKnowThis?'));
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+var MongoStore = require('connect-mongo')(session);
 app.use(session({
-    key: 'asdasdasd',
-    cookie: { maxAge: 60000, secure: false },
-    secret: 'OhSoYouWantToKnowThis?',
+    secret: constants.Cookie_Secret,
+    store: new MongoStore({ url: constants.MongoURL }),
     resave: true,
     saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+mongoose.connect(constants.MongoURL);
+
+require('./models/users.js');
+require('./config/pass.js')(passport);
 
 app.use('/', routes);
-app.use('/login', login);
 
-require('./config/pass.js')(passport);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

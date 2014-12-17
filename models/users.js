@@ -17,4 +17,4 @@ var userSchema = new Schema({
   access_token_secret: String
 });
 
-mongoose.model('Users', userSchema);
+module.exports = mongoose.model('Users', userSchema);
