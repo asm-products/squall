@@ -33,21 +33,36 @@ block content
           | When ready, click the Tweet button and your tweet will be posted.
 
   .col-lg-8.col-lg-offset-2
-    .form-group.credit-checkbox
-      .checkbox
-        label(for="credit")
-            input(type="checkbox", id="credit", checked)
-            | Credit Storming.ME
+    .row
+      .col-lg-8
+        .form-group.credit-checkbox
+          .checkbox
+            label(for="credit")
+                input(type="checkbox", id="credit", checked)
+                | Credit Storming.ME
+      .col-lg-2
+        button.btn.btn-default Clear Text
+  
   .col-lg-8.col-lg-offset-2
     .panel.panel-default
       .panel-body
         .textBox(contenteditable='true', data-ph='Enter your tweetstorm here.. Remember, no character limits.', tabindex='1', autofocus='')
-        img#image
-        .col-lg-4.col-lg-offset-7
-          button.btn.btn-default Clear Text
-          a.btn.btn-info.pull-right.tweet-button
-            | Tweet Image
-            .ripple-wrapper
+        img#image(style='display: none;')
+  
+  .col-lg-8.col-lg-offset-2
+    .form-group
+      label.col-lg-2.control-label(for="textArea") Tweet text (Optional)
+      span.help-block Enter tweet text that introduces your tweetstorm created above. You can tag @username or paste links or use #hashtags.
+      .input-group
+        .form-control-wrapper
+          textarea.form-control.empty#textArea(rows="2", maxLength="117")
+          span.material-input
+        .input-group-addon.text-length 23/140
+  
+  .col-lg-2.col-lg-offset-7
+    a.btn.btn-info.pull-right.tweet-button
+      | Tweet Image
+      .ripple-wrapper
 
   canvas#textCanvas(style='display: none;')
 

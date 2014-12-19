@@ -6,6 +6,8 @@ var spacemeasure = context.measureText(" ").width;
 
 var checked = true;
 var credit_text = "Tweeted using Storming.ME";
+var TCO_LENGTH = 23;
+var IMAGE_LINK_LENGTH = 23;
 
 
 $('#textCanvas').attr('width', $('.panel-body').width());
@@ -142,7 +144,7 @@ function fragmentText(text, maxWidth) {
 
 
 $('.tweet-button').click(function() {
-  $.post('/tweet', { image: $('#image').attr('src') }, function(data) {
+  $.post('/tweet', { image: $('#image').attr('src'), message: $('#textArea').val() }, function(data) {
     console.log(data);
   });
 });
@@ -152,4 +154,21 @@ $('#credit').click(function() {
   var $this = $(this);
   checked = $this.is(':checked');
   draw();
+});
+
+$('#textArea').keyup(function() {
+  var text = $(this).val();
+  var splits = text.split(' ');
+  geturl = new RegExp("(^|[ \t\r\n])((ftp|http|https|gopher|mailto|news|nntp|telnet|wais|file|prospero|aim|webcal):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))", "g");
+  var length = 0;
+
+  for (var i = 0; i < splits.length; i++) {
+    if (splits[i].match(geturl) && splits[i].length > TCO_LENGTH) {
+      // it's a url and under max length
+      length += TCO_LENGTH;
+    } else {
+      length += splits[i].length;
+    }
+  }
+  $('.text-length').text(IMAGE_LINK_LENGTH + length + '/140');
 });

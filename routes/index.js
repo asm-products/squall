@@ -63,7 +63,7 @@ router.post('/tweet', isAuthenticated, function(req, res) {
     });
 
     T.post('statuses/update', {
-      status: 'Testing',
+      status: req.body.message || "",
       media_ids: body.media_id_string}, function(err, data, response) {
       console.log(data.id_str);
     });
