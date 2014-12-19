@@ -14,3 +14,8 @@ body {
 .textBox {
   margin-bottom: 40px;
 }
+
+.footer {
+  margin-top: 80px;
+  text-align: center;
+}
