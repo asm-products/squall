@@ -5,7 +5,7 @@ var emmeasure = context.measureText("M").width;
 var spacemeasure = context.measureText(" ").width;
 
 var checked = true;
-var credit_text = "by Storming.ME";
+var credit_text = "Tweeted using Storming.ME";
 
 
 $('#textCanvas').attr('width', $('.panel-body').width());
