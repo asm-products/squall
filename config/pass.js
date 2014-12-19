@@ -1,7 +1,11 @@
 var TwitterStrategy = require('passport-twitter').Strategy;
 
-var Users = require('./../models/users'),
-    constants = require('./constants');
+var Users = require('./../models/users');
+if (process.env.NODE_ENV === 'production') {
+    var constants = require('./constants.production.js');
+} else {
+    var constants = require('./constants.js');
+}
 
 module.exports = function (passport) {
 

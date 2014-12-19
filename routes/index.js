@@ -1,7 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var constants = require('./../config/constants.js');
+if (process.env.NODE_ENV === 'production') {
+    var constants = require('./../config/constants.production.js');
+} else {
+    var constants = require('./../config/constants.js');
+}
 var request = require('request');
 var twit = require('twit');
 

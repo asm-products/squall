@@ -6,7 +6,12 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var constants = require('./config/constants.js');
+if (process.env.NODE_ENV === 'production') {
+    var constants = require('./config/constants.production.js');
+} else {
+    var constants = require('./config/constants.js');
+}
+
 var passport = require('passport');
 
 var routes = require('./routes/index');
