@@ -13,6 +13,7 @@ body {
 
 .textBox {
   margin-bottom: 40px;
+  min-height: 50px;
 }
 
 .footer {

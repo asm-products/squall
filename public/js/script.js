@@ -4,17 +4,26 @@ var context = canvas.getContext('2d');
 var emmeasure = context.measureText("M").width;
 var spacemeasure = context.measureText(" ").width;
 
+var checked = true;
+var credit_text = "by Storming.ME";
+
+
 $('#textCanvas').attr('width', $('.panel-body').width());
 
 $('.textBox').keyup(function() {
   draw();
 });
-window.onresize = draw;
+
+$(window).resize(function() {
+  draw();
+});
+
 
 function draw() {
   var lines = fragmentText($('.textBox').text(), canvas.width * 0.8),
       font_size = 18;
-  $('#textCanvas').attr('height', lines.length * (font_size + 5) + 20);
+  $('#textCanvas').attr('width', $('.panel-body').width());
+  $('#textCanvas').attr('height', lines.length * (font_size + 5) + 100);
   context.font = font_size + "px sans-serif";
   context.save();
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -22,6 +31,11 @@ function draw() {
   lines.forEach(function(line, i) {
     context.fillText(line, canvas.width * 0.1, (i + 1) * (font_size + 5));
   });
+  if (checked) {
+    context.fillText(credit_text,
+                     canvas.width - (emmeasure * credit_text.length) - 40,
+                     canvas.height - (font_size + 10));
+  }
   document.getElementById('image').src = context.canvas.toDataURL();
   context.restore();
 }
@@ -131,4 +145,11 @@ $('.tweet-button').click(function() {
   $.post('/tweet', { image: $('#image').attr('src') }, function(data) {
     console.log(data);
   });
+});
+
+
+$('#credit').click(function() {
+  var $this = $(this);
+  checked = $this.is(':checked');
+  draw();
 });
