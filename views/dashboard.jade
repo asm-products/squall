@@ -69,6 +69,14 @@ block content
       | Post Tweetstorm as Picture
       .ripple-wrapper
 
+  //- The result of posting the tweet
+  .col-lg-8.col-lg-offset-2.tweetresult
+    .bs-component
+      .alert.alert-dismissable
+        button.close(type="button", data-dismiss="alert") ×
+        h4 You just hacked the tweetstorm.
+        .embed
+
   canvas#textCanvas(style='display: none;')
   img#image(style='display: none;')
 

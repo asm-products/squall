@@ -144,8 +144,13 @@ function fragmentText(text, maxWidth) {
 
 
 $('.tweet-button').click(function() {
+  $('.tweet-button').text('Posting your tweetstorm...');
+  $('.tweetresult').css('display', 'none');
   $.post('/tweet', { image: $('#image').attr('src'), message: $('#textArea').val() }, function(data) {
     console.log(data);
+    $('.tweetresult').css('display', 'block');
+    $('.tweetresult').find('.embed').html(data);
+    $('.tweet-button').text('Post Tweetstorm as Picture');
   });
 });
 

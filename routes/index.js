@@ -54,7 +54,6 @@ router.post('/tweet', isAuthenticated, function(req, res) {
     },
     json: true
   }, function (err, response, body) {
-    console.log(body);
     var T = new twit({
       consumer_key: constants.Twitter.KEY,
       consumer_secret: constants.Twitter.SECRET,
@@ -64,8 +63,12 @@ router.post('/tweet', isAuthenticated, function(req, res) {
 
     T.post('statuses/update', {
       status: req.body.message || "",
-      media_ids: body.media_id_string}, function(err, data, response) {
+      media_ids: body.media_id_string
+    }, function(err, data, response) {
       console.log(data.id_str);
+      T.get('statuses/oembed', { id: data.id_str }, function(err, data, response) {
+        res.send(data.html);
+      });
     });
   });
 });

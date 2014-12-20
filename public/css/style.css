@@ -24,3 +24,8 @@ body {
 .credit-preview {
   float: right;
 }
+
+.tweetresult {
+  margin-top: : 50px;
+  display: none;
+}
