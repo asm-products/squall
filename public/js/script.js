@@ -70,6 +70,44 @@ function fragmentText(text, maxWidth) {
     return [text];
   }
 
+  function getEdgeWords(word, maxWidth) {
+    var wlen = word.length;
+    if (wlen === 0) return [];
+    if (wlen === 1) return [word];
+
+    var awords = [], cword = "", cmeasure = 0, letters = [];
+
+    for (var l = 0; l < wlen; l++) {
+      letters.push({
+        "letter": word[l],
+        "measure": context.measureText(word[l]).width
+      });
+    }
+
+    for (var ml in letters) {
+      var metaletter = letters[ml];
+
+      if (cmeasure + metaletter.measure > maxWidth) {
+        awords.push({
+          "word": cword,
+          "len": cword.length,
+          "measure": cmeasure
+        });
+        cword = "";
+        cmeasure = 0;
+      }
+
+      cword += metaletter.letter;
+      cmeasure += metaletter.measure;
+    }
+    awords.push({
+      "word": cword,
+      "len": cword.length,
+      "measure": cmeasure
+    });
+    return awords;
+  }
+
   var words = text.split(' '),
       metawords = [],
       lines = [];
@@ -79,43 +117,7 @@ function fragmentText(text, maxWidth) {
     var measure = context.measureText(word).width;
 
     if (measure > maxWidth) {
-      var edgewords = (function(word, maxWidth) {
-        var wlen = word.length;
-        if (wlen == 0) return [];
-        if (wlen == 1) return [word];
-
-        var awords = [], cword = "", cmeasure = 0, letters = [];
-
-        for (var l = 0; l < wlen; l++) {
-          letters.push({
-            "letter": word[l],
-            "measure": context.measureText(word[l]).width
-          });
-        }
-
-        for (var ml in letters) {
-          var metaletter = letters[ml];
-
-          if (cmeasure + metaletter.measure > maxWidth) {
-            awords.push({
-              "word": cword,
-              "len": cword.length,
-              "measure": cmeasure
-            });
-            cword = "";
-            cmeasure = 0;
-          }
-
-          cword += metaletter.letter;
-          cmeasure += metaletter.measure;
-        }
-        awords.push({
-          "word": cword,
-          "len": cword.length,
-          "measure": cmeasure
-        });
-        return awords;
-      })(word, maxWidth);
+      var edgewords = getEdgeWords(word, maxWidth);
 
       for (var ew in edgewords) {
         metawords.push(edgewords[ew]);
@@ -136,7 +138,7 @@ function fragmentText(text, maxWidth) {
 
     if ((cmeasure + metaword.measure > maxWidth) &&
          cmeasure > 0 && metaword.len > 1) {
-      lines.push(cline)
+      lines.push(cline);
       cline = "";
       cmeasure = 0;
     }
@@ -148,7 +150,7 @@ function fragmentText(text, maxWidth) {
       cline += " ";
       cmeasure += spacemeasure;
     } else {
-      lines.push(cline)
+      lines.push(cline);
       cline = "";
       cmeasure = 0;
     }
