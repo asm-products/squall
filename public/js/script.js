@@ -10,6 +10,18 @@ var TCO_LENGTH = 23;
 var IMAGE_LINK_LENGTH = 23;
 
 
+$('.login-btn').click(function() {
+  ga('send', 'event', 'Homepage', 'click', 'Login');
+});
+
+$('.example-btn').click(function() {
+  ga('send', 'event', 'Homepage', 'click', 'Example');
+});
+
+$('.why-btn').click(function() {
+  ga('send', 'event', 'Homepage', 'click', 'Why Medium');
+});
+
 $('#textCanvas').attr('width', $('.panel-body').width());
 
 $('.textBox').keyup(function() {
@@ -152,6 +164,7 @@ function fragmentText(text, maxWidth) {
 $('.tweet-button').click(function() {
   $('.tweet-button').text('Posting your tweetstorm...');
   $('.tweetresult').css('display', 'none');
+  ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
   $.post('/tweet', { image: $('#image').attr('src'), message: $('#textArea').val() }, function(data) {
     console.log(data);
     $('.tweetresult').css('display', 'block');
