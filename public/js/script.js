@@ -53,7 +53,7 @@ function draw() {
   });
   if (checked) {
     context.fillText(credit_text,
-                     canvas.width - (emmeasure * credit_text.length) - 40,
+                     canvas.width - (emmeasure * credit_text.length) - 60,
                      canvas.height - (font_size + 10));
   }
   document.getElementById('image').src = context.canvas.toDataURL();
