@@ -1,4 +1,5 @@
 var canvas = document.getElementById("textCanvas");
+$('#textCanvas').css('background-color', '#fff');
 var context = canvas.getContext('2d');
 
 var emmeasure = context.measureText("M").width;
