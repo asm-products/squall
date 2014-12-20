@@ -44,6 +44,7 @@ module.exports = function (passport) {
       // If user doesn't exist create a new one
       var newUser = new Users({
         twId: profile.id,
+        name: profile.displayName,
         username: profile.username,
         photo: profile.photos[0].value || '',
         access_token: token,

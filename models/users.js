@@ -14,7 +14,8 @@ var userSchema = new Schema({
   twId: String,
   photo: String,
   access_token: String,
-  access_token_secret: String
+  access_token_secret: String,
+  tweet_ids = []
 });
 
 module.exports = mongoose.model('Users', userSchema);
