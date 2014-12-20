@@ -35,7 +35,7 @@ $(window).resize(function() {
 
 function draw() {
   var lines = fragmentText($('.textBox').text(), canvas.width * 0.8),
-      font_size = 18;
+      font_size = 22;
   
   $('#textCanvas').attr('width', $('.panel-body').width());
   $('#textCanvas').attr('height', lines.length * (font_size + 5) + 100);
