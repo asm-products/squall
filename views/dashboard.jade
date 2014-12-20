@@ -3,6 +3,7 @@ extends layout
 block content
   link(href='/css/style.css', rel='stylesheet')
 
+  //- Navbar
   .navbar.navbar-info
     .col-lg-8.col-lg-offset-2
       .navbar-header
@@ -22,33 +23,36 @@ block content
             a(href='http://github.com/karan/Storming', target='_blank')
               span.fa.fa-github.fa-2x
 
+  //- Greeting
   .col-lg-8.col-lg-offset-2.greeting
     .bs-component
       .alert.alert-dismissable
         button.close(type="button", data-dismiss="alert") ×
         h4 Getting Started
         p
-          | Welcome to your dashboard. To get started, simple compose a tweet below. 
+          | Welcome to your dashboard, @#{username}. To get started, simple compose a tweet below. 
           | The editor is a live preview of what your final image will look like. 
           | When ready, click the Tweet button and your tweet will be posted.
 
+  //- Text editor controls
   .col-lg-8.col-lg-offset-2
     .row
       .col-lg-8
         .form-group.credit-checkbox
           .checkbox
             label(for="credit")
-                input(type="checkbox", id="credit", checked)
+                input(type="checkbox", id="credit")
                 | Credit Storming.ME
       .col-lg-2
         button.btn.btn-default Clear Text
   
+  //- Text editor
   .col-lg-8.col-lg-offset-2
     .panel.panel-default
       .panel-body
         .textBox(contenteditable='true', data-ph='Enter your tweetstorm here.. Remember, no character limits.', tabindex='1', autofocus='')
-        img#image(style='display: none;')
   
+  //- Tweet text box
   .col-lg-8.col-lg-offset-2
     .form-group
       label.col-lg-2.control-label(for="textArea") Tweet text (Optional)
@@ -59,11 +63,13 @@ block content
           span.material-input
         .input-group-addon.text-length 23/140
   
+  //- Tweet button
   .col-lg-2.col-lg-offset-7
     a.btn.btn-info.pull-right.tweet-button
-      | Tweet Image
+      | Post Tweetstorm as Picture
       .ripple-wrapper
 
   canvas#textCanvas(style='display: none;')
+  img#image(style='display: none;')
 
   include footer

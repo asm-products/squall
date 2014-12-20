@@ -153,8 +153,14 @@ $('.tweet-button').click(function() {
 $('#credit').click(function() {
   var $this = $(this);
   checked = $this.is(':checked');
+  if (checked) {
+    $('.textBox').after('<div class="credit-preview">' + credit_text + '</div>');
+  } else {
+    $('.panel-body').find('.credit-preview').remove();
+  }
   draw();
 });
+
 
 $('#textArea').keyup(function() {
   var text = $(this).val();

@@ -33,7 +33,7 @@ router.get(constants.Twitter.CALLBACK,
 );
 
 router.get('/dashboard', isAuthenticated, function(req, res) {
-  res.render('dashboard');
+  res.render('dashboard', { username: req.user.username });
 });
 
 router.post('/tweet', isAuthenticated, function(req, res) {
