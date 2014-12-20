@@ -1,5 +1,4 @@
 var canvas = document.getElementById("textCanvas");
-$('#textCanvas').css('background-color', '#fff');
 var context = canvas.getContext('2d');
 
 var emmeasure = context.measureText("M").width;
@@ -25,12 +24,18 @@ $(window).resize(function() {
 function draw() {
   var lines = fragmentText($('.textBox').text(), canvas.width * 0.8),
       font_size = 18;
+  
   $('#textCanvas').attr('width', $('.panel-body').width());
   $('#textCanvas').attr('height', lines.length * (font_size + 5) + 100);
-  context.font = font_size + "px sans-serif";
-  context.save();
+  
   context.clearRect(0, 0, canvas.width, canvas.height);
+  context.rect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = "#ffffff";
+  context.fill();
+  context.font = font_size + "px sans-serif";
   context.textBaseline = 'top';
+  context.fillStyle = "#333333";
+  
   lines.forEach(function(line, i) {
     context.fillText(line, canvas.width * 0.1, (i + 1) * (font_size + 5));
   });
