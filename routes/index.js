@@ -65,8 +65,9 @@ router.post('/tweet', isAuthenticated, function(req, res) {
       status: req.body.message || "",
       media_ids: body.media_id_string
     }, function(err, data, response) {
-      T.get('statuses/oembed', { id: data.id_str }, function(err, data, response) {
-        req.user.tweet_ids.push('https://twitter.com/' + req.user.username + '/status/' + data.id_str);
+      var tweet_id = data.id_str;
+      T.get('statuses/oembed', { id: tweet_id }, function(err, data, response) {
+        req.user.tweet_ids.push('https://twitter.com/' + req.user.username + '/status/' + tweet_id);
         req.user.save(function(err, u) {
           res.send(data.html);
         });
