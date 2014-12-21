@@ -2,6 +2,7 @@ extends layout
 
 block content
   link(href='/css/style.css', rel='stylesheet')
+  .ignore(style="font-family:Lato;")
 
   //- Navbar
   .navbar.navbar-info
@@ -78,6 +79,6 @@ block content
         .embed
 
   canvas#textCanvas(style='display: none;')
-  img#image(style='display: none;')
+  img#image
 
   include footer

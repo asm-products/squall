@@ -35,7 +35,7 @@ $(window).resize(function() {
 
 function draw() {
   var lines = fragmentText($('.textBox').text(), canvas.width * 0.8),
-      font_size = 22;
+      font_size = 20;
   
   $('#textCanvas').attr('width', $('.panel-body').width());
   $('#textCanvas').attr('height', lines.length * (font_size + 5) + 100);
@@ -44,7 +44,7 @@ function draw() {
   context.rect(0, 0, canvas.width, canvas.height);
   context.fillStyle = "#ffffff";
   context.fill();
-  context.font = font_size + "px sans-serif";
+  context.font = font_size + "px Lato";
   context.textBaseline = 'top';
   context.fillStyle = "#333333";
   
