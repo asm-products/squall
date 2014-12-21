@@ -3,6 +3,7 @@ extends layout
 block content
   link(href='/css/style.css', rel='stylesheet')
   .ignore(style="font-family:Lato;")
+  .ignore(style="font-family:Merriweather;")
 
   //- Navbar
   .navbar.navbar-info
@@ -38,12 +39,18 @@ block content
   //- Text editor controls
   .col-lg-8.col-lg-offset-2
     .row
-      .col-lg-8
+      .col-lg-3
         .form-group.credit-checkbox
           .checkbox
             label(for="credit")
                 input(type="checkbox", id="credit")
                 | Credit Storming.ME
+      .col-lg-5
+        .form-group.font-checkbox
+          .checkbox
+            label(for="font")
+                input(type="checkbox", id="font")
+                | Serif font
       .col-lg-2
         button.btn.btn-default Clear Text
   

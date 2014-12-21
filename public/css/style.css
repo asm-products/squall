@@ -1,4 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Lato);
+@import url(http://fonts.googleapis.com/css?family=Merriweather);
 
 body {
   font-size: 16px;
@@ -16,6 +17,7 @@ body {
 .textBox {
   margin-bottom: 40px;
   min-height: 50px;
+  font-family: "Lato", sans-serif;
 }
 
 .footer {
@@ -25,6 +27,7 @@ body {
 
 .credit-preview {
   float: right;
+  font-family: "Lato", sans-serif;
 }
 
 .tweetresult {

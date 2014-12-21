@@ -8,6 +8,7 @@ var checked = true;
 var credit_text = "Tweeted using Storming.ME";
 var TCO_LENGTH = 23;
 var IMAGE_LINK_LENGTH = 23;
+var font = "Lato";
 
 
 $('.login-btn').click(function() {
@@ -44,7 +45,7 @@ function draw() {
   context.rect(0, 0, canvas.width, canvas.height);
   context.fillStyle = "#ffffff";
   context.fill();
-  context.font = font_size + "px Lato";
+  context.font = font_size + "px " + font;
   context.textBaseline = 'top';
   context.fillStyle = "#333333";
   
@@ -184,6 +185,21 @@ $('#credit').click(function() {
   } else {
     $('.panel-body').find('.credit-preview').remove();
   }
+  draw();
+});
+
+$('#font').click(function() {
+  var $this = $(this);
+  checked = $this.is(':checked');
+  console.log(checked);
+  if (checked) {
+    font = 'Merriweather';
+  } else {
+    font = 'Lato';
+  }
+  console.log(font);
+  $('.textBox').css('font-family', font);
+  $('.credit-preview').css('font-family', font);
   draw();
 });
 
