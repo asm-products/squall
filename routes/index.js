@@ -32,6 +32,11 @@ router.get(constants.Twitter.CALLBACK,
     })
 );
 
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
 router.get('/dashboard', isAuthenticated, function(req, res) {
   res.render('dashboard', { username: req.user.username });
 });
