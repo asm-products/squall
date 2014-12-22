@@ -191,13 +191,11 @@ $('#credit').click(function() {
 $('#font').click(function() {
   var $this = $(this);
   checked = $this.is(':checked');
-  console.log(checked);
   if (checked) {
     font = 'Merriweather';
   } else {
     font = 'Lato';
   }
-  console.log(font);
   $('.textBox').css('font-family', font);
   $('.credit-preview').css('font-family', font);
   draw();
