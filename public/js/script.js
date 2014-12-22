@@ -53,7 +53,6 @@ $('.tweet-button').click(function() {
   $('.tweet-button').addClass('disabled');
   ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
   $.post('/tweet', { image: $('#image').attr('src'), message: $('#textArea').val() }, function(data) {
-    console.log(data);
     $('.tweetresult').css('display', 'block');
     $('.tweetresult').find('.embed').html(data);
     $('.tweet-button').text('Post Tweetstorm as Picture');
@@ -128,7 +127,6 @@ $('#textArea').keyup(function() {
 
 
 $(".textBox").on('paste', function(){
-  console.log('paste');
   setTimeout(function() {
     var text = $('.textBox').text();
     $(".textBox").text(text);
@@ -136,6 +134,6 @@ $(".textBox").on('paste', function(){
 });
 
 
-$(".upload-link").focus(function(){
-    this.select();
+$(".upload-link").focus(function() {
+  this.select();
 });
