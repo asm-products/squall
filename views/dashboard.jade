@@ -7,7 +7,7 @@ block content
 
   //- Navbar
   .navbar.navbar-info
-    .col-lg-8.col-lg-offset-2
+    .col-lg-6.col-lg-offset-3
       .navbar-header
         button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-inverse-collapse')
           span.icon-bar
@@ -29,7 +29,7 @@ block content
               span.fa.fa-sign-out.fa-2x
 
   //- Greeting
-  .col-lg-8.col-lg-offset-2.greeting
+  .col-lg-6.col-lg-offset-3.greeting
     .bs-component
       .alert.alert-dismissable
         button.close(type="button", data-dismiss="alert") ×
@@ -39,47 +39,45 @@ block content
           | The editor is a live preview of what your final image will look like. 
           | When ready, click the Tweet button and your tweet will be posted.
         button.btn.btn-primary.btn-raised.bookmark Bookmark Storming.ME
+  
+  //- Tweet text box
+  .col-lg-6.col-lg-offset-3.tweet-text
+    .form-group
+      label.control-label.tweet-title(for="textArea") Tweet
+      .input-group
+        .form-control-wrapper
+          textarea#textArea(rows="2", maxLength="117", tabindex="2", autofocus, placeholder="Introduce your tweetstorm. You can tag @username, paste links or use #hashtags.")
+        .input-group-addon.text-length 23/140
 
   //- Text editor controls
-  .col-lg-8.col-lg-offset-2
+  .col-lg-6.col-lg-offset-3
     .row
       .col-lg-3
         .form-group.credit-checkbox
           .checkbox
             label(for="credit")
                 input(type="checkbox", id="credit")
-                | Credit Storming.ME
-      .col-lg-5
+                | Watermark
+      .col-lg-3
         .form-group.font-checkbox
           .checkbox
             label(for="font")
                 input(type="checkbox", id="font")
                 | Serif font
-      .col-lg-2
-        button.btn.btn-default Clear Text
-  
+      //- .col-lg-2
+      //-   button.btn.btn-default Clear Text
+
   //- Text editor
-  .col-lg-8.col-lg-offset-2
+  .col-lg-6.col-lg-offset-3
     .panel.panel-default
       .panel-body#t
-        .textBox(contenteditable='true', data-ph='Enter your tweetstorm here.. Remember, no character limits.', tabindex='1', autofocus='')
-  
-  //- Tweet text box
-  .col-lg-8.col-lg-offset-2
-    .form-group
-      label.col-lg-2.control-label(for="textArea") Tweet text (Optional)
-      span.help-block Enter tweet text that introduces your tweetstorm created above. You can tag @username or paste links or use #hashtags.
-      .input-group
-        .form-control-wrapper
-          textarea.form-control.empty#textArea(rows="2", maxLength="117")
-          span.material-input
-        .input-group-addon.text-length 23/140
+        .textBox(contenteditable='true', data-ph='Enter your tweetstorm here.. Remember, no character limits.', tabindex='1')
   
   //- Tweet button
   .col-lg-2.col-lg-offset-7
-    .btn-group
+    .btn-group.pull-right
       a.btn.btn-info.tweet-button
-        | Post as Image
+        | Tweet
         .ripple-wrapper
       a.btn.btn-info.dropdown-toggle(href="javascript:void(0)", data-toggle="dropdown")
         span.caret
@@ -89,7 +87,7 @@ block content
 
 
   //- The result of posting the tweet
-  .col-lg-8.col-lg-offset-2.tweetresult
+  .col-lg-6.col-lg-offset-3.tweetresult
     .bs-component
       .alert.alert-dismissable
         button.close(type="button", data-dismiss="alert") ×

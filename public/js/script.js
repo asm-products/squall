@@ -55,7 +55,7 @@ $('.tweet-button').click(function() {
   $.post('/tweet', { image: $('#image').attr('src'), message: $('#textArea').val() }, function(data) {
     $('.tweetresult').css('display', 'block');
     $('.tweetresult').find('.embed').html(data);
-    $('.tweet-button').text('Post as Image');
+    $('.tweet-button').text('Tweet');
     $('.tweet-button').removeClass('disabled');
   });
 });
@@ -77,7 +77,7 @@ $('.upload-imgur').click(function() {
           'empty upload-link" readonly value="' + data + '" type="text"><span ' +
           'class="material-input"></span></div>');
     }
-    $('.tweet-button').text('Post as Image');
+    $('.tweet-button').text('Tweet');
     $('.tweet-button').removeClass('disabled');
   });
 });
