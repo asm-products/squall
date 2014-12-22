@@ -6,6 +6,10 @@ body {
   margin: 40px 0 30px 0;
 }
 
+h4.lead-text {
+  line-height: 26px;
+}
+
 .icon {
   font-size: 100pt;
   margin-bottom: 20px;
