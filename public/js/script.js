@@ -48,15 +48,37 @@ function draw() {
 
 
 $('.tweet-button').click(function() {
-  $('.tweet-button').text('Posting your tweetstorm...');
+  $('.tweet-button').text('Posting tweet...');
   $('.tweetresult').css('display', 'none');
-  ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
   $('.tweet-button').addClass('disabled');
+  ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
   $.post('/tweet', { image: $('#image').attr('src'), message: $('#textArea').val() }, function(data) {
     console.log(data);
     $('.tweetresult').css('display', 'block');
     $('.tweetresult').find('.embed').html(data);
     $('.tweet-button').text('Post Tweetstorm as Picture');
+    $('.tweet-button').removeClass('disabled');
+  });
+});
+
+
+$('.upload-imgur').click(function() {
+  $('.tweet-button').text('Uploading image...');
+  $('.tweetresult').css('display', 'none');
+  $('.tweet-button').addClass('disabled');
+  ga('send', 'event', 'Dashboard', 'Click', 'Imgur Upload');
+  $.post('/upload/imgur', { image: $('#image').attr('src') }, function(data) {
+    if (data === 'error') {
+      alert('Could not upload image');
+    } else {
+      $('.tweetresult').css('display', 'block');
+      $('.tweetresult').find('h4').text('Image Uploaded');
+      $('.tweetresult').find('.embed').html(
+          '<div class="form-control-wrapper"><input class="form-control ' +
+          'empty upload-link" readonly value="' + data + '" type="text"><span ' +
+          'class="material-input"></span></div>');
+    }
+    $('.tweet-button').text('Post as Image');
     $('.tweet-button').removeClass('disabled');
   });
 });
@@ -111,4 +133,9 @@ $(".textBox").on('paste', function(){
     var text = $('.textBox').text();
     $(".textBox").text(text);
   }, 50);
+});
+
+
+$(".upload-link").focus(function(){
+    this.select();
 });

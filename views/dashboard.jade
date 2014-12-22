@@ -76,9 +76,16 @@ block content
   
   //- Tweet button
   .col-lg-2.col-lg-offset-7
-    a.btn.btn-info.pull-right.tweet-button
-      | Post Tweetstorm as Picture
-      .ripple-wrapper
+    .btn-group
+      a.btn.btn-info.tweet-button
+        | Post as Image
+        .ripple-wrapper
+      a.btn.btn-info.dropdown-toggle(href="javascript:void(0)", data-toggle="dropdown")
+        span.caret
+      ul.dropdown-menu
+        li
+          a.upload-imgur(href="javascript:void(0)") Upload to Imgur
+
 
   //- The result of posting the tweet
   .col-lg-8.col-lg-offset-2.tweetresult
