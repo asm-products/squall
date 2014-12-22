@@ -73,6 +73,7 @@ $('#credit').click(function() {
   draw();
 });
 
+
 $('#font').click(function() {
   var $this = $(this);
   checked = $this.is(':checked');
@@ -101,4 +102,13 @@ $('#textArea').keyup(function() {
     }
   }
   $('.text-length').text(IMAGE_LINK_LENGTH + length + '/140');
+});
+
+
+$(".textBox").on('paste', function(){
+  console.log('paste');
+  setTimeout(function() {
+    var text = $('.textBox').text();
+    $(".textBox").text(text);
+  }, 50);
 });
