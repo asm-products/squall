@@ -137,3 +137,8 @@ $(".textBox").on('paste', function(){
 $(".upload-link").focus(function() {
   this.select();
 });
+
+
+$('.bookmark').click(function(e) {
+  alert('Press ' + (navigator.userAgent.toLowerCase().indexOf('mac') != - 1 ? 'Command/Cmd' : 'CTRL') + ' + D to bookmark this page.');
+}); 
