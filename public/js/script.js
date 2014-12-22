@@ -55,7 +55,7 @@ $('.tweet-button').click(function() {
   $.post('/tweet', { image: $('#image').attr('src'), message: $('#textArea').val() }, function(data) {
     $('.tweetresult').css('display', 'block');
     $('.tweetresult').find('.embed').html(data);
-    $('.tweet-button').text('Post Tweetstorm as Picture');
+    $('.tweet-button').text('Post as Image');
     $('.tweet-button').removeClass('disabled');
   });
 });
