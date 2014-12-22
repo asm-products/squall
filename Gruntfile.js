@@ -34,6 +34,15 @@ module.exports = function(grunt) {
                                                 'public/js/script.js']
         }
       }
+    },
+
+    watch: {
+      js: {
+        files: [
+          'public/js/*.js'
+        ],
+        tasks: ['jshint','uglify']
+      }
     }
 
   });
@@ -48,5 +57,6 @@ module.exports = function(grunt) {
   // make sure you have run npm install so our app can find these
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
 };
