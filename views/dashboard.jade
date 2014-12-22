@@ -53,17 +53,20 @@ block content
   .col-lg-6.col-lg-offset-3
     .row
       .col-lg-3
-        .form-group.credit-checkbox
-          .checkbox
-            label(for="credit")
-                input(type="checkbox", id="credit")
-                | Watermark
-      .col-lg-3
         .form-group.font-checkbox
           .checkbox
             label(for="font")
                 input(type="checkbox", id="font")
                 | Serif font
+      .col-lg-3
+        .form-group.credit-checkbox
+          .checkbox
+            label(for="credit")
+                input(type="checkbox", id="credit")
+                | Watermark
+      .col-lg-1
+        a.btn.btn-default.btn-flat.rand-bg-btn(href="javascript:void(0)", title="Random Background Color")
+          i.mdi-av-repeat.random-bg
       //- .col-lg-2
       //-   button.btn.btn-default Clear Text
 

@@ -40,6 +40,19 @@ body {
   box-shadow: inset 0 0 0 1px rgba(0,132,180,0.7);
 }
 
+.rand-bg-btn {
+  margin: 0;
+}
+
+.random-bg {
+  font-size: 30px;
+}
+
+a.btn.btn-default.btn-flat.rand-bg-btn {
+  padding: 4px 20px;
+  margin-top: 4px;
+}
+
 .textBox {
   margin-bottom: 40px;
   min-height: 50px;

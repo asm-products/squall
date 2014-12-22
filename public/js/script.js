@@ -139,6 +139,14 @@ $(".upload-link").focus(function() {
 });
 
 
+$('.rand-bg-btn').click(function() {
+  var color = randomColor({
+     luminosity: 'light'
+  });
+  $('.panel-body').css('background-color', color);
+});
+
+
 $('.bookmark').click(function(e) {
   alert('Press ' + (navigator.userAgent.toLowerCase().indexOf('mac') != - 1 ? 'Command/Cmd' : 'CTRL') + ' + D to bookmark this page.');
 }); 
