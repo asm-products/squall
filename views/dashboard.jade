@@ -57,7 +57,7 @@ block content
   //- Text editor
   .col-lg-8.col-lg-offset-2
     .panel.panel-default
-      .panel-body
+      .panel-body#t
         .textBox(contenteditable='true', data-ph='Enter your tweetstorm here.. Remember, no character limits.', tabindex='1', autofocus='')
   
   //- Tweet text box
@@ -85,7 +85,6 @@ block content
         h4 You just hacked the tweetstorm.
         .embed
 
-  canvas#textCanvas(style='display: none;')
-  img#image(style='display: none;')
+  img#image(style="display:none")
 
   include footer

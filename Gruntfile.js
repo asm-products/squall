@@ -28,7 +28,10 @@ module.exports = function(grunt) {
       },
       my_target: {
         files: {
-          'public/dist/js/application.min.js': ['public/js/script.js']
+          'public/dist/js/application.min.js': ['public/js/html2canvas.js',
+                                                'public/js/ripples.min.js',
+                                                'public/js/material.min.js',
+                                                'public/js/script.js']
         }
       }
     }
