@@ -2,6 +2,9 @@ extends layout
 
 block content
   link(href='/css/style.css', rel='stylesheet')
+  link(href='/css/medium-editor.min.css', rel='stylesheet')
+  link(href='/css/flat.min.css', rel='stylesheet')
+
   .ignore(style="font-family:Lato;")
   .ignore(style="font-family:Merriweather;")
 
@@ -64,15 +67,13 @@ block content
       .col-lg-1
         a.btn.btn-default.btn-flat.rand-bg-btn(href="javascript:void(0)", title="Random Background Color")
           i.mdi-av-repeat.random-bg
-      //- .col-lg-2
-      //-   button.btn.btn-default Clear Text
 
   //- Text editor
   .col-lg-6.col-lg-offset-3
     .panel.panel-default
       .panel-body#t
-        .textBox(contenteditable='true', data-ph='Enter your tweetstorm here.. Remember, no character limits.', tabindex='1')
-  
+        .editable.textBox(tabindex="1") Enter your tweetstorm here.. Remember, no character limits.
+
   //- Tweet button
   .col-lg-2.col-lg-offset-7
     .btn-group.pull-right
@@ -95,6 +96,5 @@ block content
         .embed
 
   img#image(style="display:none")
-  //- img#image()
 
   include footer

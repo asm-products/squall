@@ -5,9 +5,13 @@ body {
   font-size: 16px;
 }
 
-[contentEditable=true]:empty:not(:focus):before{
+.editable:empty:not(:focus):before{
   content: attr(data-ph);
   color: rgba(0, 0, 0, .4);
+}
+
+.highlight {
+  background-color: #CCDDED;
 }
 
 .greeting {
@@ -56,7 +60,6 @@ a.btn.btn-default.btn-flat.rand-bg-btn {
 .textBox {
   margin-bottom: 40px;
   min-height: 50px;
-  font-size: 18px;
 }
 
 .footer {
@@ -67,6 +70,8 @@ a.btn.btn-default.btn-flat.rand-bg-btn {
 .panel-body {
   font-family: "Lato", sans-serif;
   background-color: #fff;
+  line-height: 25px;
+  padding: 30px;
 }
 
 .credit-preview {

@@ -6,6 +6,43 @@ var font = "Lato";
 var timer;
 
 
+rangy.init();
+
+function Highlighter() {
+    this.button = document.createElement('button');
+    this.button.className = 'medium-editor-action';
+    this.button.textContent = 'H';
+    this.button.onclick = this.onClick.bind(this);
+    this.classApplier = rangy.createCssClassApplier("highlight", {
+        elementTagName: 'mark',
+        normalize: true
+    });
+}
+Highlighter.prototype.onClick = function() {
+    this.classApplier.toggleSelection();
+    draw();
+};
+Highlighter.prototype.getButton = function() {
+    return this.button;
+};
+Highlighter.prototype.checkState = function (node) {
+    if(node.tagName == 'MARK') {
+        this.button.classList.add('medium-editor-button-active');
+    }
+};
+
+
+var editor = new MediumEditor('.editable', {
+  buttons: ['highlight', 'bold', 'italic', 'underline', 'quote', 'header1',
+            'superscript', 'subscript', 'unorderedlist'],
+  cleanPastedHTML: true,
+  buttonLabels: 'fontawesome',
+  extensions: {
+    'highlight': new Highlighter()
+  }
+});
+
+
 $('.login-btn').click(function() {
   ga('send', 'event', 'Homepage', 'click', 'Login');
 });
@@ -19,12 +56,8 @@ $('.why-btn').click(function() {
 });
 
 
-$('.textBox').keyup(function() {
-  clearTimeout(timer);
-
-  timer = setTimeout(function() {
-      draw();
-  }, 300); // wait for 300ms after each keystroke
+$('.editable').on('input', function() {
+  draw();
 });
 
 
@@ -32,7 +65,7 @@ $(window).resize(function() {
   clearTimeout(timer);
 
   timer = setTimeout(function() {
-      draw();
+    draw();
   }, 200); // wait for 200ms
 });
 
@@ -126,14 +159,6 @@ $('#textArea').keyup(function() {
 });
 
 
-$(".textBox").on('paste', function(){
-  setTimeout(function() {
-    var text = $('.textBox').text();
-    $(".textBox").text(text);
-  }, 50);
-});
-
-
 $(".upload-link").focus(function() {
   this.select();
 });
@@ -144,6 +169,7 @@ $('.rand-bg-btn').click(function() {
      luminosity: 'light'
   });
   $('.panel-body').css('background-color', color);
+  draw();
 });
 
 
