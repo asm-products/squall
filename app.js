@@ -44,10 +44,10 @@ app.use(passport.session());
 mongoose.connect(constants.MongoURL, { server: { auto_reconnect: true } });
 
 require('./models/users.js');
+require('./models/posts.js');
 require('./config/pass.js')(passport);
 
 app.use('/', routes);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
