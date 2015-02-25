@@ -1,0 +1,15 @@
+extends layout
+
+block content
+
+  link(href='/css/home.css', rel='stylesheet')
+
+  .container
+    .row.header
+      .col-lg-12
+        .thumbnail.text-center
+          img(src='#{large_photo}', width="200px")
+          h3 @#{user.username}
+          h4 #{user.name}
+  
+  include footer
