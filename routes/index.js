@@ -73,7 +73,9 @@ router.post('/posts', function(request, response) {  //ADD AUTHENTICATION HERE O
   var title = request.body.title;
   var content = request.body.content;
   var author = request.body.author;
-  console.log(request.body);
+  console.log(request.body.title);
+  console.log("here");
+  console.log(request);
 
   console.log(title);
   console.log(content);
@@ -85,10 +87,10 @@ router.post('/posts', function(request, response) {  //ADD AUTHENTICATION HERE O
     author: author
   });
 
-  post.save(function(err, post) {
-    if (err) return console.error(err);
-    console.dir(post);
-  });
+  // post.save(function(err, post) {
+  //   if (err) return console.error(err);
+  //   console.dir(post);
+  // });
 
 
   response.json({status: "Post Created"});
