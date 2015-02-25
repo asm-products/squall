@@ -50,13 +50,20 @@ router.get('/posts/:post_id', function(request, response, next) {
   var post = Posts.findOne({slug: post_id},
     function(err, result) {
       if (err) {
-        response.json({status: "No User Found"});
+        response.json({status: "No Post Found"});
       }
       else {
-        var title = post.title;
-        var author = post.author;
-        var contents = post.contents;
-        response.render('post', {title: title, contents: contents, author: author});
+        if (result)
+          {
+            var title = result.title;
+            var author = result.author;
+            var contents = result.content;
+            response.render('post', {title: title, contents: contents, author: author});
+          }
+        else {
+          //return error page
+          response.json({status: "Post not found"});
+        }
       }
   });
 });
