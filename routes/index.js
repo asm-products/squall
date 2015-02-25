@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var Users = require('./../models/users');
+
 if (process.env.NODE_ENV === 'production') {
     var constants = require('./../config/constants.production.js');
 } else {
@@ -104,6 +106,32 @@ router.post('/upload/imgur', function(req, res) {
 
     return res.send(body.data.link);
   });
+});
+
+router.get('/:username', function(req, res, next) {
+  var username = req.params.username
+  // var user;
+
+  Users.findOne({ username : username }, function(err, existingUser) {
+    if (existingUser) {
+      // found existing user
+      // user = existingUser;
+      return res.render('user_profile', { user: existingUser,
+                                          large_photo: existingUser.photo.replace(/_normal/i, '') });
+    }
+
+    if (err) {
+      // something bad happened
+      return done(err);
+    }
+    res.redirect('/');
+  });
+
+  // if (user){
+  //   res.render('user_profile', { user: user });
+  // } else {
+  //   res.redirect('/');
+  // }
 });
 
 module.exports = router;
