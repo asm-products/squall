@@ -1,12 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-<<<<<<< HEAD
 var Users = require('../models/users.js');
 var Posts = require('../models/posts.js');
-=======
-var Users = require('./../models/users');
->>>>>>> f4138242d274a15b58e1ace06ab56e85e75f4be4
+var getSlug = require('speakingurl');
 
 if (process.env.NODE_ENV === 'production') {
     var constants = require('./../config/constants.production.js');
@@ -48,17 +45,9 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
   res.render('dashboard', { username: req.user.username });
 });
 
-router.get('/users/:user_id', function(req, res, next) {
-  // gets the value for the named parameter user_id from the url
-  var user_id = req.params.user_id;
-
-  var user = Users.findOne({ twId : user_id });
-  res.json(user.twId);
-});
-
 router.get('/posts/:post_id', function(request, response, next) {
   var post_id = request.params.post_id;
-  var post = Posts.findOne({title: post_id},
+  var post = Posts.findOne({slug: post_id},
     function(err, result) {
       if (err) {
         response.json({status: "No User Found"});
@@ -77,30 +66,22 @@ router.post('/posts', function(request, response) {  //ADD AUTHENTICATION HERE O
   var title = request.body.title;
   var content = request.body.content;
   var author = request.body.author;
-  console.log(request.body.title);
-  console.log("here");
-  console.log(request);
-
-  console.log(title);
-  console.log(content);
-  console.log(author);
+  var slug = getSlug(title);
 
   var post = new Posts({
     title: title,
     content: content,
-    author: author
+    author: author,
+    slug: slug
   });
 
-  // post.save(function(err, post) {
-  //   if (err) return console.error(err);
-  //   console.dir(post);
-  // });
-
+  post.save(function(err, post) {
+    if (err) return console.error(err);
+    console.dir(post);
+  });
 
   response.json({status: "Post Created"});
 });
-
-
 
 router.post('/tweet', isAuthenticated, function(req, res) {
   var API_URL = 'https://upload.twitter.com/1.1/media/upload.json';
@@ -168,7 +149,6 @@ router.post('/upload/imgur', function(req, res) {
 
 router.get('/:username', function(req, res, next) {
   var username = req.params.username
-  // var user;
 
   Users.findOne({ username : username }, function(err, existingUser) {
     if (existingUser) {
@@ -184,12 +164,6 @@ router.get('/:username', function(req, res, next) {
     }
     res.redirect('/');
   });
-
-  // if (user){
-  //   res.render('user_profile', { user: user });
-  // } else {
-  //   res.redirect('/');
-  // }
 });
 
 module.exports = router;
