@@ -174,23 +174,21 @@ router.get('/:username', function(req, res, next) {
   Users.findOne({ username : username }, function(err, existingUser) {
     if (existingUser) {
       //var posts = Posts.where('author').equals(existingUser.name).select('slug');
-      var posts = [];
 
       Posts.find({author: existingUser.username}, function (err, result) {
-        return result
-      }).exec(function(err, result) {posts = "asda"});
+        posts = result
 
-      return res.render('user_profile', { user: existingUser,
-                                          large_photo: existingUser.photo.replace(/_normal/i, ''),
-                                          posts: posts
-                                          });
+        return res.render('user_profile', { user: existingUser,
+                                            large_photo: existingUser.photo.replace(/_normal/i, ''),
+                                            posts: posts
+                                            });
+      })
     }
 
     if (err) {
       // something bad happened
       return done(err);
     }
-    res.redirect('/');
   });
 });
 
