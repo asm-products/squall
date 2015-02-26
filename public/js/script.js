@@ -55,7 +55,6 @@ $('.why-btn').click(function() {
   ga('send', 'event', 'Homepage', 'click', 'Why Medium');
 });
 
-
 $('.editable').on('input', function() {
   draw();
 });
@@ -92,7 +91,6 @@ $('.tweet-button').click(function() {
     $('.tweet-button').removeClass('disabled');
   });
 });
-
 
 $('.upload-imgur').click(function() {
   $('.tweet-button').text('Uploading image...');
@@ -175,4 +173,18 @@ $('.rand-bg-btn').click(function() {
 
 $('.bookmark').click(function(e) {
   alert('Press ' + (navigator.userAgent.toLowerCase().indexOf('mac') != - 1 ? 'Command/Cmd' : 'CTRL') + ' + D to bookmark this page.');
-}); 
+});
+
+
+$('.tweetpost').click(function() {
+  $('.tweetpost').text('Posting tweet...');
+  // $('.tweetpost').addClass('disabled');
+
+  $.post('/tweet', { image: $('#image').attr('src'), message: $('#textArea').val() }, function(data) {
+    // $('.tweetresult').css('display', 'block');
+    // $('.tweetresult').find('.embed').html(data);
+    // $('.tweetpost').removeClass('disabled');
+  });
+
+
+});
