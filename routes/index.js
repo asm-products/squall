@@ -177,10 +177,14 @@ router.get('/:username', function(req, res, next) {
 
       Posts.find({author: existingUser.username}, function (err, result) {
         posts = result
+        var following = existingUser.following.length;
+
+
 
         return res.render('user_profile', { user: existingUser,
                                             large_photo: existingUser.photo.replace(/_normal/i, ''),
-                                            posts: posts
+                                            posts: posts,
+                                            following: following
                                             });
       })
     }
