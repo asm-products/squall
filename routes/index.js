@@ -75,19 +75,32 @@ router.post('/posts', function(request, response) {  //ADD AUTHENTICATION HERE O
   var author = request.body.author;
   var slug = getSlug(title);
 
-  var post = new Posts({
-    title: title,
-    content: content,
-    author: author,
-    slug: slug
-  });
+  var max_content_length = 1000;
+  if (content.length <= max_content_length) {
+    var post = new Posts({
+      title: title,
+      content: content,
+      author: author,
+      slug: slug
+    });
 
-  post.save(function(err, post) {
-    if (err) return console.error(err);
-    console.dir(post);
-  });
+    post.save(function(err, post) {
+      if (err)
+      {
+        response.json({passed: false, message: "Unknown Failure"});
+        return console.error(err);
+      }
+      else
+      {
+        response.json({passed: true, message: "Post created", slug: slug});
+      }
+      console.dir(post);
+    });
 
-  response.json({status: "Post Created"});
+  }
+  else {
+    response.json({passed: false, message: "Post too long"})
+  }
 });
 
 router.post('/tweet', isAuthenticated, function(req, res) {
@@ -159,10 +172,17 @@ router.get('/:username', function(req, res, next) {
 
   Users.findOne({ username : username }, function(err, existingUser) {
     if (existingUser) {
-      // found existing user
-      // user = existingUser;
+      // var posts = Posts.find('author').equals(existingUser.name).exec(err, result) {
+      //   return results.map(function(item) {
+      //     return item.title;
+      //   })
+      // };
+
+
       return res.render('user_profile', { user: existingUser,
-                                          large_photo: existingUser.photo.replace(/_normal/i, '') });
+                                          large_photo: existingUser.photo.replace(/_normal/i, ''),
+                                          posts: posts
+                                          });
     }
 
     if (err) {

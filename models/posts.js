@@ -11,10 +11,16 @@ var postSchema = new Schema({
     default: Date.now
   },
   author: String,
-  title: String,
+  title: {
+    type: String,
+    unique: true
+  },
   content: String,
   tweet_ids: [],
-  slug: String
+  slug: {
+    type: String,
+    unique: true
+  }
 });
 
 module.exports = mongoose.model('Posts', postSchema);

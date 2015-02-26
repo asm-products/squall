@@ -4,8 +4,12 @@ block content
 
   link(href='/css/home.css', rel='stylesheet')
 
-  h1 #{title}
-  p #{contents}
-  p by #{author}
+  .container
+    .row.header
+      .col-lg-12
+        .thumbnail.text-center
+          h1 #{title}
+          p #{contents}
+          p by #{author}
 
   include footer
