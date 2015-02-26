@@ -4,3 +4,6 @@ node_modules/
 npm-debug.log
 data/
 
+#Igno IntellIJ IDEs (like WebStorm and PyCharm) configuration:
+.idea
+
