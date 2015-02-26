@@ -192,4 +192,62 @@ router.get('/:username', function(req, res, next) {
   });
 });
 
+router.post('/:username/follow', isAuthenticated, function(req, res, next) {
+  var username = req.params.username;
+
+  Users.findOne({ username: username }, function(err, user) {
+    if(err) {
+      res.status(500).json({message: 'Unknown Failure'});
+      return console.error(err);
+    }
+
+    if(user) {
+      req.user.following.addToSet(user.id);
+
+      req.user.save(function(err) {
+        if(err) {
+          res.status(500).json({message: 'Unknown Failure'});
+          return console.error(err);
+        }
+
+        return res.json({message: "Following @"+username});
+      });
+    }
+
+    else {
+      return res.status(404).json({message: "User @"+username+" Not Found"});
+    }
+
+  });
+});
+
+router.post('/:username/unfollow', isAuthenticated, function(req, res, next) {
+  var username = req.params.username;
+
+  Users.findOne({ username: username }, function(err, user) {
+    if(err) {
+      res.status(500).json({message: 'Unknown Failure'});
+      return console.error(err);
+    }
+
+    if(user) {
+      req.user.following.pull(user.id);
+
+      req.user.save(function(err) {
+        if(err) {
+          res.status(500).json({message: 'Unknown Failure'});
+          return console.error(err);
+        }
+
+        return res.json({message: "No Longer Following @"+username});
+      });
+    }
+
+    else {
+      return res.status(404).json({message: "User @"+username+" Not Found"});
+    }
+
+  });
+});
+
 module.exports = router;
