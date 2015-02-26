@@ -1,20 +1,30 @@
 extends layout
-
 block content
-
   link(href='/css/home.css', rel='stylesheet')
+  link(href='/css/style.css', rel='stylesheet')
+  link(href='/css/medium-editor.min.css', rel='stylesheet')
+  link(href='/css/flat.min.css', rel='stylesheet')
+
+  include navbar
 
   .container
     .row.header
       .col-lg-12
         .thumbnail.text-center
           h1 #{title}
-          :markdown
-            p #{contents}
-          p by #{author}
-          a(href="#{author_link}") #{author}
-        
+          p #{contents}
+          p by
+            a(href="#{author_link}") #{author}
+            .button.btn.btn-info
+              span Follow #{author}
+
+          a.btn.btn-info.tweetpost
+            span.fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)") Share
 
 
+
+  img#image
 
   include footer
+
+script(src='/js/postscripter.js')

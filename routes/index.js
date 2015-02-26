@@ -15,7 +15,11 @@ var twit = require('twit');
 
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
+    console.log("authenticated")
     return next();
+  }
+  else {
+    console.log("Failed authentication")
   }
   res.redirect('/');
 }
@@ -40,6 +44,11 @@ router.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 });
+
+router.get('/profile', isAuthenticated, function(req, res) {
+  var username = req.user.username;
+  res.redirect('/'+username);
+})
 
 router.get('/dashboard', isAuthenticated, function(req, res) {
   res.render('dashboard', { username: req.user.username });
@@ -177,10 +186,14 @@ router.get('/:username', function(req, res, next) {
 
       Posts.find({author: existingUser.username}, function (err, result) {
         posts = result
+        var following = existingUser.following.length;
+
+
 
         return res.render('user_profile', { user: existingUser,
                                             large_photo: existingUser.photo.replace(/_normal/i, ''),
-                                            posts: posts
+                                            posts: posts,
+                                            following: following
                                             });
       })
     }
