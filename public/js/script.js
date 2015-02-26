@@ -177,13 +177,16 @@ $('.bookmark').click(function(e) {
 
 
 $('.tweetpost').click(function() {
+  draw();
   $('.tweetpost').text('Posting tweet...');
   // $('.tweetpost').addClass('disabled');
+  var message = "Check out this post"
 
-  $.post('/tweet', { image: $('#image').attr('src'), message: $('#textArea').val() }, function(data) {
+  $.post('/tweet', { image: $('#image').attr('src'), message: message }, function(data) {
     // $('.tweetresult').css('display', 'block');
     // $('.tweetresult').find('.embed').html(data);
     // $('.tweetpost').removeClass('disabled');
+    $('.tweetpost').text('Your Tweet has been Betwotten ');
   });
 
 
