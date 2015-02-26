@@ -1,11 +1,7 @@
-Storming
+Textshots
 ========
 
-![](https://raw.githubusercontent.com/karan/Storming/master/screen.png?token=ADHGIfqMIxyYAkV3shcdsK-VpzUGI5Mhks5UngfvwA%3D%3D)
-
 Hacking The Tweetstorm... With Pictures of Text
-
-This is a product being built by the Assembly community. You can help push this idea forward by visiting [https://assembly.com/storming-me](https://assembly.com/storming-me).
 
 ## Built With
 
@@ -24,6 +20,7 @@ Make `config/constants.js` (see `config/constants.production.js` for format.)
 
 to make the constants.js file for local development, see this example.  Note this is for LOCAL DEVELOPMENT ONLY.
 
+```js
 var Constants = {
   Cookie_Secret: "ANY RANDOM STRING",
   // Key and secret used to connect to twitter app, can't be shared
@@ -39,6 +36,7 @@ var Constants = {
   MongoURL: "mongodb://localhost/local",
   RedisURL: "redis://localhost:6379"
 };
+```
 
 Things you need to do:
   - Go to apps.twitter.com and create a test app.  Use the KEY and SECRET they give you in your constants file.
@@ -55,3 +53,7 @@ Then run
 - Set the appropriate environment variables (see `config/constants.production.js`).
 - Set `NODE_ENV` to `production`.
 - Push/Deploy.
+
+## About
+
+This is a product being built by the Assembly community. You can help push this idea forward by visiting [https://assembly.com/textshots](https://assembly.com/textshots).
