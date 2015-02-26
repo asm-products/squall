@@ -178,29 +178,17 @@ router.get('/:username', function(req, res, next) {
       Posts.find({author: existingUser.username}, function (err, result) {
         posts = result
 
-        //posts = posts.map(function(r) { return r.title })
-
-        // posts = JSON.stringify(posts);
-        // posts = posts.slice();
-        // posts = String(posts);
-        // var posts = posts.split(',');
-
-        console.log(posts)
         return res.render('user_profile', { user: existingUser,
                                             large_photo: existingUser.photo.replace(/_normal/i, ''),
                                             posts: posts
                                             });
       })
-
-
-
     }
 
     if (err) {
       // something bad happened
       return done(err);
     }
-    //res.redirect('/');
   });
 });
 
