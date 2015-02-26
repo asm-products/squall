@@ -8,13 +8,31 @@ block content
     .row.header
       .col-lg-4
         .thumbnail.text-center
-          img(src='#{large_photo}', width="200px")
+          img.img-circle(src='#{large_photo}', width="200px")
           .h3
+            span.fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)")
             a(href="https://twitter.com/#{user.username}") @#{user.username}
           h3 #{user.name}
+          button.btn.btn-info Follow
+
       .col-lg-8
-        .thumbnail.text-center
+        .text-center
           h3 Posts
-            
+
+          each val in posts
+            .row.header
+              .col-lg-10.col-lg-offset-1
+                .thumbnail.text-center
+                  a(href="#")
+                    h4 #{val.title}
+                  p #{val.content}
+
+
+
+
+
+
+
+
 
   include footer
