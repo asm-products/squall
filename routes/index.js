@@ -58,7 +58,8 @@ router.get('/posts/:post_id', function(request, response, next) {
             var title = result.title;
             var author = result.author;
             var contents = result.content;
-            response.render('post', {title: title, contents: contents, author: author});
+            var author_link = '../'+author;
+            response.render('post', {title: title, contents: contents, author: author, author_link: author_link});
           }
         else {
           //return error page
@@ -172,12 +173,12 @@ router.get('/:username', function(req, res, next) {
 
   Users.findOne({ username : username }, function(err, existingUser) {
     if (existingUser) {
-      // var posts = Posts.find('author').equals(existingUser.name).exec(err, result) {
-      //   return results.map(function(item) {
-      //     return item.title;
-      //   })
-      // };
+      //var posts = Posts.where('author').equals(existingUser.name).select('slug');
+      var posts = [];
 
+      Posts.find({author: existingUser.username}, function (err, result) {
+        return result
+      }).exec(function(err, result) {posts = "asda"});
 
       return res.render('user_profile', { user: existingUser,
                                           large_photo: existingUser.photo.replace(/_normal/i, ''),

@@ -6,11 +6,15 @@ block content
 
   .container
     .row.header
-      .col-lg-12
+      .col-lg-4
         .thumbnail.text-center
           img(src='#{large_photo}', width="200px")
-          h3 @#{user.username}
-          h4 #{user.name}
+          .h3
+            a(href="https://twitter.com/#{user.username}") @#{user.username}
+          h3 #{user.name}
+      .col-lg-8
+        .thumbnail.text-center
           h3 Posts
+            
 
   include footer
