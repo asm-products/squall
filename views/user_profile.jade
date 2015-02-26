@@ -4,7 +4,7 @@ block content
 
   link(href='/css/home.css', rel='stylesheet')
   include navbar
-  
+
   .container
     .row.header
       .col-lg-4
@@ -24,7 +24,7 @@ block content
             .row.header
               .col-lg-10.col-lg-offset-1
                 .thumbnail.text-center
-                  a(href="#")
+                  a(href="/posts/#{val.slug}")
                     h4 #{val.title}
                   p #{val.content}
 
