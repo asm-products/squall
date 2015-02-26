@@ -9,7 +9,9 @@ block content
       .col-lg-12
         .thumbnail.text-center
           h1 #{title}
-          p #{contents}
+          :markdown
+            p #{contents}
           p by #{author}
+          a(href="#{author_link}") #{author}
 
   include footer

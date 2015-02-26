@@ -58,7 +58,8 @@ router.get('/posts/:post_id', function(request, response, next) {
             var title = result.title;
             var author = result.author;
             var contents = result.content;
-            response.render('post', {title: title, contents: contents, author: author});
+            var author_link = '../'+author;
+            response.render('post', {title: title, contents: contents, author: author, author_link: author_link});
           }
         else {
           //return error page
@@ -180,8 +181,8 @@ router.get('/:username', function(req, res, next) {
 
 
       return res.render('user_profile', { user: existingUser,
-                                          large_photo: existingUser.photo.replace(/_normal/i, ''),
-                                          posts: posts
+                                          large_photo: existingUser.photo.replace(/_normal/i, '')
+
                                           });
     }
 
