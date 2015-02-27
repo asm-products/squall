@@ -176,18 +176,9 @@ $('.bookmark').click(function(e) {
 });
 
 
-$('.tweetpost').click(function() {
-  draw();
-  $('.tweetpost').text('Posting tweet...');
-  // $('.tweetpost').addClass('disabled');
-  var message = "Check out this post"
-
-  $.post('/tweet', { image: $('#image').attr('src'), message: message }, function(data) {
-    // $('.tweetresult').css('display', 'block');
-    // $('.tweetresult').find('.embed').html(data);
-    // $('.tweetpost').removeClass('disabled');
-    $('.tweetpost').text('Your Tweet has been Betwotten ');
-  });
-
-
-});
+//   THIS FEATURE IS CURRENTLY DISABLED
+// $('.followperson').click(function() {
+//   var username = 'abarisser';
+//   $.post('/'+username+"/follow")
+//   $.post('/twitter/createfriendship', {username: username})
+// })

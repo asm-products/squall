@@ -15,7 +15,7 @@ block content
           #t.p #{contents}
           p by
             a(href="#{author_link}") #{author}
-            .button.btn.btn-info
+            .button.btn.btn-info.followperson
               span Follow #{author}
 
           a.btn.btn-info.tweetpost
@@ -26,5 +26,4 @@ block content
   img#image(style="display:none")
 
   include footer
-
-script(src='/js/postscripter.js')
+  script(src='/js/postscripter.js')

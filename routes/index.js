@@ -113,10 +113,28 @@ router.post('/posts', function(request, response) {  //ADD AUTHENTICATION HERE O
   }
 });
 
+router.post('/twitter/createfriendship', isAuthenticated, function(req, res) {
+  var T = new twit({
+    consumer_key: constants.Twitter.KEY,
+    consumer_secret: constants.Twitter.SECRET,
+    access_token: req.user.access_token,
+    access_token_secret: req.user.access_token_secret
+  });
+
+  T.post('friendships/create', {
+    screen_name: req.body.username
+  }, function(err, data, response) {
+    if (err) {
+      console.log(err)
+    }
+  });
+})
+
 router.post('/tweet', isAuthenticated, function(req, res) {
   var API_URL = 'https://upload.twitter.com/1.1/media/upload.json';
   var image = req.body.image.replace(/^data.*base64,/, '');
-  console.log(req)
+
+  console.log('here')
   // First we post to media/upload.json
   request.post(API_URL, {
     oauth: {
@@ -133,7 +151,7 @@ router.post('/tweet', isAuthenticated, function(req, res) {
     if (err) {
       console.log(err);
     };
-
+    console.log(body)
     var T = new twit({
       consumer_key: constants.Twitter.KEY,
       consumer_secret: constants.Twitter.SECRET,
@@ -193,14 +211,10 @@ router.get('/:username', function(req, res, next) {
 
       Posts.find({author: existingUser.username}, function (err, result) {
         posts = result
-        var following = existingUser.following.length;
-
-
 
         return res.render('user_profile', { user: existingUser,
                                             large_photo: existingUser.photo.replace(/_normal/i, ''),
-                                            posts: posts,
-                                            following: following
+                                            posts: posts
                                             });
       })
     }
