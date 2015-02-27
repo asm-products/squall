@@ -14,7 +14,7 @@ block content
             span.fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)")
             a(href="https://twitter.com/#{user.username}") @#{user.username}
           h3 #{user.name}
-          button.btn.btn-info Follow
+          button.btn.btn-info.followperson Follow
 
       .col-lg-8
         .text-center
@@ -27,13 +27,5 @@ block content
                   a(href="/posts/#{val.slug}")
                     h4 #{val.title}
                   p #{val.content}
-
-
-
-
-
-
-
-
 
   include footer

@@ -176,9 +176,8 @@ $('.bookmark').click(function(e) {
 });
 
 
-//   THIS FEATURE IS CURRENTLY DISABLED
-// $('.followperson').click(function() {
-//   var username = 'abarisser';
-//   $.post('/'+username+"/follow")
-//   $.post('/twitter/createfriendship', {username: username})
-// })
+$('.followperson').click(function() {
+  var username = 'abarisser';
+  $.post('/'+username+"/follow")
+  //$.post('/twitter/createfriendship', {username: username})
+})

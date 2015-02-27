@@ -28,8 +28,12 @@ router.get('/', function(req, res) {
   if (req.isAuthenticated()) {
     return res.redirect('/dashboard');
   }
-  res.render('landing');
+  else {
+    return res.render('landing');
+  }
+
 });
+
 
 router.get('/login', passport.authenticate('twitter'));
 
@@ -51,7 +55,13 @@ router.get('/profile', isAuthenticated, function(req, res) {
 })
 
 router.get('/dashboard', isAuthenticated, function(req, res) {
-  res.render('dashboard', { username: req.user.username });
+  Posts.find({author: req.user.username}, function(err, result) {
+    return res.render('dashboard', { user: req.user,
+                                        large_photo: req.user.photo.replace(/_normal/i, ''),
+                                        posts: result
+                                        });
+  })
+
 });
 
 router.get('/posts/:post_id', function(request, response, next) {
@@ -131,8 +141,17 @@ router.post('/twitter/createfriendship', isAuthenticated, function(req, res) {
 })
 
 router.get('/newsfeed', isAuthenticated, function(req, res) {
-  res.render('newsfeed', {user: req.user})
-})
+    var followed_user_ids = req.user.following
+    console.log(followed_user_ids)
+
+    Posts.find({author: followed_user_ids}, function(err, result) {
+      return res.render('newsfeed', { user: req.user,
+                                          large_photo: req.user.photo.replace(/_normal/i, ''),
+                                          posts: result
+                                          });
+    })
+
+});
 
 router.post('/tweet', isAuthenticated, function(req, res) {
   var API_URL = 'https://upload.twitter.com/1.1/media/upload.json';
@@ -232,7 +251,7 @@ router.post('/:username/follow', isAuthenticated, function(req, res, next) {
     }
 
     if(user) {
-      req.user.following.addToSet(user.id);
+      req.user.following.addToSet(user.username);
 
       req.user.save(function(err) {
         if(err) {
@@ -261,7 +280,7 @@ router.post('/:username/unfollow', isAuthenticated, function(req, res, next) {
     }
 
     if(user) {
-      req.user.following.pull(user.id);
+      req.user.following.pull(user.username);
 
       req.user.save(function(err) {
         if(err) {

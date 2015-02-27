@@ -18,8 +18,18 @@ block content
 
       .col-lg-8
         .text-center
-          h3 Posts
+          h3 NewsFeed
 
+          h4 Jot Something new
+            .row.header
+              .col-lg-10.col-lg-offset-1
+                .thumbnail.text-center
+                  p placeholder composing here  --> improve this
+                  input-group
+                    .form-control-wrapper
+                      textarea#textArea(rows="2", maxLength="117", tabindex="2", autofocus, placeholder="Introduce your tweetstorm. You can tag @username, paste links or use #hashtags.")
+
+          h4 Your Feed
           each val in posts
             .row.header
               .col-lg-10.col-lg-offset-1
@@ -27,5 +37,7 @@ block content
                   a(href="/posts/#{val.slug}")
                     h4 #{val.title}
                   p #{val.content}
+
+
 
   include footer

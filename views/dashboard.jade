@@ -10,64 +10,59 @@ block content
 
   include navbar
 
-  //- Greeting
-  .col-lg-6.col-lg-offset-3.greeting
-    .bs-component
-      .alert.alert-dismissable
-        button.close(type="button", data-dismiss="alert") ×
-        h4 Getting Started
-        p
-          | Welcome to your dashboard, @#{username}. To get started, simply compose a tweet below.
-          | The editor is a live preview of what your final image will look like.
-          | When ready, click the Tweet button and your tweet will be posted.
-        button.btn.btn-primary.btn-raised.bookmark Bookmark Storming.ME
+  .container
+    .row.header
+      .col-lg-4
+        .thumbnail.text-center
+          img.img-circle(src='#{large_photo}', width="200px")
+          .h3
+            span.fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)")
+            a(href="https://twitter.com/#{user.username}") @#{user.username}
+          h3 #{user.name}
+          button.btn.btn-info Follow
 
-  //- Tweet text box
-  .col-lg-6.col-lg-offset-3.tweet-text
-    .form-group
-      label.control-label.tweet-title(for="textArea") Tweet
-      .input-group
-        .form-control-wrapper
-          textarea#textArea(rows="2", maxLength="117", tabindex="2", autofocus, placeholder="Introduce your tweetstorm. You can tag @username, paste links or use #hashtags.")
-        .input-group-addon.text-length 23/140
+      .row.header
+        .col-lg-6.col-lg-offset-1
+          .row
+            label.control-label.twwet-title(for="textArea") TweetSquall
 
-  //- Text editor controls
-  .col-lg-6.col-lg-offset-3
-    .row
-      .col-lg-3
-        .form-group.font-checkbox
-          .checkbox
-            label(for="font")
-                input(type="checkbox", id="font")
-                | Serif font
-      .col-lg-3
-        .form-group.credit-checkbox
-          .checkbox
-            label(for="credit")
-                input(type="checkbox", id="credit")
-                | Watermark
-      .col-lg-1
-        a.btn.btn-default.btn-flat.rand-bg-btn(href="javascript:void(0)", title="Random Background Color")
-          i.mdi-av-repeat.random-bg
 
-  //- Text editor
-  .col-lg-6.col-lg-offset-3
-    .panel.panel-default
-      .panel-body#t
-        .editable.textBox(tabindex="1") Enter your tweetstorm here.. 1000 character max --> that's ~27^100 possible texts, or more than all the atoms in all 7 multiverses
+        //- Text editor
+        .col-lg-6.col-lg-offset-1
+          .panel.panel-default
+            .panel-body#t
+              .editable.textBox(tabindex="1") Enter your tweetstorm here.. 1000 character max --> that's ~27^100 possible texts, or more than all the atoms in all 7 multiverses
 
-  //- Tweet button
-  .col-lg-2.col-lg-offset-7
-    .btn-group.pull-right
-      a.btn.btn-info.tweet-button
-        | Tweet
-        .ripple-wrapper
-      a.btn.btn-info.dropdown-toggle(href="javascript:void(0)", data-toggle="dropdown")
-        span.caret
-      ul.dropdown-menu
-        li
-          a.upload-imgur(href="javascript:void(0)") Upload to Imgur
+        .col-lg-6.col-lg-offset-1.tweet-text
+          .form-group
+            label.control-label.twwet-title(for="textArea") Tweet
+            .input-group
+              .form-control-wrapper
+                textarea#textArea(rows="2", maxLength="117", tabindex="2", autofocus, placeholder="Introduce your tweetstorm. You can tag @username, paste links or use #hashtags.")
+              .input-group-addon.text-length 23/140
 
+        //- Tweet button
+        .col-lg-2.col-lg-offset-7
+          .btn-group.pull-right
+            a.btn.btn-info.tweet-button
+              | Tweet
+              .ripple-wrapper
+            a.btn.btn-info.dropdown-toggle(href="javascript:void(0)", data-toggle="dropdown")
+              span.caret
+            ul.dropdown-menu
+              li
+                a.upload-imgur(href="javascript:void(0)") Upload to Imgur
+
+
+        .col-lg-6.col-lg-offset-1
+          h4 Your Feed
+          each val in posts
+            .row.header
+              .col-lg-10.col-lg-offset-1
+                .thumbnail.text-center
+                  a(href="/posts/#{val.slug}")
+                    h4 #{val.title}
+                  p #{val.content}
 
   //- The result of posting the tweet
   .col-lg-6.col-lg-offset-3.tweetresult
