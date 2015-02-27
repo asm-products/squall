@@ -207,7 +207,7 @@ $('.bookmark').click(function(e) {
 
 
 $('.followperson').click(function() {
-  var username = 'abarisser';
+  var username = $('#profileUsername').text();
   $.post('/'+username+"/follow")
   //$.post('/twitter/createfriendship', {username: username})
 })
