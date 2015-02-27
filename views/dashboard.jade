@@ -8,25 +8,7 @@ block content
   .ignore(style="font-family:Lato;")
   .ignore(style="font-family:Merriweather;")
 
-  //- Navbar
-  .navbar.navbar-info
-    .col-lg-6.col-lg-offset-3
-      .navbar-header
-        button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-inverse-collapse')
-          span.icon-bar
-          span.icon-bar
-          span.icon-bar
-        a.navbar-brand(href='javascript:void(0)')
-          | Storming.ME
-          .ripple-wrapper
-      .navbar-collapse.collapse.navbar-inverse-collapse
-        ul.nav.navbar-nav.navbar-right
-          li
-            a(href='https://twitter.com/intent/tweet?text=Storming.ME+-+Hacking+the+Tweetstorm&url=http://storming.me&via=KaranGoel', target='_blank', title="Share on Twitter")
-              span.fa.fa-twitter.fa-2x
-          li
-            a(href='/logout', title="Logout")
-              span.fa.fa-sign-out.fa-2x
+  include navbar
 
   //- Greeting
   .col-lg-6.col-lg-offset-3.greeting

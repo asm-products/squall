@@ -55,7 +55,6 @@ $('.why-btn').click(function() {
   ga('send', 'event', 'Homepage', 'click', 'Why Medium');
 });
 
-
 $('.editable').on('input', function() {
   draw();
 });
@@ -92,7 +91,6 @@ $('.tweet-button').click(function() {
     $('.tweet-button').removeClass('disabled');
   });
 });
-
 
 $('.upload-imgur').click(function() {
   $('.tweet-button').text('Uploading image...');
@@ -175,4 +173,12 @@ $('.rand-bg-btn').click(function() {
 
 $('.bookmark').click(function(e) {
   alert('Press ' + (navigator.userAgent.toLowerCase().indexOf('mac') != - 1 ? 'Command/Cmd' : 'CTRL') + ' + D to bookmark this page.');
-}); 
+});
+
+
+//   THIS FEATURE IS CURRENTLY DISABLED
+// $('.followperson').click(function() {
+//   var username = 'abarisser';
+//   $.post('/'+username+"/follow")
+//   $.post('/twitter/createfriendship', {username: username})
+// })

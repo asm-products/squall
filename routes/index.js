@@ -15,7 +15,11 @@ var twit = require('twit');
 
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
+    console.log("authenticated")
     return next();
+  }
+  else {
+    console.log("Failed authentication")
   }
   res.redirect('/');
 }
@@ -40,6 +44,11 @@ router.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 });
+
+router.get('/profile', isAuthenticated, function(req, res) {
+  var username = req.user.username;
+  res.redirect('/'+username);
+})
 
 router.get('/dashboard', isAuthenticated, function(req, res) {
   res.render('dashboard', { username: req.user.username });
@@ -103,6 +112,23 @@ router.post('/posts', function(request, response) {  //ADD AUTHENTICATION HERE O
     response.json({passed: false, message: "Post too long"})
   }
 });
+
+router.post('/twitter/createfriendship', isAuthenticated, function(req, res) {
+  var T = new twit({
+    consumer_key: constants.Twitter.KEY,
+    consumer_secret: constants.Twitter.SECRET,
+    access_token: req.user.access_token,
+    access_token_secret: req.user.access_token_secret
+  });
+
+  T.post('friendships/create', {
+    screen_name: req.body.username
+  }, function(err, data, response) {
+    if (err) {
+      console.log(err)
+    }
+  });
+})
 
 router.post('/tweet', isAuthenticated, function(req, res) {
   var API_URL = 'https://upload.twitter.com/1.1/media/upload.json';
@@ -189,6 +215,64 @@ router.get('/:username', function(req, res, next) {
       // something bad happened
       return done(err);
     }
+  });
+});
+
+router.post('/:username/follow', isAuthenticated, function(req, res, next) {
+  var username = req.params.username;
+
+  Users.findOne({ username: username }, function(err, user) {
+    if(err) {
+      res.status(500).json({message: 'Unknown Failure'});
+      return console.error(err);
+    }
+
+    if(user) {
+      req.user.following.addToSet(user.id);
+
+      req.user.save(function(err) {
+        if(err) {
+          res.status(500).json({message: 'Unknown Failure'});
+          return console.error(err);
+        }
+
+        return res.json({message: "Following @"+username});
+      });
+    }
+
+    else {
+      return res.status(404).json({message: "User @"+username+" Not Found"});
+    }
+
+  });
+});
+
+router.post('/:username/unfollow', isAuthenticated, function(req, res, next) {
+  var username = req.params.username;
+
+  Users.findOne({ username: username }, function(err, user) {
+    if(err) {
+      res.status(500).json({message: 'Unknown Failure'});
+      return console.error(err);
+    }
+
+    if(user) {
+      req.user.following.pull(user.id);
+
+      req.user.save(function(err) {
+        if(err) {
+          res.status(500).json({message: 'Unknown Failure'});
+          return console.error(err);
+        }
+
+        return res.json({message: "No Longer Following @"+username});
+      });
+    }
+
+    else {
+      return res.status(404).json({message: "User @"+username+" Not Found"});
+    }
+
   });
 });
 
