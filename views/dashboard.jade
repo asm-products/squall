@@ -31,7 +31,7 @@ block content
         .col-lg-6.col-lg-offset-1
           .panel.panel-default
             .panel-body#t
-              .editable.textBox(tabindex="1") Enter your tweetstorm here.. 1000 character max --> that's ~27^100 possible texts, or more than all the atoms in all 7 multiverses
+              .editable.textBox(tabindex="1")#m Enter your tweetstorm here.. 1000 character max --> that's ~27^100 possible texts, or more than all the atoms in all 7 multiverses
 
         .col-lg-6.col-lg-offset-1.tweet-text
           .form-group
@@ -73,5 +73,7 @@ block content
         .embed
 
   img#image(style="display:none")
+  span#profileUsername(style="display:none") #{user.username}
+
 
   include footer

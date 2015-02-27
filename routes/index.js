@@ -89,11 +89,16 @@ router.get('/posts/:post_id', function(request, response, next) {
 });
 
 router.post('/posts', function(request, response) {  //ADD AUTHENTICATION HERE OF COURSE
-
   var title = request.body.title;
   var content = request.body.content;
   var author = request.body.author;
   var slug = getSlug(title);
+
+  console.log("request")
+  console.log(request)
+  console.log(title)
+  console.log(author)
+  console.log(content)
 
   var max_content_length = 1000;
   if (content.length <= max_content_length) {
@@ -153,7 +158,8 @@ router.get('/newsfeed', isAuthenticated, function(req, res) {
 
 });
 
-router.post('/tweet', isAuthenticated, function(req, res) {
+router.post('/tweet', function(req, res) {
+
   var API_URL = 'https://upload.twitter.com/1.1/media/upload.json';
   var image = req.body.image.replace(/^data.*base64,/, '');
 
