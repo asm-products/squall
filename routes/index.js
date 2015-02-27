@@ -130,6 +130,10 @@ router.post('/twitter/createfriendship', isAuthenticated, function(req, res) {
   });
 })
 
+router.get('/newsfeed', isAuthenticated, function(req, res) {
+  res.render('newsfeed', {user: req.user})
+})
+
 router.post('/tweet', isAuthenticated, function(req, res) {
   var API_URL = 'https://upload.twitter.com/1.1/media/upload.json';
   var image = req.body.image.replace(/^data.*base64,/, '');
