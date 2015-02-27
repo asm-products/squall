@@ -203,17 +203,16 @@ router.get('/:username', isAuthenticated, function(req, res, next) {
 
   Users.findOne({ username : username }, function(err, existingUser) {
     if (existingUser) {
-      //var posts = Posts.where('author').equals(existingUser.name).select('slug');
-
-      Posts.find({author: existingUser.username}, function (err, result) {
-        var posts = result
-
-        return res.render('user_profile', { user: existingUser,
-                                            large_photo: existingUser.photo.replace(/_normal/i, ''),
-                                            posts: posts,
-                                            currentUser: currentUser
-                                            });
-      })
+      Posts.find({author: existingUser.username}, function (err, posts) {
+        existingUser.getFollowerCount(function(error, followerCount){
+          return res.render('user_profile', { user: existingUser,
+            large_photo: existingUser.photo.replace(/_normal/i, ''),
+            posts: posts,
+            followerCount: followerCount,
+            currentUser: currentUser
+          });
+        });
+      });
     }
 
     if (err) {

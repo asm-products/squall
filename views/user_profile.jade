@@ -22,6 +22,14 @@ block content
             else
               button.btn.btn-danger#unfollow(data-username=user.username) Unfollow
 
+          .row
+            .col-sm-6.text-center
+              .big-number #{followerCount}
+              .big-number-label followers
+            .col-sm-6.text-center
+              .big-number #{user.following.length}
+              .big-number-label following
+
       .col-lg-8
         .text-center
           h3 Posts

@@ -21,7 +21,12 @@ var userSchema = new Schema({
 });
 
 userSchema.method("isFollowing", function(otherUser){
-    return this.following.indexOf(otherUser.id) >= 0;
+  return this.following.indexOf(otherUser.id) >= 0;
 });
 
-module.exports = mongoose.model('Users', userSchema);
+userSchema.method("getFollowerCount", function(callback){
+    return Users.count({following: this.id}, callback)
+})
+
+Users = mongoose.model('Users', userSchema);
+module.exports = Users;

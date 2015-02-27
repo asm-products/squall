@@ -83,3 +83,7 @@ a.btn.btn-default.btn-flat.rand-bg-btn {
   margin-top: 50px;
   display: none;
 }
+
+.big-number{
+    font-size:3em;
+}
