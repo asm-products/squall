@@ -3,13 +3,15 @@ $('.tweetpost').click(function() {
 
   $('.tweetpost').text('Posting tweet...');
 
-  var message = "Check out this post"
+  var author_name = $('#author_name').text()
+  console.log(author_name);
+  var message = "Check out this post by @"+author_name;
 
   $.post('/tweet', { image: $('#image').attr('src'), message: message }, function(data) {
     // $('.tweetresult').css('display', 'block');
     // $('.tweetresult').find('.embed').html(data);
     // $('.tweetpost').removeClass('disabled');
-    $('.tweetpost').text('Your Tweet is Betwotten ');
+    $('.tweetpost').text('Your Tweet is Betwotten');
   });
 });
 

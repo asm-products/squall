@@ -16,14 +16,14 @@ block content
           p by
             a(href="#{author_link}") #{author}
             .button.btn.btn-info.followperson
-              span Follow #{author}
+              span Follow
+                #author_name #{author}
 
           a.btn.btn-info.tweetpost
             span.fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)") Share
 
-
-
   img#image(style="display:none")
+
 
   include footer
   script(src='/js/postscripter.js')
