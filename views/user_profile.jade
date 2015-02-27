@@ -1,8 +1,10 @@
 extends layout
 
+block head-extras
+  link(href='/css/home.css', rel='stylesheet')
+
 block content
 
-  link(href='/css/home.css', rel='stylesheet')
   include navbar
 
   .container
@@ -14,7 +16,11 @@ block content
             span.fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)")
             a(href="https://twitter.com/#{user.username}") @#{user.username}
           h3 #{user.name}
-          button.btn.btn-info Follow
+          if currentUser && (user.id !== currentUser.id)
+            unless currentUser.isFollowing(user)
+              button.btn.btn-info#follow(data-username=user.username) Follow
+            else
+              button.btn.btn-danger#unfollow(data-username=user.username) Unfollow
 
       .col-lg-8
         .text-center

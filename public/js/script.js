@@ -175,10 +175,18 @@ $('.bookmark').click(function(e) {
   alert('Press ' + (navigator.userAgent.toLowerCase().indexOf('mac') != - 1 ? 'Command/Cmd' : 'CTRL') + ' + D to bookmark this page.');
 });
 
-
-//   THIS FEATURE IS CURRENTLY DISABLED
-// $('.followperson').click(function() {
-//   var username = 'abarisser';
-//   $.post('/'+username+"/follow")
-//   $.post('/twitter/createfriendship', {username: username})
-// })
+//Catching this event on the body means that we don't have to re-attach click handlers when swapping ids.
+$("body").on("click", "#follow, #unfollow", function(event) {
+  var btn = $(event.target);
+  var username = btn.attr("data-username");
+  btn.prop("disabled", true);
+  console.log("posting")
+  $.post('/'+username+"/"+btn.attr("id"), {}, function(){
+      btn.toggleClass("btn-info btn-danger").prop("disabled", false);
+      if(btn.hasClass("btn-info")){
+        btn.text("Follow");
+      }else{
+        btn.text("Unfollow");
+      }
+  })
+})

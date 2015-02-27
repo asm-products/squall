@@ -194,19 +194,24 @@ router.post('/upload/imgur', function(req, res) {
   });
 });
 
-router.get('/:username', function(req, res, next) {
+router.get('/:username', isAuthenticated, function(req, res, next) {
   var username = req.params.username
+  var currentUser = null;
+  if(req.isAuthenticated()){
+      currentUser = req.user;
+  }
 
   Users.findOne({ username : username }, function(err, existingUser) {
     if (existingUser) {
       //var posts = Posts.where('author').equals(existingUser.name).select('slug');
 
       Posts.find({author: existingUser.username}, function (err, result) {
-        posts = result
+        var posts = result
 
         return res.render('user_profile', { user: existingUser,
                                             large_photo: existingUser.photo.replace(/_normal/i, ''),
-                                            posts: posts
+                                            posts: posts,
+                                            currentUser: currentUser
                                             });
       })
     }

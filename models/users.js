@@ -20,4 +20,8 @@ var userSchema = new Schema({
   following: []
 });
 
+userSchema.method("isFollowing", function(otherUser){
+    return this.following.indexOf(otherUser.id) >= 0;
+});
+
 module.exports = mongoose.model('Users', userSchema);
