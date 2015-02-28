@@ -78,48 +78,32 @@ function draw() {
   });
 }
 
-
 $('.tweet-button').click(function() {
   $('.tweet-button').text('Posting tweet...');
   $('.tweetresult').css('display', 'none');
   $('.tweet-button').addClass('disabled');
   ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
-  // $.post('/tweet', { image: $('#image').attr('src'), message: $('#textArea').val() }, function(data) {
-  //   $('.tweetresult').css('display', 'block');
-  //   $('.tweetresult').find('.embed').html(data);
-  //   $('.tweet-button').text('Tweet');
-  //   $('.tweet-button').removeClass('disabled');
-  //
-
-  //
-  // });
+  $.post('/tweet', { image: $('#image').attr('src'), message: $('#textArea').val() }, function(data) {
+    $('.tweetresult').css('display', 'block');
+    $('.tweetresult').find('.embed').html(data);
+    $('.tweet-button').text('Tweet');
+    $('.tweet-button').removeClass('disabled');
+  });
 
   var title = $('textArea').val();
   var content = document.getElementById('t').textContent;
   var author = $('#profileUsername').text()
 
-  console.log(title);
-  console.log(content);
-  console.log(author);
+  var bodydata = { title: String(title), content: String(content), author:  String(author) }
 
-  var bodydata = {}
 
-  $.post('/posts'), {
+  $.post('/posts', {
     title: title,
     content: content,
-    author:  author
-  }, function(err, data) {
-    if (err)
-    {
-      return console.error(err);
-    }
-    console.log(data);
-  }
-
+    author: author
+  })
 
 });
-
-
 
 
 $('.upload-imgur').click(function() {

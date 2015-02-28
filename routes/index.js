@@ -78,7 +78,7 @@ router.get('/posts/:post_id', function(request, response, next) {
             var author = result.author;
             var contents = result.content;
             var author_link = '../'+author;
-            response.render('post', {title: title, contents: contents, author: author, author_link: author_link});
+            response.render('post', {title: title, contents: contents, author: author, author_link: author_link, post: result});
           }
         else {
           //return error page
@@ -93,12 +93,6 @@ router.post('/posts', function(request, response) {  //ADD AUTHENTICATION HERE O
   var content = request.body.content;
   var author = request.body.author;
   var slug = getSlug(title);
-
-  console.log("request")
-  console.log(request)
-  console.log(title)
-  console.log(author)
-  console.log(content)
 
   var max_content_length = 1000;
   if (content.length <= max_content_length) {
