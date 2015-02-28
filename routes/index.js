@@ -78,7 +78,7 @@ router.get('/posts/:post_id', function(request, response, next) {
             var author = result.author;
             var contents = result.content;
             var author_link = '../'+author;
-            response.render('post', {title: title, contents: contents, author: author, author_link: author_link});
+            response.render('post', {title: title, contents: contents, author: author, author_link: author_link, post: result});
           }
         else {
           //return error page
@@ -89,7 +89,6 @@ router.get('/posts/:post_id', function(request, response, next) {
 });
 
 router.post('/posts', function(request, response) {  //ADD AUTHENTICATION HERE OF COURSE
-
   var title = request.body.title;
   var content = request.body.content;
   var author = request.body.author;
@@ -153,7 +152,8 @@ router.get('/newsfeed', isAuthenticated, function(req, res) {
 
 });
 
-router.post('/tweet', isAuthenticated, function(req, res) {
+router.post('/tweet', function(req, res) {
+
   var API_URL = 'https://upload.twitter.com/1.1/media/upload.json';
   var image = req.body.image.replace(/^data.*base64,/, '');
 

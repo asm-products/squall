@@ -12,9 +12,11 @@ block content
       .col-lg-12
         .thumbnail.text-center
           h1 #{title}
+          p
+            a(href="#{author_link}") by @#{author}
+            p #{post.created_at}
           #t.p #{contents}
-          p by
-            a(href="#{author_link}") #{author}
+
             .button.btn.btn-info.followperson
               span Follow
                 #author_name #{author}
@@ -24,6 +26,8 @@ block content
 
   img#image(style="display:none")
 
+
+span#profileUsername(style="display:none") #{author}
 
   include footer
   script(src='/js/postscripter.js')

@@ -78,7 +78,6 @@ function draw() {
   });
 }
 
-
 $('.tweet-button').click(function() {
   $('.tweet-button').text('Posting tweet...');
   $('.tweetresult').css('display', 'none');
@@ -90,7 +89,22 @@ $('.tweet-button').click(function() {
     $('.tweet-button').text('Tweet');
     $('.tweet-button').removeClass('disabled');
   });
+
+  var title = $('textArea').val();
+  var content = document.getElementById('t').textContent;
+  var author = $('#profileUsername').text()
+
+  var bodydata = { title: String(title), content: String(content), author:  String(author) }
+
+
+  $.post('/posts', {
+    title: title,
+    content: content,
+    author: author
+  })
+
 });
+
 
 $('.upload-imgur').click(function() {
   $('.tweet-button').text('Uploading image...');
@@ -177,7 +191,7 @@ $('.bookmark').click(function(e) {
 
 
 $('.followperson').click(function() {
-  var username = 'abarisser';
+  var username = $('#profileUsername').text();
   $.post('/'+username+"/follow")
   //$.post('/twitter/createfriendship', {username: username})
 })
