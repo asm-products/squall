@@ -1,26 +1,37 @@
 doctype html
-html
+html(itemscope, itemtype='http://schema.org/'+schemaOrgType)
   head
-    title Storming.ME - Hack the Tweetstorm
+    title #{title || 'Storming.ME - Hack the Tweetstorm'}
     meta(charset='UTF-8')
-    meta(name='description', content='Hacking The Tweetstorm... With Pictures of Text.')
+    meta(name='description', content=description || 'Hacking The Tweetstorm... With Pictures of Text.')
     meta(name="viewport", content="width=device-width, initial-scale=1")
 
     // Twitter cards
     meta(name='twitter:card', content='summary_large_image')
-    meta(name='twitter:image', content='https://github.com/karan/Storming/raw/master/screen.png')
-    meta(name='twitter:title', content='Storming.ME')
-    meta(name='twitter:description', content='Hacking The Tweetstorm... With Pictures of Text.')
-    meta(name='twitter:creator', content='@KaranGoel')
+    meta(name='twitter:image', content=image || 'https://github.com/karan/Storming/raw/master/screen.png')
+    meta(name='twitter:title', content=title || 'Storming.ME')
+    meta(name='twitter:description', content=description || 'Hacking The Tweetstorm... With Pictures of Text.')
+    if twitterCreator
+      meta(name='twitter:creator', content=twitterCreator)
 
     // Facebook open graph
     meta(property='og:locale', content='en_US')
-    meta(property='og:type', content='website')
-    meta(property='og:image', content='https://github.com/karan/Storming/raw/master/screen.png')
-    meta(property='og:title', content='Storming.ME')
-    meta(property='og:description', content='Hacking The Tweetstorm... With Pictures of Text.')
-    meta(property='og:url', content='http://www.storming.me')
-    meta(property='og:site_name', content='Storming.ME')
+    meta(property='og:type', content=openGraphType || 'website')
+    meta(property='og:image', content=image || 'https://github.com/karan/Storming/raw/master/screen.png')
+    meta(property='og:title', content=title || 'Storming.ME')
+    meta(property='og:description', content=description || 'Hacking The Tweetstorm... With Pictures of Text.')
+    meta(property='og:url', content=url || 'http://www.storming.me')
+    if ogOtherData
+      for value, key in ogOtherData
+        meta(property='og:'+key, content=value)
+
+    // schema.org metadata (used by G+)
+    meta(itemprop='image', content=image)
+    meta(itemprop='description', content=description)
+
+    if otherSchemaOrgData
+      for value, key in schemaOrgData
+        meta(itemprop=key, content=value)
 
     link(href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css', rel='stylesheet')
     link(href='//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')

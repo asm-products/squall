@@ -205,11 +205,25 @@ router.get('/:username', isAuthenticated, function(req, res, next) {
     if (existingUser) {
       Posts.find({author: existingUser.username}, function (err, posts) {
         existingUser.getFollowerCount(function(error, followerCount){
+          var title = existingUser.name + " (@" + existingUser.username + ")";
+          var description = title + " profile page";
+          var image = existingUser.photo.replace(/_normal/i, '')
+          var url = constants.BaseUrl + "/" + username;
+
           return res.render('user_profile', { user: existingUser,
-            large_photo: existingUser.photo.replace(/_normal/i, ''),
+            large_photo: image,
             posts: posts,
             followerCount: followerCount,
-            currentUser: currentUser
+            currentUser: currentUser,
+            title: title,
+            description: description,
+            image: image,
+            url: url,
+            twitterCreator: "@" + username,
+            openGraphType: "profile",
+            ogOtherData: {
+                "profile:username": username,
+            }
           });
         });
       });

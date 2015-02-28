@@ -11,7 +11,8 @@ var Constants = {
     SECRET: process.env.IMGUR_SECRET
   },
   MongoURL: process.env.MONGOLAB_URI,
-  RedisURL: process.env.REDISTOGO_URL
+  RedisURL: process.env.REDISTOGO_URL,
+  BaseUrl: "http://squarrel.io"
 };
 
 module.exports = Constants;
