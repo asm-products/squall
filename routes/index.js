@@ -64,6 +64,19 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
 
 });
 
+
+router.get('/settings', isAuthenticated, function(req, res) {
+  return res.render('user_settings', { user: req.user });
+
+});
+router.post('/settings', isAuthenticated, function(req, res) {
+  req.user.email_address = req.body.email
+  req.user.alert_when_friends_join = req.body.alert_when_friends_join
+  req.user.alert_when_follow = req.body.alert_when_follow
+  req.user.save()
+  return res.json({passed: true});
+});
+
 router.get('/posts/:post_id', function(request, response, next) {
   var post_id = request.params.post_id;
   var post = Posts.findOne({slug: post_id},

@@ -17,7 +17,9 @@ var userSchema = new Schema({
   access_token_secret: String,
   tweet_ids: [],
   email_address: String,
-  following: []
+  following: [],
+  alert_when_friends_join: Boolean,
+  alert_when_follow: Boolean
 });
 
 module.exports = mongoose.model('Users', userSchema);
