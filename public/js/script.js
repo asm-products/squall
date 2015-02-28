@@ -182,12 +182,7 @@ $('.rand-bg-btn').click(function() {
   });
   $('.panel-body').css('background-color', color);
   draw();
-});
-
-
-$('.bookmark').click(function(e) {
-  alert('Press ' + (navigator.userAgent.toLowerCase().indexOf('mac') != - 1 ? 'Command/Cmd' : 'CTRL') + ' + D to bookmark this page.');
-});
+})
 
 //Catching this event on the body means that we don't have to re-attach click handlers when swapping ids.
 $("body").on("click", "#follow, #unfollow", function(event) {

@@ -1,11 +1,7 @@
 doctype html
 html(itemscope, itemtype='http://schema.org/'+schemaOrgType)
   head
-<<<<<<< HEAD
-    title #{title || 'Storming.ME - Hack the Tweetstorm'}
-=======
-    title Jotpad - Tweet up a Storm
->>>>>>> 5a03895c3af95455710ce80e676074959164ae20
+    title #{title || 'Jotpad - Tweet up a Storm'}
     meta(charset='UTF-8')
     meta(name='description', content=description || 'Hacking The Tweetstorm... With Pictures of Text.')
     meta(name="viewport", content="width=device-width, initial-scale=1")
@@ -42,8 +38,10 @@ html(itemscope, itemtype='http://schema.org/'+schemaOrgType)
     link(href='/css/ripples.min.css', rel='stylesheet')
     link(href='/css/material-wfont.min.css', rel='stylesheet')
     link(href='/css/style.css', rel='stylesheet')
+    script(src='/js/jquery.js')
 
     block head-extras
 
   body
     block content
+    script(src='/dist/js/application.min.js')

@@ -17,16 +17,50 @@ var userSchema = new Schema({
   access_token_secret: String,
   tweet_ids: [],
   email_address: String,
-  following: []
+  following: [],
+  followerCount: {type: Number, default: 0}
 });
 
 userSchema.method("isFollowing", function(otherUser){
   return this.following.indexOf(otherUser.id) >= 0;
 });
 
-userSchema.method("getFollowerCount", function(callback){
-    return Users.count({following: this.id}, callback)
-})
+userSchema.method("addFollower", function(otherUser, callback){
+  otherUser.following.addToSet(this.id);
+  var _this = this;
 
-Users = mongoose.model('Users', userSchema);
+  otherUser.save(function(err) {
+    if (err) {
+      return callback(err);
+    }
+   _this.followerCount += 1;
+   _this.save(function(err){
+      if (err) {
+        return callback(err);
+      }
+      return callback();
+    });
+  });
+});
+
+userSchema.method("removeFollower", function(otherUser, callback){
+  otherUser.following.pull(this.id);
+
+  var _this = this;
+  otherUser.save(function(err) {
+    if(err) {
+      return callback(err)
+    }
+
+    _this.followerCount -= 1;
+    _this.save(function(err) {
+      if(err){
+        callback(err)
+      }
+      return callback();
+    });
+  });
+});
+
+var Users = mongoose.model('Users', userSchema);
 module.exports = Users;
