@@ -28,8 +28,12 @@ router.get('/', function(req, res) {
   if (req.isAuthenticated()) {
     return res.redirect('/dashboard');
   }
-  res.render('landing');
+  else {
+    return res.render('landing');
+  }
+
 });
+
 
 router.get('/login', passport.authenticate('twitter'));
 
@@ -51,7 +55,13 @@ router.get('/profile', isAuthenticated, function(req, res) {
 })
 
 router.get('/dashboard', isAuthenticated, function(req, res) {
-  res.render('dashboard', { username: req.user.username });
+  Posts.find({author: req.user.username}, function(err, result) {
+    return res.render('dashboard', { user: req.user,
+                                        large_photo: req.user.photo.replace(/_normal/i, ''),
+                                        posts: result
+                                        });
+  })
+
 });
 
 router.get('/posts/:post_id', function(request, response, next) {
@@ -68,7 +78,7 @@ router.get('/posts/:post_id', function(request, response, next) {
             var author = result.author;
             var contents = result.content;
             var author_link = '../'+author;
-            response.render('post', {title: title, contents: contents, author: author, author_link: author_link});
+            response.render('post', {title: title, contents: contents, author: author, author_link: author_link, post: result});
           }
         else {
           //return error page
@@ -79,7 +89,6 @@ router.get('/posts/:post_id', function(request, response, next) {
 });
 
 router.post('/posts', function(request, response) {  //ADD AUTHENTICATION HERE OF COURSE
-
   var title = request.body.title;
   var content = request.body.content;
   var author = request.body.author;
@@ -130,7 +139,21 @@ router.post('/twitter/createfriendship', isAuthenticated, function(req, res) {
   });
 })
 
-router.post('/tweet', isAuthenticated, function(req, res) {
+router.get('/newsfeed', isAuthenticated, function(req, res) {
+    var followed_user_ids = req.user.following
+    console.log(followed_user_ids)
+
+    Posts.find({author: followed_user_ids}, function(err, result) {
+      return res.render('newsfeed', { user: req.user,
+                                          large_photo: req.user.photo.replace(/_normal/i, ''),
+                                          posts: result
+                                          });
+    })
+
+});
+
+router.post('/tweet', function(req, res) {
+
   var API_URL = 'https://upload.twitter.com/1.1/media/upload.json';
   var image = req.body.image.replace(/^data.*base64,/, '');
 
@@ -246,7 +269,7 @@ router.post('/:username/follow', isAuthenticated, function(req, res, next) {
     }
 
     if(user) {
-      req.user.following.addToSet(user.id);
+      req.user.following.addToSet(user.username);
 
       req.user.save(function(err) {
         if(err) {
@@ -275,7 +298,7 @@ router.post('/:username/unfollow', isAuthenticated, function(req, res, next) {
     }
 
     if(user) {
-      req.user.following.pull(user.id);
+      req.user.following.pull(user.username);
 
       req.user.save(function(err) {
         if(err) {

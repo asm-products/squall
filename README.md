@@ -43,6 +43,8 @@ Things you need to do:
   - Similarly create a legitimate IMGUR app and use the keys they give you.
   - Run MONGO locally.  The URL I used should also work for you.
   - Run REDIS locally.  My URL should work for you also; the port might differ however.
+  - Install Grunt `npm install -g grunt-cli`
+  - Run `grunt --force watch` (this will automatically rebuild your application.min.js when you make changes to script.js.)
 
 Then run
 

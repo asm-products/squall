@@ -13,6 +13,7 @@ block content
             .h3
             span.fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)")
             a(href="https://twitter.com/#{user.username}") @#{user.username}
+<<<<<<< HEAD
             h3.bottom-margin #{user.name}
 
             .row
@@ -31,6 +32,10 @@ block content
                     button.btn.btn-info.btn-block#follow(data-username=user.username) Follow
                   else
                     button.btn.btn-danger.btn-block#unfollow(data-username=user.username) Unfollow
+=======
+          h3 #{user.name}
+          button.btn.btn-info.followperson Follow
+>>>>>>> 5a03895c3af95455710ce80e676074959164ae20
 
       .col-lg-8
         .text-center
@@ -45,11 +50,6 @@ block content
                   p #{val.content}
 
 
-
-
-
-
-
-
+span#profileUsername(style="display:none") #{user.username}
 
   include footer
