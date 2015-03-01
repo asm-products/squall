@@ -7,14 +7,7 @@ block content
 
   .container
     .row.header
-      .col-lg-4
-        .thumbnail.text-center
-          img.img-circle(src='#{large_photo}', width="200px")
-          .h3
-            span.fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)")
-            a(href="https://twitter.com/#{user.username}") @#{user.username}
-          h3 #{user.name}
-          button.btn.btn-info Follow
+      include profile_component
 
       .col-lg-8
         .text-center

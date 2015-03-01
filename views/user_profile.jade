@@ -18,13 +18,14 @@ block content
             .row
               .col-sm-12.text-center.bottom-margin.edge-bottom
                 .huge-number #{posts.length}
-                .big-number-label posts
-              .col-sm-6.text-center.edge-right.bottom-margin
-                .big-number #{user.followerCount}
-                .big-number-label followers
-              .col-sm-6.text-center.bottom-margin
+                p 
+                  .big-number-label posts
+              .col-sm-6.text-center.bottom-margin.edge-right
                 .big-number #{user.following.length}
                 .big-number-label following
+              .col-sm-6.text-center.bottom-margin
+                .big-number #{user.followerCount}
+                .big-number-label followers
               .col-sm-12
                 if currentUser && (user.id !== currentUser.id)
                   unless currentUser.isFollowing(user)
