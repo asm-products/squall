@@ -35,7 +35,7 @@ block content
               .input-group-addon.text-length 23/140
 
         //- Tweet button
-        .col-lg-3.col-lg-offset-6
+        .col-lg-3.col-lg-offset-2
           .btn-group.pull-right
             a.btn.btn-info.tweet-button
               | Tweet
@@ -46,15 +46,18 @@ block content
               li
                 a.upload-imgur(href="javascript:void(0)") Upload to Imgur
 
-
         .col-lg-6.col-lg-offset-1
-          h4 Your Feed
+          label.control-label Your Feed
           each val in posts
             .row.header
               .col-lg-10.col-lg-offset-1
                 .thumbnail.text-center
                   a(href="/posts/#{val.slug}")
                     h4 #{val.title}
+
+                  p by
+                    a(href="/#{val.author}")
+                      @#{val.author}
                   p #{val.content}
 
   //- The result of posting the tweet
