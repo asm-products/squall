@@ -1,0 +1,29 @@
+.col-lg-4
+  .panel
+    .panel-body.text-center
+      img.img-circle(src='#{large_photo}', width="200px")
+      .h3
+      span.fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)")
+      a(href="https://twitter.com/#{user.username}") @#{user.username}
+      a(href="/#{user.username}")
+        h3.bottom-margin #{user.name}
+
+      .row
+        .col-sm-12.text-center.bottom-margin.edge-bottom
+          .huge-number #{posts.length}
+          p
+            .big-number-label posts
+        .col-sm-6.text-center.bottom-margin.edge-right
+          a(href="/#{user.username}/following")
+            .big-number #{user.following.length}
+            .big-number-label following
+        .col-sm-6.text-center.bottom-margin
+          a(href="/#{user.username}/followers")
+            .big-number #{user.followerCount}
+            .big-number-label followers
+        .col-sm-12
+          if currentUser && (user.id !== currentUser.id)
+            unless currentUser.isFollowing(user)
+              button.btn.btn-info.btn-block#follow(data-username=user.username) Follow
+            else
+              button.btn.btn-danger.btn-block#unfollow(data-username=user.username) Unfollow

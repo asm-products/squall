@@ -83,3 +83,28 @@ a.btn.btn-default.btn-flat.rand-bg-btn {
   margin-top: 50px;
   display: none;
 }
+
+.big-number{
+    font-size:2em;
+}
+
+.big-number-label{
+    color: #AAA;
+    font-weight:100;
+}
+
+.huge-number{
+    font-size:3em;
+}
+
+.edge-right{
+    border-right:1px solid #AAA;
+}
+
+.edge-bottom{
+    border-bottom:1px solid #AAA;
+}
+
+.bottom-margin{
+    margin-bottom:1em;
+}

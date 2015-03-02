@@ -1,6 +1,6 @@
 extends layout
+
 block content
-  link(href='/css/home.css', rel='stylesheet')
   link(href='/css/style.css', rel='stylesheet')
   link(href='/css/medium-editor.min.css', rel='stylesheet')
   link(href='/css/flat.min.css', rel='stylesheet')
@@ -8,21 +8,24 @@ block content
   include navbar
 
   .container
-    .row.header
+    .row.header.col-lg-10.col-lg-offset-1
       .col-lg-12
         .thumbnail.text-center
           h1 #{title}
-          p
-            a(href="#{author_link}") by @#{author}
-            p #{post.created_at}
+          p by&nbsp;
+            a(href="#{author_link}") @#{author}
+            p #{post.created_at.toDateString()}
           #t.p #{contents}
 
-            .button.btn.btn-info.followperson
-              span Follow
-                #author_name #{author}
 
-          a.btn.btn-info.tweetpost
-            span.fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)") Share
+          button.btn.btn-info.followperson
+            span Follow
+              #author_name #{author}
+
+          button.btn.btn-info.tweetpost
+            span
+              .fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)")
+              p Share
 
   img#image(style="display:none")
 

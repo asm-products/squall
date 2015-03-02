@@ -1,5 +1,5 @@
 var checked = true;
-var credit_text = "Tweeted using Storming.ME";
+var credit_text = ", Tweeted using @squallapp";
 var TCO_LENGTH = 23;
 var IMAGE_LINK_LENGTH = 23;
 var font = "Lato";
@@ -83,6 +83,13 @@ $('.tweet-button').click(function() {
   $('.tweetresult').css('display', 'none');
   $('.tweet-button').addClass('disabled');
   ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
+
+  var message = $('#textArea').val()
+  if (message.length>116) {
+    message = message.substring(0,115)
+  }
+  message = message+ ", sent by @Squallapp"
+
   $.post('/tweet', { image: $('#image').attr('src'), message: $('#textArea').val() }, function(data) {
     $('.tweetresult').css('display', 'block');
     $('.tweetresult').find('.embed').html(data);
@@ -168,6 +175,7 @@ $('#textArea').keyup(function() {
     }
   }
   $('.text-length').text(IMAGE_LINK_LENGTH + length + '/140');
+  //$('.text-length').text(IMAGE_LINK_LENGTH + length + '/140');
 });
 
 
@@ -182,16 +190,35 @@ $('.rand-bg-btn').click(function() {
   });
   $('.panel-body').css('background-color', color);
   draw();
-});
-
-
-$('.bookmark').click(function(e) {
-  alert('Press ' + (navigator.userAgent.toLowerCase().indexOf('mac') != - 1 ? 'Command/Cmd' : 'CTRL') + ' + D to bookmark this page.');
-});
-
-
-$('.followperson').click(function() {
-  var username = $('#profileUsername').text();
-  $.post('/'+username+"/follow")
-  //$.post('/twitter/createfriendship', {username: username})
 })
+
+//Catching this event on the body means that we don't have to re-attach click handlers when swapping ids.
+$("body").on("click", "#follow, #unfollow", function(event) {
+  var btn = $(event.target);
+  var username = btn.attr("data-username");
+  btn.prop("disabled", true);
+  console.log("posting")
+  $.post('/'+username+"/"+btn.attr("id"), {}, function(){
+      btn.toggleClass("btn-info btn-danger").prop("disabled", false);
+      if(btn.hasClass("btn-info")){
+        btn.text("Follow");
+      }else{
+        btn.text("Unfollow");
+      }
+  })
+})
+
+$('#settings-form').submit(function(e) {
+  $('#success-alert').addClass("hide")
+  $('#error-alert').addClass("hide")
+  var params = $('#settings-form').serializeJSON();
+  $.post('/settings', params, function(data) {
+    if (data.passed) {
+      $('#success-alert').removeClass("hide")
+    } else {
+      $('#error-alert').html(data.errors);
+      $('#error-alert').removeClass("hide");
+    };
+  });
+  e.preventDefault();
+});

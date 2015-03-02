@@ -1,21 +1,19 @@
 //- Navbar
 .navbar.navbar-info
-  .col-lg-6.col-lg-offset-3
+  .col-lg-10.col-lg-offset-1
     .navbar-header
       button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-inverse-collapse')
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      a.navbar-brand(href='javascript:void(0)')
-        | Textshots
+      a.navbar-brand(href='/dashboard')
+        span.fa.fa-comments.fa-2x
+        |   Squall
         .ripple-wrapper
     .navbar-collapse.collapse.navbar-inverse-collapse
       ul.nav.navbar-nav.navbar-right
         li
-          a(href='/profile')
-            span Profile
-        li
-          a(href='https://twitter.com/intent/tweet?text=TextShots+-+Turn+a+Thought+into+a+Tweetstorm&url=http://www.textshots.com', target='_blank', title="Share on Twitter")
+          a(href='https://twitter.com/intent/tweet?text=Squall+-+Turn+a+Thought+into+a+Tweetstorm&url=http://www.squall.io', target='_blank', title="Share on Twitter")
             span.fa.fa-twitter.fa-2x
         li
           a(href='/logout', title="Logout")

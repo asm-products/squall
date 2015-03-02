@@ -1,0 +1,26 @@
+extends layout
+
+block content
+
+  include navbar
+
+  .container
+    .row.header
+      include profile_component
+
+      .container.col-lg-8
+        .panel
+          .panel-body.text-center
+            .row.header
+              .col-lg-10.col-lg-offset-1
+                h1 Followers
+                .col-lg-8.col-lg-offset-2
+                  each val in followers
+                    .row.header
+                      a(href="/#{val.username}")
+                        p #{val.username}
+
+
+span#profileUsername(style="display:none") #{user.username}
+
+  include footer

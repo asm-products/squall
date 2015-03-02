@@ -12,64 +12,55 @@ block content
 
   .container
     .row.header
-      .col-lg-4
-        .thumbnail.text-center
-          img.img-circle(src='#{large_photo}', width="200px")
-          .h3
-            span.fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)")
-            a(href="https://twitter.com/#{user.username}") @#{user.username}
-          h3 #{user.name}
-          button.btn.btn-info Follow
+      include profile_component
 
-      .row.header
-        .col-lg-6.col-lg-offset-1
-          .row
-            label.control-label.twwet-title(for="textArea") TweetSquall
+      .container.col-lg-8
+        .row.header
+          .col-lg-10.col-lg-offset-1.tweet-text
+           .form-group
+             label.control-label.twwet-title(for="textArea") Title
+             .input-group
+               .form-control-wrapper
+                 textarea#textArea(rows="2", maxLength="117", tabindex="2", autofocus, placeholder="Introduce your tweetstorm. You can tag @username, paste links or use #hashtags.")
+               .input-group-addon.text-length 23/140
 
 
-        //- Text editor
-        .col-lg-6.col-lg-offset-1
-          .panel.panel-default
-            .panel-body#t
-              .editable.textBox(tabindex="1")#m Enter your tweetstorm here.. 1000 character max --> that's ~27^100 possible texts, or more than all the atoms in all 7 multiverses
+          .row.col-lg-3.col-lg-offset-1
+            label.control-label.twwet-title(for="textArea") Post
 
-        .col-lg-6.col-lg-offset-1.tweet-text
-          .form-group
-            label.control-label.twwet-title(for="textArea") Tweet
-            .input-group
-              .form-control-wrapper
-                textarea#textArea(rows="2", maxLength="117", tabindex="2", autofocus, placeholder="Introduce your tweetstorm. You can tag @username, paste links or use #hashtags.")
-              .input-group-addon.text-length 23/140
+          //- Text editor
+          .row.col-lg-10.col-lg-offset-1
+            .panel.panel-default
+              .panel-body#t
+                .editable.textBox(tabindex="1")#m Enter your Tweetstorm here.. 1000 character max --> that's ~27^1000 possible texts, or more than all the atoms in all 7 multiverses
 
-        //- Tweet button
-        .col-lg-3.col-lg-offset-6
-          .btn-group.pull-right
-            a.btn.btn-info.tweet-button
-              | Tweet
-              .ripple-wrapper
-            a.btn.btn-info.dropdown-toggle(href="javascript:void(0)", data-toggle="dropdown")
-              span.caret
-            ul.dropdown-menu
-              li
-                a.upload-imgur(href="javascript:void(0)") Upload to Imgur
+          //- Tweet button
+          .row.col-lg-3.col-lg-offset-1
+            .btn-group.pull-right
+              a.btn.btn-info.tweet-button
+                | Tweet
+                .ripple-wrapper
 
+          .row.col-lg-10.col-lg-offset-1
+            label.control-label Your Feed
+            each val in posts
+              .row.header
+                .col-lg-12
+                  .thumbnail.text-center
+                    a(href="/posts/#{val.slug}")
+                      h4 #{val.title}
 
-        .col-lg-6.col-lg-offset-1
-          h4 Your Feed
-          each val in posts
-            .row.header
-              .col-lg-10.col-lg-offset-1
-                .thumbnail.text-center
-                  a(href="/posts/#{val.slug}")
-                    h4 #{val.title}
-                  p #{val.content}
+                    p by&nbsp;
+                      a(href="/#{val.author}")
+                        p @#{val.author}
+                    p #{val.content}
 
   //- The result of posting the tweet
   .col-lg-6.col-lg-offset-3.tweetresult
     .bs-component
       .alert.alert-dismissable
         button.close(type="button", data-dismiss="alert") ×
-        h4 You just hacked the tweetstorm.
+        h4 You just hacked the Tweetstorm.
         .embed
 
   img#image(style="display:none")
