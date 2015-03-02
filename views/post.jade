@@ -17,6 +17,8 @@ block content
             p #{post.created_at.toDateString()}
           #t.p #{contents}
 
+          span
+            h5(style="color: rgb(100,100,100)") views #{post.viewCount}
 
           button.btn.btn-info.followperson
             span Follow

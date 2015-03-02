@@ -90,6 +90,16 @@ router.get('/posts/:post_id', function(request, response, next) {
             var author = result.author;
             var contents = result.content;
             var author_link = '../'+author;
+
+            if (isNaN(result.viewCount)) {
+              var newViewCount = 1;
+            }
+            else {
+              var newViewCount = result.viewCount + 1;
+            }
+
+            result.update({viewCount: newViewCount});
+
             response.render('post', {title: title, contents: contents, author: author, author_link: author_link, post: result});
           }
         else {
@@ -106,13 +116,14 @@ router.post('/posts', isAuthenticated, function(request, response) {  //ADD AUTH
   var author = request.body.author;
   var slug = getSlug(title);
 
-  var max_content_length = 1000;
+  var max_content_length = 2000;
   if (content.length <= max_content_length) {
     var post = new Posts({
       title: title,
       content: content,
       author: author,
-      slug: slug
+      slug: slug,
+      viewCount: 0
     });
 
     post.save(function(err, post) {

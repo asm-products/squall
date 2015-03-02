@@ -20,7 +20,8 @@ var postSchema = new Schema({
   slug: {
     type: String,
     unique: true
-  }
+  },
+  viewCount: Number
 });
 
 module.exports = mongoose.model('Posts', postSchema);
