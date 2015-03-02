@@ -1,0 +1,35 @@
+extends layout
+
+block content
+
+  link(href='/css/style.css', rel='stylesheet')
+  link(href='/css/flat.min.css', rel='stylesheet')
+  include navbar
+
+  .container
+    .row.header
+      .col-lg-8
+        h2.form-signin-heading Settings
+      
+        .alert.alert-success.hide#success-alert(role="alert") Settings successfully saved!
+        .alert.alert-error.hide#error-alert(role="alert")
+
+        form#settings-form
+          .form-group
+              label(for='email') Email address
+              input#email.form-control(type='email', required, placeholder='Enter email', name="email", value='#{user.email_address || ""}')
+
+            .checkbox
+              label
+                input(type='checkbox', name='alert_when_friends_join', checked=(user.alert_when_follow ? "checked" : undefined))
+                |  Alert me when a friend joins
+            .checkbox
+              label
+                input(type='checkbox', name='alert_when_follow', checked=(user.alert_when_follow ? "checked" : undefined))
+                |  Alert me when someone follows me 
+            button.btn.btn-default.save-settings-button(type='submit') Save my settings
+  
+  include footer
+  
+  
+  
