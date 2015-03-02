@@ -110,7 +110,7 @@ router.get('/posts/:post_id', function(request, response, next) {
   });
 });
 
-router.post('/posts', isAuthenticated, function(request, response) {  //ADD AUTHENTICATION HERE OF COURSE
+router.post('/posts', isAuthenticated, function(request, response) {
   var title = request.body.title;
   var content = request.body.content;
   var author = request.body.author;
@@ -257,6 +257,80 @@ router.get('/:username/following', function(req,res,next) {
       return done(err);
     }
   });
+})
+
+router.post('/tweetpost', isAuthenticated, function(req, res) {
+  var title = req.body.title;
+  var content = req.body.content;
+  var author = req.body.author;
+  var slug = getSlug(title);
+
+  // CREATE POST OBJECT
+  var max_content_length = 2000;
+  if (content.length <= max_content_length) {
+    var post = new Posts({
+      title: title,
+      content: content,
+      author: author,
+      slug: slug,
+      viewCount: 0
+    });
+    post.save();
+  }
+
+  //CONSTRUCT MESSAGE
+  var url = "http://squall.io/posts/" + slug;
+  console.log(url);
+  var end_message = url + " sent via @Squallapp"
+  console.log(end_message)
+  var n = 138- url.length - end_message.length
+  console.log(n)
+  var message = title;
+  console.log(message)
+  if (message.length>n) {
+    message = message.substring(0,n)
+  }
+  message = message + " " + end_message;
+  console.log(message)
+
+  //TWEET IMAGE
+  var API_URL = 'https://upload.twitter.com/1.1/media/upload.json';
+  var image = req.body.image.replace(/^data.*base64,/, '');
+
+  // First we post to media/upload.json
+  request.post(API_URL, {
+    oauth: {
+      consumer_key: constants.Twitter.KEY,
+      consumer_secret: constants.Twitter.SECRET,
+      token: req.user.access_token,
+      token_secret: req.user.access_token_secret
+    },
+    form: {
+      media: image
+    },
+    json: true
+  }, function (err, response, body) {
+    var T = new twit({
+      consumer_key: constants.Twitter.KEY,
+      consumer_secret: constants.Twitter.SECRET,
+      access_token: req.user.access_token,
+      access_token_secret: req.user.access_token_secret
+    });
+
+    T.post('statuses/update', {
+      status: message || "",
+      media_ids: body.media_id_string
+    }, function(err, data, response) {
+      var tweet_id = data.id_str;
+      T.get('statuses/oembed', { id: tweet_id }, function(err, data, response) {
+        req.user.tweet_ids.push('https://twitter.com/' + req.user.username + '/status/' + tweet_id);
+        req.user.save(function(err, u) {
+          res.send(data.html);
+        });
+      });
+    });
+  });
+
 })
 
 router.post('/tweet', isAuthenticated, function(req, res) {

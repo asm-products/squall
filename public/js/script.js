@@ -5,7 +5,6 @@ var IMAGE_LINK_LENGTH = 23;
 var font = "Lato";
 var timer;
 
-
 rangy.init();
 
 function Highlighter() {
@@ -84,30 +83,15 @@ $('.tweet-button').click(function() {
   $('.tweet-button').addClass('disabled');
   ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
 
-  var message = $('#textArea').val()
-  if (message.length>116) {
-    message = message.substring(0,115)
-  }
-  message = message+ ", sent by @Squallapp"
-
-  $.post('/tweet', { image: $('#image').attr('src'), message: $('#textArea').val() }, function(data) {
-    $('.tweetresult').css('display', 'block');
-    $('.tweetresult').find('.embed').html(data);
-    $('.tweet-button').text('Tweet');
-    $('.tweet-button').removeClass('disabled');
-  });
-
   var title = $('textArea').val();
   var content = document.getElementById('t').textContent;
   var author = $('#profileUsername').text()
 
-  var bodydata = { title: String(title), content: String(content), author:  String(author) }
-
-
-  $.post('/posts', {
-    title: title,
-    content: content,
-    author: author
+  $.post('/tweetpost', { image: $('#image').attr('src'), title: String(title), content: String(content), author: String(author) }, function(data) {
+    $('.tweetresult').css('display', 'block');
+    $('.tweetresult').find('.embed').html(data);
+    $('.tweet-button').text('Tweet');
+    $('.tweet-button').removeClass('disabled');
   })
 
 });
