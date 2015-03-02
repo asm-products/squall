@@ -24,11 +24,11 @@ var userSchema = new Schema({
 });
 
 userSchema.method("isFollowing", function(otherUser){
-  return this.following.indexOf(otherUser.id) >= 0;
+  return this.following.indexOf(otherUser.username) >= 0;
 });
 
 userSchema.method("addFollower", function(otherUser, callback){
-  otherUser.following.addToSet(this.id);
+  otherUser.following.addToSet(this.username);
   var _this = this;
 
   otherUser.save(function(err) {
@@ -46,7 +46,7 @@ userSchema.method("addFollower", function(otherUser, callback){
 });
 
 userSchema.method("removeFollower", function(otherUser, callback){
-  otherUser.following.pull(this.id);
+  otherUser.following.pull(this.username);
 
   var _this = this;
   otherUser.save(function(err) {
