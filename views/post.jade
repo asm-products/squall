@@ -17,11 +17,12 @@ block content
             p #{post.created_at}
           #t.p #{contents}
 
-            .button.btn.btn-info.followperson
-              span Follow
-                #author_name #{author}
 
-          a.btn.btn-info.tweetpost
+          button.btn.btn-info.followperson
+            span Follow
+              #author_name #{author}
+
+          button.btn.btn-info.tweetpost
             span.fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)") Share
 
   img#image(style="display:none")

@@ -101,7 +101,7 @@ router.get('/posts/:post_id', function(request, response, next) {
   });
 });
 
-router.post('/posts', function(request, response) {  //ADD AUTHENTICATION HERE OF COURSE
+router.post('/posts', isAuthenticated, function(request, response) {  //ADD AUTHENTICATION HERE OF COURSE
   var title = request.body.title;
   var content = request.body.content;
   var author = request.body.author;
@@ -165,7 +165,7 @@ router.get('/newsfeed', isAuthenticated, function(req, res) {
 
 });
 
-router.post('/tweet', function(req, res) {
+router.post('/tweet', isAuthenticated, function(req, res) {
 
   var API_URL = 'https://upload.twitter.com/1.1/media/upload.json';
   var image = req.body.image.replace(/^data.*base64,/, '');
@@ -205,7 +205,7 @@ router.post('/tweet', function(req, res) {
   });
 });
 
-router.post('/upload/imgur', function(req, res) {
+router.post('/upload/imgur', isAuthenticated, function(req, res) {
 
   var img = req.body.image.replace(/^data:image\/(png|jpg);base64,/, '');
   var options = {
@@ -232,19 +232,34 @@ router.post('/upload/imgur', function(req, res) {
 
 router.get('/:username', function(req, res, next) {
   var username = req.params.username
+  var currentUser = null;
+  if(req.isAuthenticated()){
+      currentUser = req.user;
+  }
 
   Users.findOne({ username : username }, function(err, existingUser) {
     if (existingUser) {
-      //var posts = Posts.where('author').equals(existingUser.name).select('slug');
-
-      Posts.find({author: existingUser.username}, function (err, result) {
-        posts = result
+      Posts.find({author: existingUser.username}, function (err, posts) {
+        var title = existingUser.name + " (@" + existingUser.username + ")";
+        var description = title + " profile page";
+        var image = existingUser.photo.replace(/_normal/i, '')
+        var url = constants.BaseUrl + "/" + username;
 
         return res.render('user_profile', { user: existingUser,
-                                            large_photo: existingUser.photo.replace(/_normal/i, ''),
-                                            posts: posts
-                                            });
-      })
+          large_photo: image,
+          posts: posts,
+          currentUser: currentUser,
+          title: title,
+          description: description,
+          image: image,
+          url: url,
+          twitterCreator: "@" + username,
+          openGraphType: "profile",
+          ogOtherData: {
+            "profile:username": username,
+          }
+        });
+      });
     }
 
     if (err) {
@@ -264,15 +279,12 @@ router.post('/:username/follow', isAuthenticated, function(req, res, next) {
     }
 
     if(user) {
-      req.user.following.addToSet(user.username);
-
-      req.user.save(function(err) {
-        if(err) {
-          res.status(500).json({message: 'Unknown Failure'});
-          return console.error(err);
-        }
-
-        return res.json({message: "Following @"+username});
+      user.addFollower(req.user, function(err){
+          if(err){
+            res.status(500).json({message: 'Unknown Failure'});
+            return console.log(err);
+          }
+          return res.json({message: "Following @"+username});
       });
     }
 
@@ -293,15 +305,12 @@ router.post('/:username/unfollow', isAuthenticated, function(req, res, next) {
     }
 
     if(user) {
-      req.user.following.pull(user.username);
-
-      req.user.save(function(err) {
-        if(err) {
-          res.status(500).json({message: 'Unknown Failure'});
-          return console.error(err);
-        }
-
-        return res.json({message: "No Longer Following @"+username});
+      user.removeFollower(req.user, function(err){
+          if(err){
+              res.status(500).json({message: 'Unknown Failure'});
+              return console.error(err)
+          }
+          return res.json({message: 'No longer following @'+username+'.'});
       });
     }
 
