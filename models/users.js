@@ -19,7 +19,7 @@ var userSchema = new Schema({
   email_address: String,
   following: [],
   alert_when_friends_join: Boolean,
-  alert_when_follow: Boolean
+  alert_when_follow: Boolean,
   followerCount: {type: Number, default: 0}
 });
 
