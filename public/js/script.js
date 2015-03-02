@@ -1,5 +1,5 @@
 var checked = true;
-var credit_text = "Tweeted using Squall";
+var credit_text = ", Tweeted using @squallapp";
 var TCO_LENGTH = 23;
 var IMAGE_LINK_LENGTH = 23;
 var font = "Lato";
@@ -175,6 +175,7 @@ $('#textArea').keyup(function() {
     }
   }
   $('.text-length').text(IMAGE_LINK_LENGTH + length + '/140');
+  //$('.text-length').text(IMAGE_LINK_LENGTH + length + '/140');
 });
 
 
