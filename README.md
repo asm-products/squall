@@ -50,6 +50,12 @@ Then run
 
     $ node bin/www
 
+#### If using fig
+
+ - Set MongoURL as `"mongodb://" + process.env.MONGODB_PORT_27017_TCP_ADDR + "/local",`
+ - Set RedisURL as `"redis://" + process.env.REDIS_PORT_6379_TCP_ADDR + ":6379"`
+ - Run `$ fig build` and then `$ fig up web`
+
 ### Production
 
 - Set the appropriate environment variables (see `config/constants.production.js`).
