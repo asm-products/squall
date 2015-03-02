@@ -1,5 +1,5 @@
 var checked = true;
-var credit_text = "Tweeted using Storming.ME";
+var credit_text = "Tweeted using Squall";
 var TCO_LENGTH = 23;
 var IMAGE_LINK_LENGTH = 23;
 var font = "Lato";
@@ -83,6 +83,13 @@ $('.tweet-button').click(function() {
   $('.tweetresult').css('display', 'none');
   $('.tweet-button').addClass('disabled');
   ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
+
+  var message = $('#textArea').val()
+  if (message.length>116) {
+    message = message.substring(0,115)
+  }
+  message = message+ ", sent by @Squallapp"
+
   $.post('/tweet', { image: $('#image').attr('src'), message: $('#textArea').val() }, function(data) {
     $('.tweetresult').css('display', 'block');
     $('.tweetresult').find('.embed').html(data);

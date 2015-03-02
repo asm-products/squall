@@ -15,24 +15,24 @@ block content
       include profile_component
 
       .row.header
+
+        .col-lg-6.col-lg-offset-1.tweet-text
+          .form-group
+            label.control-label.twwet-title(for="textArea") Title
+            .input-group
+              .form-control-wrapper
+                textarea#textArea(rows="2", maxLength="117", tabindex="2", autofocus, placeholder="Introduce your tweetstorm. You can tag @username, paste links or use #hashtags.")
+              .input-group-addon.text-length 23/140
+
         .col-lg-6.col-lg-offset-1
           .row
-            label.control-label.twwet-title(for="textArea") TweetSquall
-
+            label.control-label.twwet-title(for="textArea") Post
 
         //- Text editor
         .col-lg-6.col-lg-offset-1
           .panel.panel-default
             .panel-body#t
               .editable.textBox(tabindex="1")#m Enter your tweetstorm here.. 1000 character max --> that's ~27^100 possible texts, or more than all the atoms in all 7 multiverses
-
-        .col-lg-6.col-lg-offset-1.tweet-text
-          .form-group
-            label.control-label.twwet-title(for="textArea") Tweet
-            .input-group
-              .form-control-wrapper
-                textarea#textArea(rows="2", maxLength="117", tabindex="2", autofocus, placeholder="Introduce your tweetstorm. You can tag @username, paste links or use #hashtags.")
-              .input-group-addon.text-length 23/140
 
         //- Tweet button
         .col-lg-3.col-lg-offset-2
@@ -55,7 +55,7 @@ block content
                   a(href="/posts/#{val.slug}")
                     h4 #{val.title}
 
-                  p by
+                  p by&nbsp;
                     a(href="/#{val.author}")
                       @#{val.author}
                   p #{val.content}
@@ -65,7 +65,7 @@ block content
     .bs-component
       .alert.alert-dismissable
         button.close(type="button", data-dismiss="alert") ×
-        h4 You just hacked the tweetstorm.
+        h4 You just hacked the Tweetstorm.
         .embed
 
   img#image(style="display:none")

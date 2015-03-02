@@ -5,7 +5,8 @@
       .h3
       span.fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)")
       a(href="https://twitter.com/#{user.username}") @#{user.username}
-      h3.bottom-margin #{user.name}
+      a(href="/#{user.username}")
+        h3.bottom-margin #{user.name}
 
       .row
         .col-sm-12.text-center.bottom-margin.edge-bottom

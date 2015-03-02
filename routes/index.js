@@ -88,7 +88,7 @@ router.get('/posts/:post_id', function(request, response, next) {
   });
 });
 
-router.post('/posts', function(request, response) {  //ADD AUTHENTICATION HERE OF COURSE
+router.post('/posts', isAuthenticated, function(request, response) {  //ADD AUTHENTICATION HERE OF COURSE
   var title = request.body.title;
   var content = request.body.content;
   var author = request.body.author;
@@ -152,7 +152,7 @@ router.get('/newsfeed', isAuthenticated, function(req, res) {
 
 });
 
-router.post('/tweet', function(req, res) {
+router.post('/tweet', isAuthenticated, function(req, res) {
 
   var API_URL = 'https://upload.twitter.com/1.1/media/upload.json';
   var image = req.body.image.replace(/^data.*base64,/, '');
@@ -192,7 +192,7 @@ router.post('/tweet', function(req, res) {
   });
 });
 
-router.post('/upload/imgur', function(req, res) {
+router.post('/upload/imgur', isAuthenticated, function(req, res) {
 
   var img = req.body.image.replace(/^data:image\/(png|jpg);base64,/, '');
   var options = {
@@ -217,7 +217,7 @@ router.post('/upload/imgur', function(req, res) {
   });
 });
 
-router.get('/:username', isAuthenticated, function(req, res, next) {
+router.get('/:username', function(req, res, next) {
   var username = req.params.username
   var currentUser = null;
   if(req.isAuthenticated()){
