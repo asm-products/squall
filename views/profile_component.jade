@@ -14,11 +14,13 @@
           p
             .big-number-label posts
         .col-sm-6.text-center.bottom-margin.edge-right
-          .big-number #{user.following.length}
-          .big-number-label following
+          a(href="/#{user.username}/following")
+            .big-number #{user.following.length}
+            .big-number-label following
         .col-sm-6.text-center.bottom-margin
-          .big-number #{user.followerCount}
-          .big-number-label followers
+          a(href="/#{user.username}/followers")
+            .big-number #{user.followerCount}
+            .big-number-label followers
         .col-sm-12
           if currentUser && (user.id !== currentUser.id)
             unless currentUser.isFollowing(user)

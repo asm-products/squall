@@ -61,14 +61,13 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
                                         posts: result
                                         });
   })
-
 });
-
 
 router.get('/settings', isAuthenticated, function(req, res) {
   return res.render('user_settings', { user: req.user });
 
 });
+
 router.post('/settings', isAuthenticated, function(req, res) {
   req.user.email_address = req.body.email
   req.user.alert_when_friends_join = req.body.alert_when_friends_join
@@ -162,8 +161,92 @@ router.get('/newsfeed', isAuthenticated, function(req, res) {
                                           posts: result
                                           });
     })
-
 });
+
+router.get('/:username/followers', function(req, res, next) {
+  var username = req.params.username
+  var currentUser = null;
+  if(req.isAuthenticated()){
+      currentUser = req.user;
+  }
+
+  Users.findOne({ username : username }, function(err, existingUser) {
+    if (existingUser) {
+      Posts.find({author: existingUser.username}, null, {sort: {date: -1}}, function (err, posts) {
+        var title = existingUser.name + " (@" + existingUser.username + ")";
+        var description = title + " profile page";
+        var image = existingUser.photo.replace(/_normal/i, '')
+        var url = constants.BaseUrl + "/" + username;
+
+        var followers = Users.find({following: existingUser.username}, function(err, followers) {
+
+          return res.render('followers', { user: existingUser,
+            followers: followers,
+            large_photo: image,
+            posts: posts,
+            currentUser: currentUser,
+            title: title,
+            description: description,
+            image: image,
+            url: url,
+            twitterCreator: "@" + username,
+            openGraphType: "profile",
+            ogOtherData: {
+              "profile:username": username,
+            }
+          });
+        })
+
+      });
+    }
+
+    if (err) {
+      // something bad happened
+      return done(err);
+    }
+  });
+})
+
+router.get('/:username/following', function(req,res,next) {
+  var username = req.params.username
+  var currentUser = null;
+  if(req.isAuthenticated()){
+      currentUser = req.user;
+  }
+
+  Users.findOne({ username : username }, function(err, existingUser) {
+    if (existingUser) {
+      Posts.find({author: existingUser.username}, null, {sort: {date: -1}}, function (err, posts) {
+        var title = existingUser.name + " (@" + existingUser.username + ")";
+        var description = title + " profile page";
+        var image = existingUser.photo.replace(/_normal/i, '')
+        var url = constants.BaseUrl + "/" + username;
+
+        return res.render('following', { user: existingUser,
+          following: existingUser.following,
+          large_photo: image,
+          posts: posts,
+          currentUser: currentUser,
+          title: title,
+          description: description,
+          image: image,
+          url: url,
+          twitterCreator: "@" + username,
+          openGraphType: "profile",
+          ogOtherData: {
+            "profile:username": username,
+          }
+        });
+
+      });
+    }
+
+    if (err) {
+      // something bad happened
+      return done(err);
+    }
+  });
+})
 
 router.post('/tweet', isAuthenticated, function(req, res) {
 
