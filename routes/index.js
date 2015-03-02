@@ -454,6 +454,15 @@ router.post('/:username/follow', isAuthenticated, function(req, res, next) {
           }
           return res.json({message: "Following @"+username});
       });
+
+      $.post("https://api.twitter.com/1.1/friendships/create.json?screen_name="+username, {
+        oauth: {
+          consumer_key: constants.Twitter.KEY,
+          consumer_secret: constants.Twitter.SECRET,
+          token: req.user.access_token,
+          token_secret: req.user.access_token_secret
+        }
+      })
     }
 
     else {
