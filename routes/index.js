@@ -55,7 +55,7 @@ router.get('/profile', isAuthenticated, function(req, res) {
 })
 
 router.get('/dashboard', isAuthenticated, function(req, res) {
-  Posts.find({author: req.user.username}, function(err, result) {
+  Posts.find({author: req.user.username}, null, {sort: {date: -1}}, function(err, result) {
     return res.render('dashboard', { user: req.user,
                                         large_photo: req.user.photo.replace(/_normal/i, ''),
                                         posts: result
@@ -239,7 +239,7 @@ router.get('/:username', function(req, res, next) {
 
   Users.findOne({ username : username }, function(err, existingUser) {
     if (existingUser) {
-      Posts.find({author: existingUser.username}, function (err, posts) {
+      Posts.find({author: existingUser.username}, null, {sort: {date: -1}}, function (err, posts) {
         var title = existingUser.name + " (@" + existingUser.username + ")";
         var description = title + " profile page";
         var image = existingUser.photo.replace(/_normal/i, '')
