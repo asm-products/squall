@@ -80,6 +80,7 @@ router.get('/:username/:post_id', function(request, response) {
   var username = request.params.username
   var post = Posts.findOne({slug: post_id, author: username}, function(err, result) {
     if (err) {
+      console.log(err);
       response.redirect('/error');
     }
     else {
@@ -261,7 +262,7 @@ router.get('/:username/following', function(req,res,next) {
   if(req.isAuthenticated()){
       currentUser = req.user;
   }
-
+  console.log("following")
   Users.findOne({ username : username }, function(err, existingUser) {
     if (existingUser) {
       Posts.find({author: existingUser.username}, null, {sort: {date: -1}}, function (err, posts) {
@@ -291,6 +292,7 @@ router.get('/:username/following', function(req,res,next) {
 
     if (err) {
       // something bad happened
+      console.log(err);
       return done(err);
     }
   });
