@@ -304,20 +304,20 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
     },
     json: true
   }, function (err, response, body) {
-    if (err) {
-      console.log(err)
-    }
     var T = new twit({
       consumer_key: constants.Twitter.KEY,
       consumer_secret: constants.Twitter.SECRET,
       access_token: req.user.access_token,
       access_token_secret: req.user.access_token_secret
     });
-
+    console.log("adasda")
+    console.log(message)
     T.post('statuses/update', {
       status: message || "",
       media_ids: body.media_id_string
     }, function(err, data, response) {
+      console.log(err)
+      console.log(data)
       var tweet_id = data.id_str;
       T.get('statuses/oembed', { id: tweet_id }, function(err, data, response) {
         req.user.tweet_ids.push('https://twitter.com/' + req.user.username + '/status/' + tweet_id);
