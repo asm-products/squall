@@ -189,7 +189,7 @@ router.get('/:username/followers', function(req, res, next) {
         var image = existingUser.photo.replace(/_normal/i, '')
         var url = constants.BaseUrl + "/" + username;
 
-        var followers = Users.find({following: existingUser.username}, function(err, followers) {
+        var followers = Users.find({ following : { $in : [username] }}, function(err, followers) {
 
           return res.render('followers', { user: existingUser,
             followers: followers,
