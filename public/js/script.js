@@ -207,6 +207,24 @@ $("body").on("click", "#follow, #unfollow", function(event) {
   });
 });
 
+$('.followuser').click(function() {
+  var username = $('#profileUsername').text()
+  console.log("following")
+  console.log(username)
+  $.post("/"+username+"/follow", function() {
+    $('.followuser').text("Followed");
+  });
+});
+
+$('.unfollowuser').click(function() {
+  var username = $('#profileUsername').text()
+  console.log("unfollowing");
+  console.log(username);
+  $.post("/"+username+"/unfollow", function() {
+    $('.unfollowuser').text("Unfollowed")
+  });
+});
+
 $('#settings-form').submit(function(e) {
   $('#success-alert').addClass("hide");
   $('#error-alert').addClass("hide");

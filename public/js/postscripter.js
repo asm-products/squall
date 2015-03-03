@@ -10,13 +10,4 @@ $('.sharepost').click(function() {
   });
 });
 
-$('.followuser').click(function() {
-  var username = $('#profileUsername').text()
-  console.log("following")
-  console.log(username)
-  $('.followuser').text("Followed");
-  $.post("/"+username+"/follow");
-});
-
-
 window.onload = draw();

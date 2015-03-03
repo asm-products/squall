@@ -24,6 +24,6 @@
         .col-sm-12
           if currentUser && (user.id !== currentUser.id)
             unless currentUser.isFollowing(user)
-              button.btn.btn-info.btn-block#follow(data-username=user.username) Follow
+              button.btn.btn-info.btn-block.followuser#follow(data-username=user.username) Follow
             else
-              button.btn.btn-danger.btn-block#unfollow(data-username=user.username) Unfollow
+              button.btn.btn-danger.btn-block.unfollowuser#unfollow(data-username=user.username) Unfollow
