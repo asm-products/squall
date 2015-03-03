@@ -3,11 +3,29 @@
 
 body {
   font-size: 16px;
+  background-color:#fff;
 }
 
 .editable:empty:not(:focus):before{
   content: attr(data-ph);
   color: rgba(0, 0, 0, .4);
+}
+
+/* COLORS */
+.brand-color {
+  color: #2cbbd4;
+}
+
+.primary-text-color {
+  color: #1f1f1f;
+}
+
+.secondary-text-color {
+  color: #717171;
+} 
+
+.light-gray {
+  color: #b6b6b6;
 }
 
 .highlight {
@@ -16,6 +34,10 @@ body {
 
 .greeting {
   margin-bottom: 50px;
+}
+
+.navbar {
+  background-color: #2cbbd4;
 }
 
 .tweet-text {
@@ -57,6 +79,10 @@ a.btn.btn-default.btn-flat.rand-bg-btn {
   margin-top: 4px;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 .textBox {
   margin-bottom: 40px;
   min-height: 50px;
@@ -84,6 +110,10 @@ a.btn.btn-default.btn-flat.rand-bg-btn {
   display: none;
 }
 
+.normal-font-size {
+  font-size:1.5em;
+}
+
 .big-number{
     font-size:2em;
 }
@@ -106,5 +136,5 @@ a.btn.btn-default.btn-flat.rand-bg-btn {
 }
 
 .bottom-margin{
-    margin-bottom:1em;
+    margin-bottom:2em;
 }
