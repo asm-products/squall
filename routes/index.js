@@ -104,7 +104,7 @@ router.get('/posts/:post_id', function(request, response, next) {
           }
         else {
           //return error page
-          response.json({status: "Post not found"});
+          response.redirect('/error');
         }
       }
   });
