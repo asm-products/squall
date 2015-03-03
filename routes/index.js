@@ -13,6 +13,37 @@ if (process.env.NODE_ENV === 'production') {
 var request = require('request');
 var twit = require('twit');
 
+if (!Array.prototype.map)
+{
+  Array.prototype.map = function(fun /*, thisp*/)
+  {
+    var len = this.length;
+    if (typeof fun != "function")
+      throw new TypeError();
+
+    var res = new Array(len);
+    var thisp = arguments[1];
+    for (var i = 0; i < len; i++)
+    {
+      if (i in this)
+        res[i] = fun.call(thisp, this[i], i, this);
+    }
+
+    return res;
+  };
+}
+Array.prototype.getUnique = function(){
+   var u = {}, a = [];
+   for(var i = 0, l = this.length; i < l; ++i){
+      if(u.hasOwnProperty(this[i])) {
+         continue;
+      }
+      a.push(this[i]);
+      u[this[i]] = 1;
+   }
+   return a;
+}
+
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     console.log("authenticated")
@@ -54,11 +85,16 @@ router.get('/profile', isAuthenticated, function(req, res) {
 })
 
 router.get('/dashboard', isAuthenticated, function(req, res) {
-  Posts.find({author: req.user.username}, null, {sort: {date: -1}}, function(err, result) {
-    return res.render('dashboard', { user: req.user,
-                                        large_photo: req.user.photo.replace(/_normal/i, ''),
-                                        posts: result
-                                        });
+
+  Users.find({username: {$in : [req.user.following] }}, function(err, following) {
+    var f = following.map(function(a) {return a.username})
+    f.push(req.user.username)
+    Posts.find({author: { $in : f.getUnique()}}, null, {sort: {date: -1}}, function(err, result) {
+      return res.render('dashboard', { user: req.user,
+                                          large_photo: req.user.photo.replace(/_normal/i, ''),
+                                          posts: result
+                                          });
+    })
   })
 });
 
