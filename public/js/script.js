@@ -193,6 +193,15 @@ $("body").on("click", "#follow, #unfollow", function(event) {
   })
 })
 
+$('.followperson').click(function() {
+  var username = $('#profileUsername').text();
+  console.log(username)
+  $.post('/'+username+"/follow", function () {
+    $(".followperson").text("Followed")
+    console.log("followed")
+  })
+})
+
 $('#settings-form').submit(function(e) {
   $('#success-alert').addClass("hide")
   $('#error-alert').addClass("hide")
