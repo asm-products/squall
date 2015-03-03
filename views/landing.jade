@@ -1,13 +1,20 @@
 extends layout
 
 block content
+  link(href='/css/style.css', rel='stylesheet')
+  link(href='/css/medium-editor.min.css', rel='stylesheet')
+  link(href='/css/flat.min.css', rel='stylesheet')
 
-  link(href='/css/home.css', rel='stylesheet')
+  include navbar
 
   .container
     .row.header
-      .col-lg-6.col-lg-offset-3
-        h1 Squall.io
+      .col-lg-10.col-lg-offset-1
+        .col-lg-6.col-lg-offset-3
+          h1 Squall.io
+
+    .row.header
+      .col-lg-10.col-lg-offset-1
         p.lead Write down a thought.  Tweet up a storm.  All in one go.
         col-lg-6.col-lg-offset-3
           a.btn.btn-info.btn-lg.login-btn(href="/login") Login with Twitter

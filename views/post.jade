@@ -16,7 +16,7 @@ block content
             a(href="#{author_link}") @#{author}
             p #{post.created_at.toDateString()}
           #t
-            p #{contents}
+            p !{contents}
 
           span
             h5(style="color: rgb(100,100,100)") views #{post.viewCount}
