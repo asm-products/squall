@@ -31,9 +31,7 @@ router.get('/', function(req, res) {
   else {
     return res.render('landing');
   }
-
 });
-
 
 router.get('/login', passport.authenticate('twitter'));
 
@@ -189,25 +187,21 @@ router.get('/:username/followers', function(req, res, next) {
         var image = existingUser.photo.replace(/_normal/i, '')
         var url = constants.BaseUrl + "/" + username;
 
-        var followers = Users.find({following: existingUser.username}, function(err, followers) {
-
-          return res.render('followers', { user: existingUser,
-            followers: followers,
-            large_photo: image,
-            posts: posts,
-            currentUser: currentUser,
-            title: title,
-            description: description,
-            image: image,
-            url: url,
-            twitterCreator: "@" + username,
-            openGraphType: "profile",
-            ogOtherData: {
-              "profile:username": username,
-            }
-          });
-        })
-
+        return res.render('followers', { user: existingUser,
+          followers: existingUser.followers,
+          large_photo: image,
+          posts: posts,
+          currentUser: currentUser,
+          title: title,
+          description: description,
+          image: image,
+          url: url,
+          twitterCreator: "@" + username,
+          openGraphType: "profile",
+          ogOtherData: {
+            "profile:username": username,
+          }
+        });
       });
     }
 
@@ -310,6 +304,9 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
     },
     json: true
   }, function (err, response, body) {
+    if (err) {
+      console.log(err)
+    }
     var T = new twit({
       consumer_key: constants.Twitter.KEY,
       consumer_secret: constants.Twitter.SECRET,
@@ -454,21 +451,10 @@ router.post('/:username/follow', isAuthenticated, function(req, res, next) {
           }
           return res.json({message: "Following @"+username});
       });
-
-      $.post("https://api.twitter.com/1.1/friendships/create.json?screen_name="+username, {
-        oauth: {
-          consumer_key: constants.Twitter.KEY,
-          consumer_secret: constants.Twitter.SECRET,
-          token: req.user.access_token,
-          token_secret: req.user.access_token_secret
-        }
-      })
     }
-
     else {
       return res.status(404).json({message: "User @"+username+" Not Found"});
     }
-
   });
 });
 
