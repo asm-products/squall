@@ -34,7 +34,6 @@ router.get('/', function(req, res) {
 
 });
 
-
 router.get('/login', passport.authenticate('twitter'));
 
 router.get(constants.Twitter.CALLBACK,
@@ -75,6 +74,40 @@ router.post('/settings', isAuthenticated, function(req, res) {
   req.user.save()
   return res.json({passed: true});
 });
+
+router.get('/:username/:post_id', function(request, response) {
+  var post_id = request.params.post_id;
+  var username = request.params.username
+  var post = Posts.findOne({slug: post_id, author: username}, function(err, result) {
+    if (err) {
+      response.redirect('/error');
+    }
+    else {
+      if (result)
+        {
+          var title = result.title;
+          var author = result.author;
+          var contents = result.content;
+          var author_link = '../'+author;
+
+          if (isNaN(result.viewCount)) {
+            var newViewCount = 1;
+          }
+          else {
+            var newViewCount = result.viewCount + 1;
+          }
+
+          result.update({viewCount: newViewCount});
+
+          response.render('post', {title: title, contents: contents, author: author, author_link: author_link, post: result});
+        }
+        else {
+          //return error page
+          response.redirect('/error');
+        }
+    }
+  })
+})
 
 router.get('/posts/:post_id', function(request, response, next) {
   var post_id = request.params.post_id;
@@ -285,7 +318,7 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
   }
 
   //CONSTRUCT MESSAGE
-  var url = "http://squall.io/posts/" + slug;
+  var url = "http://squall.io/"+author+"/" + slug;
   console.log(url);
   var end_message = url + " sent via @Squallapp"
   console.log(end_message)
