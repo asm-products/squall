@@ -84,9 +84,7 @@ $('.tweet-button').click(function() {
   ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
 
   var title = $('textArea').val();
-  // var content = document.getElementById('t').textContent;
-  // this gets santizied html output from the Medium editor
-  var content = $('#m').html();
+  var content = document.getElementById('t').textContent;
   var author = $('#profileUsername').text()
 
   $.post('/tweetpost', { image: $('#image').attr('src'), title: String(title), content: String(content), author: String(author) }, function(data) {
