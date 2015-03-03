@@ -1,7 +1,7 @@
 var checked = true;
 var credit_text = ", Tweeted using @squallapp";
 var TCO_LENGTH = 23;
-var IMAGE_LINK_LENGTH = 23;
+var IMAGE_LINK_LENGTH = 40;
 var font = "Lato";
 var timer;
 
@@ -86,14 +86,14 @@ $('.tweet-button').click(function() {
   var title = $('textArea').val();
   var content = document.getElementById('t').textContent;
   var htmlcontent = $('#m').html().toString();
-  var author = $('#profileUsername').text()
+  var author = $('#profileUsername').text();
 
   $.post('/tweetpost', { image: $('#image').attr('src'), title: String(title), htmlcontent: htmlcontent, content: String(content), author: String(author) }, function(data) {
     $('.tweetresult').css('display', 'block');
     $('.tweetresult').find('.embed').html(data);
     $('.tweet-button').text('Tweet');
     $('.tweet-button').removeClass('disabled');
-  })
+  });
 });
 
 
@@ -158,8 +158,19 @@ $('#textArea').keyup(function() {
       length += splits[i].length;
     }
   }
-  $('.text-length').text(IMAGE_LINK_LENGTH + length + '/140');
-  //$('.text-length').text(IMAGE_LINK_LENGTH + length + '/140');
+  $('.text-length').text( length + '/100');
+  if($('#textArea').text().length > 100){
+    $('#textArea').text($('#textArea').text().substring(0,99));
+  }
+
+});
+
+$('#t').keyup(function() {
+  var post_length = $('#t').text().length;
+  if (post_length > 10000) {
+    $('#t').text($('#t').text().substring(0,9999));
+  }
+  $('.post-length').text(post_length +' / 10000');
 });
 
 
@@ -174,14 +185,14 @@ $('.rand-bg-btn').click(function() {
   });
   $('.panel-body').css('background-color', color);
   draw();
-})
+});
 
 //Catching this event on the body means that we don't have to re-attach click handlers when swapping ids.
 $("body").on("click", "#follow, #unfollow", function(event) {
   var btn = $(event.target);
   var username = btn.attr("data-username");
   btn.prop("disabled", true);
-  console.log("posting")
+  console.log("posting");
   $.post('/'+username+"/"+btn.attr("id"), {}, function(){
       btn.toggleClass("btn-info btn-danger").prop("disabled", false);
       if(btn.hasClass("btn-info")){
@@ -189,43 +200,21 @@ $("body").on("click", "#follow, #unfollow", function(event) {
       }else{
         btn.text("Unfollow");
       }
-  })
-})
+  });
+});
 
-$('#follow').click(function(), function(event) {
-  var btn = $(event.target);
-  var username = $('#profileUsername').text();
-  console.log("posting")
-  $.post('/'+username+"/follow", function() {
-      btn.toggleClass("btn-info btn-danger").prop("disabled", false);
-      if(btn.hasClass("btn-info")){
-        btn.text("Follow");
-      }else{
-        btn.text("Unfollow");
-      }
-  })
-})
-
-$('.followperson').click(function() {
-  var username = $('#profileUsername').text();
-  console.log(username)
-  $.post('/'+username+"/follow", function () {
-    $(".followperson").text("Followed")
-    console.log("followed")
-  })
-})
 
 $('#settings-form').submit(function(e) {
-  $('#success-alert').addClass("hide")
-  $('#error-alert').addClass("hide")
+  $('#success-alert').addClass("hide");
+  $('#error-alert').addClass("hide");
   var params = $('#settings-form').serializeJSON();
   $.post('/settings', params, function(data) {
     if (data.passed) {
-      $('#success-alert').removeClass("hide")
+      $('#success-alert').removeClass("hide");
     } else {
       $('#error-alert').html(data.errors);
       $('#error-alert').removeClass("hide");
-    };
+    }
   });
   e.preventDefault();
 });

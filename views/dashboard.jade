@@ -22,7 +22,7 @@ block content
              .input-group
                .form-control-wrapper
                  textarea#textArea(rows="2", maxLength="117", tabindex="2", autofocus, placeholder="Introduce your tweetstorm. You can tag @username, paste links or use #hashtags.")
-               .input-group-addon.text-length 23/140
+               .input-group-addon.text-length 0/100
 
 
           .row.col-lg-3.col-lg-offset-1
@@ -32,7 +32,8 @@ block content
           .row.col-lg-10.col-lg-offset-1
             .panel.panel-default
               .panel-body#t
-                .editable.textBox(tabindex="1")#m Enter your Tweetstorm here..  Write something interesting --> without character limits.
+                .editable.textBox(tabindex="1")#m Write something interesting: without character limits.
+              .label.post-length 54/10000
 
           //- Tweet button
           .row.col-lg-3.col-lg-offset-1
@@ -42,7 +43,7 @@ block content
                 .ripple-wrapper
 
           .row.col-lg-10.col-lg-offset-1
-            label.control-label Your Feed
+            h3 Your Feed
             each val in posts
               .row.header
                 .col-lg-12

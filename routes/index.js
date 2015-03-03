@@ -288,7 +288,6 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
   var n = 138- url.length - end_message.length
   console.log(n)
   var message = title;
-  console.log(message)
   if (message.length>n) {
     message = message.substring(0,n)
   }
