@@ -85,15 +85,16 @@ $('.tweet-button').click(function() {
 
   var title = $('textArea').val();
   var content = document.getElementById('t').textContent;
+  var htmlcontent = $('#m').html().toString();
+  console.log(htmlcontent);
   var author = $('#profileUsername').text()
 
-  $.post('/tweetpost', { image: $('#image').attr('src'), title: String(title), content: String(content), author: String(author) }, function(data) {
+  $.post('/tweetpost', { image: $('#image').attr('src'), title: String(title), htmlcontent: htmlcontent, content: String(content), author: String(author) }, function(data) {
     $('.tweetresult').css('display', 'block');
     $('.tweetresult').find('.embed').html(data);
     $('.tweet-button').text('Tweet');
     $('.tweet-button').removeClass('disabled');
   })
-
 });
 
 
@@ -189,6 +190,15 @@ $("body").on("click", "#follow, #unfollow", function(event) {
       }else{
         btn.text("Unfollow");
       }
+  })
+})
+
+$('.followperson').click(function() {
+  var username = $('#profileUsername').text();
+  console.log(username)
+  $.post('/'+username+"/follow", function () {
+    $(".followperson").text("Followed")
+    console.log("followed")
   })
 })
 

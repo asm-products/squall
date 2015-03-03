@@ -24,7 +24,7 @@ block content
             span Follow
               #author_name #{author}
 
-          button.btn.btn-info.tweetpost
+          button.btn.btn-info.sharepost
             span
               .fa.fa-twitter.fa-2x(style="color: rgb(29,202,255)")
               p Share
@@ -33,6 +33,6 @@ block content
 
 
 span#profileUsername(style="display:none") #{author}
+  script(src='/js/postscripter.js')
 
   include footer
-  script(src='/js/postscripter.js')

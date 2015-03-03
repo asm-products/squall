@@ -263,6 +263,8 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
   var title = req.body.title;
   var content = req.body.content;
   var author = req.body.author;
+  var htmlcontent = req.body.htmlcontent
+  console.log(htmlcontent);
   var slug = getSlug(title);
 
   // CREATE POST OBJECT
@@ -270,7 +272,7 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
   if (content.length <= max_content_length) {
     var post = new Posts({
       title: title,
-      content: content,
+      content: String(content),
       author: author,
       slug: slug,
       viewCount: 0
