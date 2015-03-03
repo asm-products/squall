@@ -18,9 +18,9 @@ var userSchema = new Schema({
   tweet_ids: [],
   email_address: String,
   following: [],
-  followers: [],
   alert_when_friends_join: Boolean,
-  alert_when_follow: Boolean
+  alert_when_follow: Boolean,
+  followerCount: {type: Number, default: 0}
 });
 
 userSchema.method("isFollowing", function(otherUser){
@@ -36,7 +36,7 @@ userSchema.method("addFollower", function(otherUser, callback){
     if (err) {
       return callback(err);
     }
-   _this.followers.addToSet(this.username)
+    _this.followerCount += 1;
    _this.save(function(err){
       if (err) {
         return callback(err);
@@ -54,7 +54,7 @@ userSchema.method("removeFollower", function(otherUser, callback){
     if(err) {
       return callback(err)
     }
-    _this.followers.pull(this.username);
+    _this.followerCount -= 1;
     _this.save(function(err) {
       if(err){
         callback(err)
