@@ -185,6 +185,8 @@ router.post('/posts', isAuthenticated, function(request, response) {
 });
 
 router.post('/twitter/createfriendship', isAuthenticated, function(req, res) {
+  console.log("creating friendship with ")
+  console.log(req.bodty.username)
   var T = new twit({
     consumer_key: constants.Twitter.KEY,
     consumer_secret: constants.Twitter.SECRET,
