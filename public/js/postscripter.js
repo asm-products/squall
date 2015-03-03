@@ -5,7 +5,8 @@ $('.tweetpost').click(function() {
 
   var author_name = $('#author_name').text()
   console.log(author_name);
-  var message = "Check out this post by @"+author_name;
+  var url = document.URL
+  var message = "Check out this post by @"+author_name+" "+url;
 
   $.post('/tweet', { image: $('#image').attr('src'), message: message }, function(data) {
     // $('.tweetresult').css('display', 'block');

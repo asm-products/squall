@@ -31,9 +31,7 @@ router.get('/', function(req, res) {
   else {
     return res.render('landing');
   }
-
 });
-
 
 router.get('/login', passport.authenticate('twitter'));
 
@@ -189,25 +187,21 @@ router.get('/:username/followers', function(req, res, next) {
         var image = existingUser.photo.replace(/_normal/i, '')
         var url = constants.BaseUrl + "/" + username;
 
-        var followers = Users.find({following: existingUser.username}, function(err, followers) {
-
-          return res.render('followers', { user: existingUser,
-            followers: followers,
-            large_photo: image,
-            posts: posts,
-            currentUser: currentUser,
-            title: title,
-            description: description,
-            image: image,
-            url: url,
-            twitterCreator: "@" + username,
-            openGraphType: "profile",
-            ogOtherData: {
-              "profile:username": username,
-            }
-          });
-        })
-
+        return res.render('followers', { user: existingUser,
+          followers: existingUser.followers,
+          large_photo: image,
+          posts: posts,
+          currentUser: currentUser,
+          title: title,
+          description: description,
+          image: image,
+          url: url,
+          twitterCreator: "@" + username,
+          openGraphType: "profile",
+          ogOtherData: {
+            "profile:username": username,
+          }
+        });
       });
     }
 
@@ -316,11 +310,14 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
       access_token: req.user.access_token,
       access_token_secret: req.user.access_token_secret
     });
-
+    console.log("adasda")
+    console.log(message)
     T.post('statuses/update', {
       status: message || "",
       media_ids: body.media_id_string
     }, function(err, data, response) {
+      console.log(err)
+      console.log(data)
       var tweet_id = data.id_str;
       T.get('statuses/oembed', { id: tweet_id }, function(err, data, response) {
         req.user.tweet_ids.push('https://twitter.com/' + req.user.username + '/status/' + tweet_id);
@@ -455,11 +452,9 @@ router.post('/:username/follow', isAuthenticated, function(req, res, next) {
           return res.json({message: "Following @"+username});
       });
     }
-
     else {
       return res.status(404).json({message: "User @"+username+" Not Found"});
     }
-
   });
 });
 
