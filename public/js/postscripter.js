@@ -1,10 +1,6 @@
-
-
-
-
 $('.sharepost').click(function() {
-  console.log("here")
   $('.sharepost').text('Sharing Post...');
+  draw();
   var author_name = $('#author_name').text()
   var url = document.URL
   var message = "Check out this post by @"+author_name+" "+url;
@@ -14,13 +10,13 @@ $('.sharepost').click(function() {
   });
 });
 
-function draw() {
-  html2canvas(document.getElementById('t'), {
-    allowTaint: true,
-    onrendered: function(canvas) {
-      document.getElementById('image').src = canvas.toDataURL();
-    }
-  });
-}
+// function draw() {
+//   html2canvas(document.getElementById('t'), {
+//     allowTaint: true,
+//     onrendered: function(canvas) {
+//       document.getElementById('image').src = canvas.toDataURL();
+//     }
+//   });
+// }
 
-window.onload = draw();
+// window.onload = draw();
