@@ -84,6 +84,12 @@ $('.tweet-button').click(function() {
   ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
 
   var title = $('textArea').val();
+  if(title.length === 0) {
+    title = "My Post";
+    console.log("too short");
+    console.log(title);
+  }
+
   var content = document.getElementById('t').textContent;
   var htmlcontent = $('#m').html().toString();
   var author = $('#profileUsername').text();
@@ -173,11 +179,9 @@ $('#t').keyup(function() {
   $('.post-length').text(post_length +' / 10000');
 });
 
-
 $(".upload-link").focus(function() {
   this.select();
 });
-
 
 $('.rand-bg-btn').click(function() {
   var color = randomColor({
@@ -202,7 +206,6 @@ $("body").on("click", "#follow, #unfollow", function(event) {
       }
   });
 });
-
 
 $('#settings-form').submit(function(e) {
   $('#success-alert').addClass("hide");

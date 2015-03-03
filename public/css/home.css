@@ -23,3 +23,7 @@ h4.lead-text {
   margin-top: 80px;
   text-align: center;
 }
+
+.tempest {
+  background-image: url(http://upload.wikimedia.org/wikipedia/commons/0/0c/De_Windstoot_-_A_ship_in_need_in_a_raging_storm_(Willem_van_de_Velde_II,_1707).jpg);
+}

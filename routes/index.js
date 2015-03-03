@@ -110,13 +110,17 @@ router.get('/posts/:post_id', function(request, response, next) {
   });
 });
 
+router.get('/error', function(req, res) {
+  return res.render('squall');
+})
+
 router.post('/posts', isAuthenticated, function(request, response) {
   var title = request.body.title;
   var content = request.body.content;
   var author = request.body.author;
   var slug = getSlug(title);
 
-  var max_content_length = 2000;
+  var max_content_length = 10000;
   if (content.length <= max_content_length) {
     var post = new Posts({
       title: title,
@@ -268,7 +272,7 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
   var slug = getSlug(title);
 
   // CREATE POST OBJECT
-  var max_content_length = 2000;
+  var max_content_length = 10000;
   if (content.length <= max_content_length) {
     var post = new Posts({
       title: title,
