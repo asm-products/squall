@@ -50,6 +50,35 @@ Then run
 
     $ node bin/www
 
+### Run using Docker
+
+#### If using OSX or Windows
+  - [Install Boot2Docker](http://boot2docker.io/)
+  - Run Boot2Docker
+    - $ `boot2docker init`
+    - $ `boot2docker start`
+    - $ `$(boot2docker shellinit)`
+    - To persist the environment variables across shell sessions, you can add `$(boot2docker shellinit)` to your `~/.bashrc` file
+
+#### If using Linux (Ubuntu)
+  - Install from your favorite package manager
+    - $ `sudo apt-get install docker.io`
+
+#### Installing Fig
+  - [Install Fig](http://www.fig.sh/install.html)
+    - ``$ curl -L https://github.com/docker/fig/releases/download/1.0.1/fig-`uname -s`-`uname -m` > /usr/local/bin/fig; chmod +x /usr/local/bin/fig``
+  - Get the Twitter and Imgur API key and secret and set them in constants.js
+  - Set MongoURL as `"mongodb://" + process.env.MONGODB_PORT_27017_TCP_ADDR + "/local",`
+  - Set RedisURL as `"redis://" + process.env.REDIS_PORT_6379_TCP_ADDR + ":6379"`
+  - Build the Docker containers
+    - $ `fig build`
+  - Run the app
+    - $ `fig up web`
+  - Access the app locally
+    - OSX/Windows: Run `boot2docker ip` to get the ip address of the Docker daemon
+    - View the app at `IP_ADDRESS:3000`. If using Linux, go to `localhost:3000`
+
+
 ### Production
 
 - Set the appropriate environment variables (see `config/constants.production.js`).

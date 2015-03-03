@@ -1,0 +1,35 @@
+mongodb:
+  image: dockerfile/mongodb
+  ports:
+    - "27017"
+  volumes:
+    - ./data/mongo:/data/db
+
+redis:
+  image: redis
+  ports:
+    - "6379"
+  volumes:
+    - ./data/redis:/data
+
+grunt:
+  image: dockerfile/nodejs-bower-grunt
+  working_dir: /usr/src/app
+  command: grunt --force watch
+  volumes:
+    - .:/usr/src/app
+
+web:
+  build: .
+  command: node bin/www
+  environment:
+    - PORT=3000
+    - NODE_ENV=development
+  volumes:
+    - .:/usr/src/app
+  ports:
+    - "3000:3000"
+  links:
+    - mongodb
+    - redis
+    - grunt
