@@ -193,6 +193,20 @@ $("body").on("click", "#follow, #unfollow", function(event) {
   })
 })
 
+$('#follow').click(function(), function(event) {
+  var btn = $(event.target);
+  var username = $('#profileUsername').text();
+  console.log("posting")
+  $.post('/'+username+"/follow", function() {
+      btn.toggleClass("btn-info btn-danger").prop("disabled", false);
+      if(btn.hasClass("btn-info")){
+        btn.text("Follow");
+      }else{
+        btn.text("Unfollow");
+      }
+  })
+})
+
 $('.followperson').click(function() {
   var username = $('#profileUsername').text();
   console.log(username)
