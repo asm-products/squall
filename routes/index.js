@@ -75,41 +75,6 @@ router.post('/settings', isAuthenticated, function(req, res) {
   return res.json({passed: true});
 });
 
-router.get('/:username/:post_id', function(request, response) {
-  var post_id = request.params.post_id;
-  var username = request.params.username
-  var post = Posts.findOne({slug: post_id, author: username}, function(err, result) {
-    if (err) {
-      console.log(err);
-      response.redirect('/error');
-    }
-    else {
-      if (result)
-        {
-          var title = result.title;
-          var author = result.author;
-          var contents = result.content;
-          var author_link = '../'+author;
-
-          if (isNaN(result.viewCount)) {
-            var newViewCount = 1;
-          }
-          else {
-            var newViewCount = result.viewCount + 1;
-          }
-
-          result.update({viewCount: newViewCount});
-
-          response.render('post', {title: title, contents: contents, author: author, author_link: author_link, post: result});
-        }
-        else {
-          //return error page
-          response.redirect('/error');
-        }
-    }
-  })
-})
-
 router.get('/posts/:post_id', function(request, response, next) {
   var post_id = request.params.post_id;
   var post = Posts.findOne({slug: post_id},
@@ -528,5 +493,40 @@ router.post('/:username/unfollow', isAuthenticated, function(req, res, next) {
 
   });
 });
+
+router.get('/:username/:post_id', function(request, response) {
+  var post_id = request.params.post_id;
+  var username = request.params.username
+  var post = Posts.findOne({slug: post_id, author: username}, function(err, result) {
+    if (err) {
+      console.log(err);
+      response.redirect('/error');
+    }
+    else {
+      if (result)
+        {
+          var title = result.title;
+          var author = result.author;
+          var contents = result.content;
+          var author_link = '../'+author;
+
+          if (isNaN(result.viewCount)) {
+            var newViewCount = 1;
+          }
+          else {
+            var newViewCount = result.viewCount + 1;
+          }
+
+          result.update({viewCount: newViewCount});
+
+          response.render('post', {title: title, contents: contents, author: author, author_link: author_link, post: result});
+        }
+        else {
+          //return error page
+          response.redirect('/error');
+        }
+    }
+  })
+})
 
 module.exports = router;
