@@ -19,7 +19,7 @@
             .big-number-label following
         .col-sm-6.text-center.bottom-margin
           a(href="/#{user.username}/followers")
-            .big-number #{user.followers.length}
+            .big-number #{user.followerCount}
             .big-number-label followers
         .col-sm-12
           if currentUser && (user.id !== currentUser.id)
