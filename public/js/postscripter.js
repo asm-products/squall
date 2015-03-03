@@ -3,6 +3,7 @@
 
 
 $('.sharepost').click(function() {
+  console.log("here")
   $('.sharepost').text('Sharing Post...');
   var author_name = $('#author_name').text()
   var url = document.URL
