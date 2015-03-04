@@ -169,7 +169,7 @@ router.post('/posts', isAuthenticated, function(request, response) {
   var author = request.body.author;
   var slug = getSlug(title);
 
-  var max_content_length = 10000;
+  var max_content_length = 3000;
   if (content.length <= max_content_length) {
     var post = new Posts({
       title: title,
@@ -324,7 +324,7 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
   var slug = getSlug(title);
 
   // CREATE POST OBJECT
-  var max_content_length = 10000;
+  var max_content_length = 3000;
   if (content.length <= max_content_length) {
     var post = new Posts({
       title: title,

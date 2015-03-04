@@ -180,10 +180,10 @@ $('#textArea').keyup(function() {
 
 $('#t').keyup(function() {
   var post_length = $('#t').text().length;
-  if (post_length > 10000) {
-    $('#t').text($('#t').text().substring(0,9999));
+  if (post_length > 3000) {
+    $('#t').text($('#t').text().substring(0,2999));
   }
-  $('.post-length').text(post_length +' / 10000');
+  $('.post-length').text(post_length +' / 3000');
 });
 
 $(".upload-link").focus(function() {
