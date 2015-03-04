@@ -548,40 +548,43 @@ router.get('/:username/:post_id', function(request, response) {
   var username = request.params.username
 
   var user = Users.findOne({username: username}, function (err, u) {
-    var avatar_url = u.photo;
-    console.log('A', avatar_url)
-    var post = Posts.findOne({slug: post_id, author: username}, function(err, result) {
-      if (err) {
-        console.log(err);
-        response.redirect('/error');
-      }
-      else {
-        if (result)
-          {
-            var title = result.title;
-            var author = result.author;
-            var contents = result.content;
-            var author_link = '../'+author;
+    if (u) {
+      var avatar_url = u.photo;
+      console.log('A', avatar_url)
+      var post = Posts.findOne({slug: post_id, author: username}, function(err, result) {
+        if (err) {
+          console.log(err);
+          response.redirect('/error');
+        }
+        else {
+          if (result)
+            {
+              var title = result.title;
+              var author = result.author;
+              var contents = result.content;
+              var author_link = '../'+author;
 
-            if (isNaN(result.viewCount)) {
-              var newViewCount = 1;
+              if (isNaN(result.viewCount)) {
+                var newViewCount = 1;
+              }
+              else {
+                var newViewCount = result.viewCount + 1;
+              }
+              result.viewCount = newViewCount;
+              result.save();
+
+              response.render('post', {avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result});
             }
             else {
-              var newViewCount = result.viewCount + 1;
+              //return error page
+              response.redirect('/error');
             }
-            result.viewCount = newViewCount;
-            result.save();
-
-            response.render('post', {avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result});
-          }
-          else {
-            //return error page
-            response.redirect('/error');
-          }
-      }
-    })
-
-
+        }
+      })
+    }
+    else{
+      response.redirect('/error');
+    }
   })
 
 })
