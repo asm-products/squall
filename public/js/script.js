@@ -98,6 +98,7 @@ $('.tweet-button').click(function() {
 
   var content = document.getElementById('t').textContent;
   var htmlcontent = $('#m').html().toString();
+  console.log(htmlcontent)
   var author = $('#profileUsername').text();
 
   $.post('/tweetpost', { image: $('#image').attr('src'), title: String(title), htmlcontent: htmlcontent, content: String(content), author: String(author) }, function(data) {

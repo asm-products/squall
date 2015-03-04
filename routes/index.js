@@ -62,7 +62,6 @@ router.get('/', function(req, res) {
   else {
     return res.render('landing');
   }
-
 });
 
 router.get('/login', passport.authenticate('twitter'));
@@ -327,7 +326,7 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
   if (content.length <= max_content_length) {
     var post = new Posts({
       title: title,
-      content: String(content),
+      content: String(htmlcontent),
       author: author,
       slug: slug,
       viewCount: 0
