@@ -98,40 +98,32 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
       f.push(req.user.username)
       avatar_urls[req.user.username] = req.user.photo
 
-      var top_users = Users.find({}).sort({viewScore: -1}).limit(10).exec(function(err, leaders) {
-        if (leaders) {
-          var p=0;
-        }
-        else {
-          leaders = [];
-        }
+      var my_rank = Users.find({}).sort({viewScore: -1}).exec(function(err, userlist) {
+        var g = userlist.map(function(q) {return q.username} );
+        var b = g.indexOf(req.user.username) + 1;
         Posts.find({author: { $in : f.getUnique()}}, null, {sort: {created_at: -1}}, function(err, result) {
-
-          console.log(leaders)
+          console.log(b)
           return res.render('dashboard', { user: req.user,
                                               large_photo: req.user.photo.replace(/_normal/i, ''),
                                               posts: result,
                                               post_count: c,
                                               avatar_urls: avatar_urls,
-                                              leaders: leaders
+                                              rank: b
                                               });
         })
       })
-
     })
   })
 });
 
 router.get('/leaderboard', function(req, res) {
-  var top_users = Users.find({}).sort({viewScore: -1}).limit(40).exec(function(err, leaders) {
+  var top_users = Users.find({}).sort({viewScore: -1}).limit(100).exec(function(err, leaders) {
     if (leaders) {
       var p=0;
     }
     else {
       leaders = [];
     }
-
-
     res.render('leaderboard', {
       leaders: leaders
     })
@@ -149,40 +141,6 @@ router.post('/settings', isAuthenticated, function(req, res) {
   req.user.alert_when_follow = req.body.alert_when_follow
   req.user.save()
   return res.json({passed: true});
-});
-
-router.get('/posts/:post_id', function(request, response, next) {
-  var post_id = request.params.post_id;
-  var post = Posts.findOne({slug: post_id},
-    function(err, result) {
-      if (err) {
-        response.json({status: "No Post Found"});
-      }
-      else {
-        if (result)
-          {
-            var title = result.title;
-            var author = result.author;
-            var contents = result.content;
-            var author_link = '../'+author;
-
-            if (isNaN(result.viewCount)) {
-              var newViewCount = 1;
-            }
-            else {
-              var newViewCount = result.viewCount + 1;
-            }
-
-            result.update({viewCount: newViewCount});
-
-            response.render('post', {title: title, contents: contents, author: author, author_link: author_link, post: result});
-          }
-        else {
-          //return error page
-          response.redirect('/error');
-        }
-      }
-  });
 });
 
 router.get('/error', function(req, res) {
@@ -243,18 +201,6 @@ router.post('/twitter/createfriendship', isAuthenticated, function(req, res) {
   });
 })
 
-router.get('/newsfeed', isAuthenticated, function(req, res) {
-    var followed_user_ids = req.user.following
-    console.log(followed_user_ids)
-
-    Posts.find({author: followed_user_ids}, function(err, result) {
-      return res.render('newsfeed', { user: req.user,
-                                          large_photo: req.user.photo.replace(/_normal/i, ''),
-                                          posts: result
-                                          });
-    })
-});
-
 router.get('/:username/followers', function(req, res, next) {
   var username = req.params.username
   var currentUser = null;
@@ -262,41 +208,53 @@ router.get('/:username/followers', function(req, res, next) {
       currentUser = req.user;
   }
 
-  Users.findOne({ username : username }, function(err, existingUser) {
-    if (existingUser) {
-      Posts.find({author: existingUser.username}, null, {sort: {date: -1}}, function (err, posts) {
-        var title = existingUser.name + " (@" + existingUser.username + ")";
-        var description = title + " profile page";
-        var image = existingUser.photo.replace(/_normal/i, '')
-        var url = constants.BaseUrl + "/" + username;
+  var post_count = Posts.find({author: req.user.username}, function(err, rt) {
+    c = rt.length;
 
-        var followers = Users.find({ following : { $in : [username] }}, function(err, followers) {
+    var my_rank = Users.find({}).sort({viewScore: -1}).exec(function(err, userlist) {
+      var g = userlist.map(function(q) {return q.username} );
+      var b = g.indexOf(req.user.username) + 1;
 
-          return res.render('followers', { user: existingUser,
-            followers: followers,
-            large_photo: image,
-            posts: posts,
-            currentUser: currentUser,
-            title: title,
-            description: description,
-            image: image,
-            url: url,
-            twitterCreator: "@" + username,
-            openGraphType: "profile",
-            ogOtherData: {
-              "profile:username": username,
-            }
+      Users.findOne({ username : username }, function(err, existingUser) {
+        if (existingUser) {
+          Posts.find({author: existingUser.username}, null, {sort: {date: -1}}, function (err, posts) {
+            var title = existingUser.name + " (@" + existingUser.username + ")";
+            var description = title + " profile page";
+            var image = existingUser.photo.replace(/_normal/i, '')
+            var url = constants.BaseUrl + "/" + username;
+
+            var followers = Users.find({ following : { $in : [username] }}, function(err, followers) {
+
+              return res.render('followers', { user: existingUser,
+                followers: followers,
+                large_photo: image,
+                posts: posts,
+                currentUser: currentUser,
+                title: title,
+                description: description,
+                image: image,
+                url: url,
+                twitterCreator: "@" + username,
+                openGraphType: "profile",
+                ogOtherData: {
+                  "profile:username": username,
+                },
+                rank: b,
+                post_count: c
+              });
+            })
           });
-        })
-
+        }
+        if (err) {
+          // something bad happened
+          return done(err);
+        }
       });
-    }
+    })
 
-    if (err) {
-      // something bad happened
-      return done(err);
-    }
-  });
+  })
+
+
 })
 
 router.get('/:username/following', function(req,res,next) {
@@ -306,21 +264,33 @@ router.get('/:username/following', function(req,res,next) {
         currentUser = req.user;
     }
 
-    Users.findOne({ username : username }, function(err, existingUser) {
-      if (existingUser) {
-        Users.find({username: {$in : [existingUser.following] }}, function(err, following) {
-          return res.render('following',
-            { user: existingUser,
-              following: following,
-              large_photo: existingUser.photo })
+    var post_count = Posts.find({author: req.user.username}, function(err, rt) {
+      c = rt.length;
+      var my_rank = Users.find({}).sort({viewScore: -1}).exec(function(err, userlist) {
+        var g = userlist.map(function(q) {return q.username} );
+        var b = g.indexOf(req.user.username) + 1;
+        Users.findOne({ username : username }, function(err, existingUser) {
+          if (existingUser) {
+            Users.find({username: {$in : [existingUser.following] }}, function(err, following) {
+              return res.render('following',
+                { user: existingUser,
+                  following: following,
+                  large_photo: existingUser.photo,
+                  rank: b,
+                  post_count: c})
+            })
+          if (err) {
+            // something bad happened
+            console.log(err);
+            return done(err);
+          }
+        };
         })
-      if (err) {
-        // something bad happened
-        console.log(err);
-        return done(err);
-      }
-    };
+      })
+
     })
+
+
 })
 
 router.post('/tweetpost', isAuthenticated, function(req, res) {
@@ -470,36 +440,52 @@ router.get('/:username', function(req, res, next) {
       currentUser = req.user;
   }
 
-  Users.findOne({ username : username }, function(err, existingUser) {
-    if (existingUser) {
-      Posts.find({author: existingUser.username}, null, {sort: {created_at: -1}}, function (err, posts) {
-        var title = existingUser.name + " (@" + existingUser.username + ")";
-        var description = title + " profile page";
-        var image = existingUser.photo.replace(/_normal/i, '')
-        var url = constants.BaseUrl + "/" + username;
+  var post_count = Posts.find({author: req.user.username}, function(err, rt) {
+    c = rt.length;
+    var my_rank = Users.find({}).sort({viewScore: -1}).exec(function(err, userlist) {
+      var g = userlist.map(function(q) {return q.username} );
+      var b = g.indexOf(req.user.username) + 1;
+      Users.findOne({ username : username }, function(err, existingUser) {
+        if (existingUser) {
+          Posts.find({author: existingUser.username}, null, {sort: {created_at: -1}}, function (err, posts) {
+            var title = existingUser.name + " (@" + existingUser.username + ")";
+            var description = title + " profile page";
+            var image = existingUser.photo.replace(/_normal/i, '')
+            var url = constants.BaseUrl + "/" + username;
 
-        return res.render('user_profile', { user: existingUser,
-          large_photo: image,
-          posts: posts,
-          currentUser: currentUser,
-          title: title,
-          description: description,
-          image: image,
-          url: url,
-          twitterCreator: "@" + username,
-          openGraphType: "profile",
-          ogOtherData: {
-            "profile:username": username,
-          }
-        });
+            return res.render('user_profile', { user: existingUser,
+              large_photo: image,
+              posts: posts,
+              currentUser: currentUser,
+              title: title,
+              description: description,
+              image: image,
+              url: url,
+              twitterCreator: "@" + username,
+              openGraphType: "profile",
+              ogOtherData: {
+                "profile:username": username,
+              },
+              rank: b,
+              post_count: c
+            });
+          });
+        }
+
+        if (err) {
+          // something bad happened
+          return done(err);
+        }
       });
-    }
 
-    if (err) {
-      // something bad happened
-      return done(err);
-    }
-  });
+
+    })
+
+  })
+
+
+
+
 });
 
 router.post('/:username/follow', isAuthenticated, function(req, res, next) {
