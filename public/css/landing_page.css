@@ -1,0 +1,22 @@
+.cta-content {
+  vertical-align: center;
+  padding-top:10%;
+}
+
+.cta-container {
+  min-height:500px;
+}
+
+body {
+  background-color: #fff;
+  color:#068399;
+}
+
+.tweet-button-disabled {
+  display: block;
+  color: #2cbbd4;
+  font-size: 16px;
+  padding: 5px 60px;
+  border: 1px solid #2cbbd4;
+  margin: 0 auto;
+}
