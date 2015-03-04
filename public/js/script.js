@@ -159,9 +159,9 @@ $('#textArea').keyup(function() {
       length += splits[i].length;
     }
   }
-  $('.text-length').text( length + '/100');
-  if($('#textArea').text().length > 100){
-    $('#textArea').text($('#textArea').text().substring(0,99));
+  $('.text-length').text( length + '/90');
+  if($('#textArea').text().length > 90){
+    $('#textArea').text($('#textArea').text().substring(0, 89));
   }
 
   draw();
