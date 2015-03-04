@@ -52,10 +52,6 @@ function draw() {
 
 $(document).ready(function() {
 
-  var content = document.getElementById('t').textContent;
-  var htmlcontent = $('#m').html().toString();
-  var author = $('#profileUsername').text();
-
   // Format date strings
   $('.post-time').map(function() {
     var dateString = Date.parse($(this).text());
@@ -126,50 +122,50 @@ $(document).ready(function() {
   });
 
 
-  $('#credit').click(function() {
-    var $this = $(this);
-    checked = $this.is(':checked');
-    if (checked) {
-      $('.textBox').after('<div class="credit-preview">' + credit_text + '</div>');
+$('#credit').click(function() {
+  var $this = $(this);
+  checked = $this.is(':checked');
+  if (checked) {
+    $('.textBox').after('<div class="credit-preview">' + credit_text + '</div>');
+  } else {
+    $('.panel-body').find('.credit-preview').remove();
+  }
+});
+
+$('#font').click(function() {
+  var $this = $(this);
+  checked = $this.is(':checked');
+  if (checked) {
+    font = 'Merriweather';
+  } else {
+    font = 'Lato';
+  }
+  $('.panel-body').css('font-family', font);
+  draw();
+});
+
+
+$('#textArea').keyup(function() {
+  var text = $(this).val();
+  var splits = text.split(' ');
+  geturl = new RegExp("(^|[ \t\r\n])((ftp|http|https|gopher|mailto|news|nntp|telnet|wais|file|prospero|aim|webcal):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))", "g");
+  var length = 0;
+
+  for (var i = 0; i < splits.length; i++) {
+    if (splits[i].match(geturl) && splits[i].length > TCO_LENGTH) {
+      // it's a url and under max length
+      length += TCO_LENGTH;
     } else {
-      $('.panel-body').find('.credit-preview').remove();
+      length += splits[i].length;
     }
-  });
+  }
+  $('.text-length').text( length + '/100');
+  if($('#textArea').text().length > 100){
+    $('#textArea').text($('#textArea').text().substring(0,99));
+  }
 
-  $('#font').click(function() {
-    var $this = $(this);
-    checked = $this.is(':checked');
-    if (checked) {
-      font = 'Merriweather';
-    } else {
-      font = 'Lato';
-    }
-    $('.panel-body').css('font-family', font);
-    draw();
-  });
-
-
-  $('#textArea').keyup(function() {
-    var text = $(this).val();
-    var splits = text.split(' ');
-    geturl = new RegExp("(^|[ \t\r\n])((ftp|http|https|gopher|mailto|news|nntp|telnet|wais|file|prospero|aim|webcal):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))", "g");
-    var length = 0;
-
-    for (var i = 0; i < splits.length; i++) {
-      if (splits[i].match(geturl) && splits[i].length > TCO_LENGTH) {
-        // it's a url and under max length
-        length += TCO_LENGTH;
-      } else {
-        length += splits[i].length;
-      }
-    }
-    $('.text-length').text( length + '/100');
-    if($('#textArea').text().length > 100){
-      $('#textArea').text($('#textArea').text().substring(0,99));
-    }
-
-    draw();
-  });
+  draw();
+});
 
   $('#t').keyup(function() {
     var post_length = $('#t').text().length;
@@ -196,7 +192,6 @@ $(document).ready(function() {
     var btn = $(event.target);
     var username = btn.attr("data-username");
     btn.prop("disabled", true);
-    console.log("posting");
     $.post('/'+username+"/"+btn.attr("id"), {}, function(){
         btn.toggleClass("btn-info btn-danger").prop("disabled", false);
         if(btn.hasClass("btn-info")){
@@ -207,24 +202,26 @@ $(document).ready(function() {
     });
   });
 
-  $('.followuser').click(function() {
-    var username = $('#profileUsername').text()
+$('.followuser').click(function() {
+  console.log('following')
+  var username = $('#profileUsername').text()
 
-    $.post("/"+username+"/follow", function() {
-      console.log('friendship')
-      $('.followuser').text("Followed");
-    });
-
+  $.post("/"+username+"/follow", function() {
+    console.log('friendship')
+    $('.followuser').text("Followed");
   });
 
-  $('.unfollowuser').click(function() {
-    var username = $('#profileUsername').text()
-    console.log("unfollowing");
-    console.log(username);
-    $.post("/"+username+"/unfollow", function() {
-      $('.unfollowuser').text("Unfollowed")
-    });
+});
+
+$('.unfollowuser').click(function() {
+  console.log('unfollow')
+  var username = $('#profileUsername').text()
+  console.log("unfollowing");
+  console.log(username);
+  $.post("/"+username+"/unfollow", function() {
+    $('.unfollowuser').text("Unfollowed")
   });
+});
 
   $('#settings-form').submit(function(e) {
     $('#success-alert').addClass("hide");
