@@ -173,10 +173,10 @@ $(document).ready(function() {
 
   $('#t').keyup(function() {
     var post_length = $('#t').text().length;
-    if (post_length > 10000) {
-      $('#t').text($('#t').text().substring(0,9999));
+    if (post_length > 2000) {
+      $('#t').text($('#t').text().substring(0,1999));
     }
-    $('.post-length').text(post_length +' / 10000');
+    $('.post-length').text(post_length +' / 2000');
   });
 
   $(".upload-link").focus(function() {
@@ -250,7 +250,3 @@ $(window).resize(function() {
     draw();
   }, 200); // wait for 200ms
 });
-
-
-
-

@@ -11,7 +11,7 @@ block content
         .post-container
           .post-author
             a(href="/#{post.author}")
-              img.author-image(src="#")
+              img.author-image(src="#{avatar_url}")
               .author-name #{post.author}
           .post-body
             h1.post-title #{post.title}
@@ -22,7 +22,7 @@ block content
               .post-stats
                 span.retweets
                   strong #{post.viewCount}
-                  |  Views 
+                  |  Views
             .post-social
               button.btn.btn-info.followuser
                 span Follow

@@ -97,7 +97,7 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
 
       f.push(req.user.username)
       avatar_urls[req.user.username] = req.user.photo
-      Posts.find({author: { $in : f.getUnique()}}, null, {sort: {created_at: -1}}, function(err, result) {
+      Posts.find({author: { $in : f.getUnique()}}, null, {sort: {date: -1}}, function(err, result) {
         return res.render('dashboard', { user: req.user,
                                             large_photo: req.user.photo.replace(/_normal/i, ''),
                                             posts: result,
@@ -166,7 +166,7 @@ router.post('/posts', isAuthenticated, function(request, response) {
   var author = request.body.author;
   var slug = getSlug(title);
 
-  var max_content_length = 10000;
+  var max_content_length = 2000;
   if (content.length <= max_content_length) {
     var post = new Posts({
       title: title,
@@ -321,7 +321,7 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
   var slug = getSlug(title);
 
   // CREATE POST OBJECT
-  var max_content_length = 10000;
+  var max_content_length = 2000;
   if (content.length <= max_content_length) {
     var post = new Posts({
       title: title,
@@ -562,39 +562,44 @@ router.post('/:username/unfollow', isAuthenticated, function(req, res, next) {
 router.get('/:username/:post_id', function(request, response) {
   var post_id = request.params.post_id;
   var username = request.params.username
-  var post = Posts.findOne({slug: post_id, author: username}, function(err, result) {
-    if (err) {
-      console.log(err);
-      response.redirect('/error');
-    }
-    else {
-      if (result)
-        {
-          var title = result.title;
-          var author = result.author;
-          var contents = result.content;
-          var author_link = '../'+author;
-          var created_at = result.created_at
 
-          if (isNaN(result.viewCount)) {
-            var newViewCount = 1;
+  var user = Users.findOne({username: username}, function (err, u) {
+    var avatar_url = u.photo;
+    console.log('A', avatar_url)
+    var post = Posts.findOne({slug: post_id, author: username}, function(err, result) {
+      if (err) {
+        console.log(err);
+        response.redirect('/error');
+      }
+      else {
+        if (result)
+          {
+            var title = result.title;
+            var author = result.author;
+            var contents = result.content;
+            var author_link = '../'+author;
+
+            if (isNaN(result.viewCount)) {
+              var newViewCount = 1;
+            }
+            else {
+              var newViewCount = result.viewCount + 1;
+            }
+            result.viewCount = newViewCount;
+            result.save();
+
+            response.render('post', {avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result});
           }
           else {
-            var newViewCount = result.viewCount + 1;
+            //return error page
+            response.redirect('/error');
           }
-          result.viewCount = newViewCount;
-          result.save();
+      }
+    })
 
-          response.render('post', { author_link: author_link, 
-                                    post: result
-                                  });
-        }
-        else {
-          //return error page
-          response.redirect('/error');
-        }
-    }
+
   })
+
 })
 
 module.exports = router;
