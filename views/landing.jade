@@ -1,57 +1,47 @@
 extends layout
 
 block content
-  link(href='/css/style.css', rel='stylesheet')
   link(href='/css/medium-editor.min.css', rel='stylesheet')
   link(href='/css/flat.min.css', rel='stylesheet')
+  link(href='/css/landing_page.css', rel='stylesheet')
 
-  .container
-    .row.header
-      .col-lg-10.col-lg-offset-1
-        .col-lg-6.col-lg-offset-3
-          h1 Squall.io
-
-    .row.header
-      .col-lg-10.col-lg-offset-1
-        p.lead Write down a thought.  Tweet up a storm.  All in one go.
-        col-lg-6.col-lg-offset-3
-          a.btn.btn-info.btn-lg.login-btn(href="/login") Login with Twitter
-
-      .col-lg-6.col-md-6.col-sm-6
-        .well.infobox
-          p.lead-text
-            | The single greatest strength of Twitter has always been its simplicity.
-            | There's a lot to be said in 140 characters. But there's even more that
-            | just needs more space.
-          p.lead-text
-            | Storming.ME allows you to compose a tweet with no character limit and
-            | post it as an image for free.
-          a.btn.btn-default.example-btn(href="https://twitter.com/karangoel/status/546098580096704513", target="_blank", style="margin-right:8px;") Example Tweet
-          a.btn.btn-default.why-btn(href="https://medium.com/five-hundred-words/hacking-the-tweet-stream-52ed63a0731", target="_blank") Why Storming.ME
-    .row
-      .col-lg-4.col-md-4.col-sm-4
-        .panel.panel-default
-          .panel-body
-            h2 No Character Limit
-            i.icon.mdi-action-subject
-            p Compose and post a tweet with
-              b no character limit
-              | . So now get the message across in as many words as it takes.
-      .col-lg-4.col-md-4.col-sm-4
-        .panel.panel-default
-          .panel-body
-            h2 Higher Engagement
-            i.icon.mdi-social-group-add
-            p Tweets with media have proven to be more engaging. Even
-              a(href="https://twitter.com/cdixon/status/535256285500178433", target="_blank") Chris Dixon
-              |  agrees. Tweets created using Storming.ME will be loved by your followers.
-      .col-lg-4.col-md-4.col-sm-4
-        .panel.panel-default
-          .panel-body
-            H2 Fully Responsive
-            i.icon.mdi-hardware-phonelink
-            p Storming.ME has a perfectly responsive dashboard where you can compose your
-              | tweetstorm conveniently on any device.
+  .container.cta-container
+    .row.col-md-10.col-md-offset-1.text-center.cta-content
+      .col-md-5.col-md-offset-1.text-left
+        h2 Express yourself on Twitter, without character limits
+        h3 Create & share images of text
+        a.btn.btn-info.btn-lg.login-btn(href="/login") Login with Twitter
+      .col-md-6
+        .post-container
+          .post-author
+            img.author-image(src='https://pbs.twimg.com/profile_images/420314816444502016/xj5TnUsx_400x400.jpeg')
+            .author-name Elon Musk
+          .post-body
+            h1.post-title 
+              span Title
+            .post-content content goes here
+          .post-footer
+            .post-meta
+              .post-time #{new Date}
+              .post-stats
+                span.retweets
+                  strong 90
+                  |  Retweets
+                span.favorites
+                  strong 180
+                  |  Favorites
+            .post-social
+              .tweet-button-disabled
+                i.fa.fa-twitter
+                |  Tweet This
+              //
+                .post-share
+                  a(href='#')
+                    i.fa.fa-facebook-official
+                  a(href='#')
+                    i.fa.fa-google-plus-square
+                  a(href='#')
+                    i.fa.fa-pinterest-square
 
 
   include footer
