@@ -14,8 +14,10 @@ block content
               img.author-image(src="#{avatar_url}")
               .author-name #{post.author}
           .post-body
-            h1.post-title#t #{post.title}
-            .post-content#m !{post.content}
+            .panel-default
+              .panel-body#t
+                h1.post-title #{post.title}
+                .post-content#m !{post.content}
           .post-footer
             .post-meta
               .post-time #{post.created_at}
@@ -41,10 +43,6 @@ block content
 
 
   img#image(style="display:none")
-
-
-  span#profileUsername(style="display:none") #{post.author}
-
 
   include footer
   script(src='/js/postscripter.js')

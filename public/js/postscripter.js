@@ -10,8 +10,9 @@ $(document).ready(function() {
       $('.sharepost').text('Your Tweet is Betwotten');
     });
   });
+
+
+
 });
-
-
 
 window.onload = draw;
