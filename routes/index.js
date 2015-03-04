@@ -99,6 +99,8 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
       avatar_urls[req.user.username] = req.user.photo
       Posts.find({author: { $in : f.getUnique()}}, null, {sort: {date: -1}}, function(err, result) {
         console.log(c)
+        console.log("UNIQUE USERNAMES", f)
+        console.log("POST RESULTS RAW", result)
         return res.render('dashboard', { user: req.user,
                                             large_photo: req.user.photo.replace(/_normal/i, ''),
                                             posts: result,
