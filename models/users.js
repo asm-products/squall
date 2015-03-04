@@ -37,6 +37,7 @@ userSchema.method("addFollower", function(otherUser, callback){
       return callback(err);
     }
     _this.followerCount += 1;
+
    _this.save(function(err){
       if (err) {
         return callback(err);

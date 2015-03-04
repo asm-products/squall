@@ -518,8 +518,6 @@ router.post('/:username/follow', isAuthenticated, function(req, res, next) {
         }
       });
 
-
-
     }
 
     else {
@@ -577,8 +575,8 @@ router.get('/:username/:post_id', function(request, response) {
           else {
             var newViewCount = result.viewCount + 1;
           }
-
-          result.update({viewCount: newViewCount});
+          result.viewCount = newViewCount;
+          result.save();
 
           response.render('post', {title: title, contents: contents, author: author, author_link: author_link, post: result});
         }
