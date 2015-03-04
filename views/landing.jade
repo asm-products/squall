@@ -5,36 +5,40 @@ block content
   link(href='/css/flat.min.css', rel='stylesheet')
   link(href='/css/landing_page.css', rel='stylesheet')
 
-  .container.cta-container
-    .row.col-md-10.col-md-offset-1.text-center.cta-content
-      .col-md-6.text-center.pitch
-        img.brand(src="squall.svg")
-        h2 Express yourself on Twitter, without character limits
-        h3.secondary-text-color Create & share images of text
-        a.btn-lg.login-btn(href="/login") Sign in with Twitter
-      .col-md-6.sample-squall
-        .post-container
-          .post-body
-            .media
-              .post-author.pull-left
-                img.media-object.author-image(src='https://pbs.twimg.com/profile_images/420314816444502016/xj5TnUsx_400x400.jpeg')
-              .media-body
-                .author-name Elon Musk
+  .cta-container.container
+    .row
+      .col-md-6
+        .row
+          .col-md-8.col-md-offset-3.text-center
+            .pitch
+              img.brand(src="squall.svg")
+              h2 Express yourself on Twitter, without character limits
+              h3.secondary-text-color Create & share images of text
+              a.btn-lg.login-btn(href="/login") Sign in with Twitter
+      .col-md-6(style="background:#068399;")
+        .row
+          .col-md-10.col-md-offset-1.sample-squall
+            .post-container
+              .post-body
+                .media
+                  .post-author.pull-left
+                    img.media-object.author-image(src='https://pbs.twimg.com/profile_images/420314816444502016/xj5TnUsx_400x400.jpeg')
+                  .media-body
+                    .author-name Elon Musk
+                    .post-meta
+                      .post-time #{new Date}
+                h1.post-title
+                  span First Day on Mars
+                .post-content It's pretty Red.  Otherwise things are cool.  Getting bored actually... thinking Titan would be noice next summer.
+              .post-footer
                 .post-meta
                   .post-time #{new Date}
-            h1.post-title
-              span First Day on Mars
-            .post-content It's pretty Red.  Otherwise things are cool.  Getting bored actually... thinking Titan would be noice next summer.
-          .post-footer
-            .post-meta
-              .post-time #{new Date}
-              .post-stats
-                span.retweets
-                  strong 90
-                  |  Retweets
-                span.favorites
-                  strong 180
-                  |  Favorites
-
+                  .post-stats
+                    span.retweets
+                      strong 90
+                      |  Retweets
+                    span.favorites
+                      strong 180
+                      |  Favorites
 
   include footer
