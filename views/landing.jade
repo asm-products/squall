@@ -6,10 +6,12 @@ block content
   link(href='/css/landing_page.css', rel='stylesheet')
 
   .container.cta-container
+    .row.text-center
+      img.brand(src="squall.svg")
     .row.col-md-10.col-md-offset-1.text-center.cta-content
-      .col-md-5.col-md-offset-1.text-left
+      .col-md-6.text-left.pitch
         h2 Express yourself on Twitter, without character limits
-        h3 Create & share images of text
+        h3.secondary-text-color Create & share images of text
         a.btn.btn-info.btn-lg.login-btn(href="/login") Login with Twitter
       .col-md-6
         .post-container
@@ -30,18 +32,6 @@ block content
                 span.favorites
                   strong 180
                   |  Favorites
-            .post-social
-              .tweet-button-disabled
-                i.fa.fa-twitter
-                |  Tweet This
-              //
-                .post-share
-                  a(href='#')
-                    i.fa.fa-facebook-official
-                  a(href='#')
-                    i.fa.fa-google-plus-square
-                  a(href='#')
-                    i.fa.fa-pinterest-square
 
 
   include footer

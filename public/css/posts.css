@@ -37,6 +37,10 @@ p {
   font-weight: normal;
 }
 
+.post-body {
+  text-align: left;
+}
+
 .post-title {
   color: #2cbbd4;
   font-size: 33px;

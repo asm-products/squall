@@ -1,6 +1,9 @@
+@font-face {
+    font-family: 'Eagle-Book'; /*a name to be used later*/
+    src: url('/fonts/Eagle-Book.otf'); /*URL to font*/
+}
+
 .cta-content {
-  vertical-align: center;
-  padding-top:10%;
 }
 
 .cta-container {
@@ -10,6 +13,20 @@
 body {
   background-color: #fff;
   color:#068399;
+}
+
+.pitch {
+  padding-top: 2em;
+}
+
+.pitch > h2, .pitch > h3, .pitch > a {
+  /*font-family: 'Eagle-Book';*/
+}
+
+img.brand {
+  padding-top:5%;
+  width:250px;
+  margin-bottom:3em;
 }
 
 .tweet-button-disabled {
