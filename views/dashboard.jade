@@ -36,15 +36,16 @@ block content
               .ripple-wrapper
 
         .row.col-md-10.col-md-offset-1
-          each val in posts
+          each val, index in posts
             .row.header
               .col-lg-12
                 .post-container
                   .post-author
-                    img.author-image(src='https://pbs.twimg.com/profile_images/420314816444502016/xj5TnUsx_400x400.jpeg')
-                    .author-name Elon Musk
+                    a(href="/#{val.author}")
+                      img.author-image(src="#{avatar_urls[val.author]}")
+                      .author-name #{val.author}
                   .post-body
-                    h1.post-title 
+                    h1.post-title
                       a(href="/#{val.author}/#{val.slug}")
                         span #{val.title}
                     .post-content!= val.content
@@ -59,11 +60,11 @@ block content
                           span.favorites
                             strong 180
                             |  Favorites
-                    .post-social
-                      .tweet-button
-                        a(href='#')
-                          i.fa.fa-twitter
-                          |  Tweet This
+              //      .post-social
+                //      .tweet-button
+                  //      a(href='#')
+                    //      i.fa.fa-twitter
+                      //    |  Tweet This
                       //
                         .post-share
                           a(href='#')

@@ -90,13 +90,21 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
     c = rt.length;
     Users.find({username: {$in : [req.user.following] }}, function(err, following) {
       var f = following.map(function(a) {return a.username})
+      var au = following.map(function(b) {return b.photo})
+      var avatar_urls = {}
+      for(i = 0; i < f.length; i++) {
+        avatar_urls[f[i]] = au[i];
+      }
+
       f.push(req.user.username)
+      avatar_urls[req.user.username] = req.user.photo
       Posts.find({author: { $in : f.getUnique()}}, null, {sort: {date: -1}}, function(err, result) {
         console.log(c)
         return res.render('dashboard', { user: req.user,
                                             large_photo: req.user.photo.replace(/_normal/i, ''),
                                             posts: result,
-                                            post_count: c
+                                            post_count: c,
+                                            avatar_urls: avatar_urls
                                             });
       })
     })
