@@ -134,16 +134,7 @@ $(document).ready(function() {
     } else {
       $('.panel-body').find('.credit-preview').remove();
     }
-
-  }
-
-  $('.text-length').text( length + '/90');
-    if($('#textArea').text().length > 90){
-      $('#textArea').text($('#textArea').text().substring(0,89));
-    }
-    draw();
   });
-
 
   $('#font').click(function() {
     var $this = $(this);
@@ -177,6 +168,7 @@ $(document).ready(function() {
       $('#textArea').text($('#textArea').text().substring(0,99));
     }
 
+    draw();
   });
 
   $('#t').keyup(function() {
