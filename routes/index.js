@@ -98,9 +98,6 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
       f.push(req.user.username)
       avatar_urls[req.user.username] = req.user.photo
       Posts.find({author: { $in : f.getUnique()}}, null, {sort: {date: -1}}, function(err, result) {
-        console.log(c)
-        console.log("UNIQUE USERNAMES", f)
-        console.log("POST RESULTS RAW", result)
         return res.render('dashboard', { user: req.user,
                                             large_photo: req.user.photo.replace(/_normal/i, ''),
                                             posts: result,
@@ -464,7 +461,7 @@ router.get('/:username', function(req, res, next) {
 
   Users.findOne({ username : username }, function(err, existingUser) {
     if (existingUser) {
-      Posts.find({author: existingUser.username}, null, {sort: {date: -1}}, function (err, posts) {
+      Posts.find({author: existingUser.username}, null, {sort: {created_at: -1}}, function (err, posts) {
         var title = existingUser.name + " (@" + existingUser.username + ")";
         var description = title + " profile page";
         var image = existingUser.photo.replace(/_normal/i, '')
