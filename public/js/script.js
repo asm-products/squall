@@ -160,8 +160,9 @@ $('#textArea').keyup(function() {
       length += splits[i].length;
     }
   }
+
   $('.text-length').text( length + '/90 characters left');
-  if($('#textArea').text().length > 90){
+  if(length > 90){
     $('#textArea').text($('#textArea').text().substring(0, 89));
   }
   $('#previewtitle').text($('#textArea').val());

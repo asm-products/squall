@@ -13,7 +13,7 @@ block content
     .row.header
       include profile_component
 
-      .container.col-md-8.dashboard-feed
+      .container.col-md-8.dashboard-feed-container
         .row.col-md-10.col-md-offset-1
           .form-group
             .input-group.squall-title
@@ -36,6 +36,7 @@ block content
               | Publish
               .ripple-wrapper
 
+
         .row.col-md-10.col-md-offset-1
           .panel.panel-body#preview(style="display:none")
 
@@ -43,6 +44,7 @@ block content
             .post-content#previewcontent
           img#image(style="display:none")
 
+        .row.col-md-10.col-md-offset-1.dashboard-feed
           //include leaderboard_component
           each val, index in posts
             .row.header
@@ -52,11 +54,11 @@ block content
                     a(href="/#{val.author}")
                       img.author-image(src="#{avatar_urls[val.author]}")
                       .author-name #{val.author}
-                  .post-body
+                  .post-body.dashboard-post-body
                     h1.post-title
                       a(href="/#{val.author}/#{val.slug}")
                         span #{val.title}
-                    .post-content!= val.content
+                     .post-content!= val.content
                   .post-footer
                     .post-meta
                       .post-time #{val.created_at}
