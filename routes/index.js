@@ -98,18 +98,45 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
       f.push(req.user.username)
       avatar_urls[req.user.username] = req.user.photo
 
-      Posts.find({author: { $in : f.getUnique()}}, null, {sort: {created_at: -1}}, function(err, result) {
+      var top_users = Users.find({}).sort({viewScore: -1}).limit(10).exec(function(err, leaders) {
+        if (leaders) {
+          var p=0;
+        }
+        else {
+          leaders = [];
+        }
+        Posts.find({author: { $in : f.getUnique()}}, null, {sort: {created_at: -1}}, function(err, result) {
 
-        return res.render('dashboard', { user: req.user,
-                                            large_photo: req.user.photo.replace(/_normal/i, ''),
-                                            posts: result,
-                                            post_count: c,
-                                            avatar_urls: avatar_urls
-                                            });
+          console.log(leaders)
+          return res.render('dashboard', { user: req.user,
+                                              large_photo: req.user.photo.replace(/_normal/i, ''),
+                                              posts: result,
+                                              post_count: c,
+                                              avatar_urls: avatar_urls,
+                                              leaders: leaders
+                                              });
+        })
       })
+
     })
   })
 });
+
+router.get('/leaderboard', function(req, res) {
+  var top_users = Users.find({}).sort({viewScore: -1}).limit(40).exec(function(err, leaders) {
+    if (leaders) {
+      var p=0;
+    }
+    else {
+      leaders = [];
+    }
+
+
+    res.render('leaderboard', {
+      leaders: leaders
+    })
+})
+})
 
 router.get('/settings', isAuthenticated, function(req, res) {
   return res.render('user_settings', { user: req.user });
@@ -513,7 +540,6 @@ router.post('/:username/follow', isAuthenticated, function(req, res, next) {
     else {
       return res.status(404).json({message: "User @"+username+" Not Found"});
     }
-
   });
 });
 
@@ -550,7 +576,9 @@ router.get('/:username/:post_id', function(request, response) {
   var user = Users.findOne({username: username}, function (err, u) {
     if (u) {
       var avatar_url = u.photo;
-      console.log('A', avatar_url)
+
+      u.addView();
+
       var post = Posts.findOne({slug: post_id, author: username}, function(err, result) {
         if (err) {
           console.log(err);

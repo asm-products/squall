@@ -1,0 +1,10 @@
+.col-3-md
+  .panel-body
+    .post_container
+      label.control-label Title
+      each val, index in leaders
+        span
+          p #{index+1}
+          p #{val.username}
+          p #{val.viewScore}
+          img.img-circle(src='#{val.photo}', width="40px")
