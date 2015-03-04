@@ -9,10 +9,16 @@ block content
     .row.col-md-10.col-md-offset-1.text-center.cta-content
       .col-md-6.text-center.pitch
         img.brand(src="squall.svg")
-        h2 Write beyond the usual constraints.
-        h3.secondary-text-color Use Twitter to share something substantial.
-        h3.secondary-text-color If a picture is worth a thousand words, then a Squall is worth a dozen tweets.
-        a.btn-lg.login-btn(href="/login") Sign in with Twitter
+        h2 Express yourself on Twitter, with more character
+        h4.secondary-text-color If a picture is worth a thousand words, then a Squall is worth a dozen tweets.
+        h3.signin-button
+          a.btn-lg.login-btn(href="/login") Sign in with Twitter
+        .assembly-footer.light-gray
+          p.light-gray
+            | Built with love on&nbsp;
+            a.light-gray(href="https://assembly.com/squall", target="_blank") 
+              img.asm-flag(src="/asm_flag.svg")
+              | Assembly
       .col-md-6.sample-squall
         .post-container
           .post-body
@@ -24,8 +30,10 @@ block content
                 .post-meta
                   .post-time #{new Date}
             h1.post-title
-              span First Day on Mars
-            .post-content It's pretty Red.  Otherwise things are cool.  Getting bored actually... thinking Titan would be noice next summer.
+              span Need more than 140 characters on Twitter? Use Squall.
+            .post-content
+              p Squall is the easiest way to publish on Twitter without hitting that 140 character limit. Write your post, give it a title, and hit publish. It's that simple.
+              p Signup to start sharing your brief thoughts, experiences, and tips. Squall will publish each post as a simple, beautiful image to your Twitter stream for all to read as well as collect them at Squall.io.
           .post-footer
             .post-meta
               .post-time #{new Date}

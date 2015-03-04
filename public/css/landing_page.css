@@ -19,6 +19,15 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
   font-family: 'Lato';
 }
 
+img.asm-flag {
+  height:14px;
+  margin:-4px 4px 0 0;
+}
+
+.signin-button {
+  margin-top:1.5em;
+}
+
 .pitch {
   padding-top: 2em;
   margin-bottom:100px;
@@ -43,13 +52,30 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
   background:black;
 }
 
+.footer {
+  display: none;
+}
+
+h1.post-title {
+  font-size:18px;
+}
+
+.post-content p {
+  font-size: 14px;
+}
+
 a.login-btn {
-  top: 1.5em;
   background-color: #fff;
   color:#068399;
   padding:0.5em 1em;
-  position: relative;
   border:#068399 solid 1px;
+}
+
+.assembly-footer {
+  margin-top: 3em;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 img.brand {
