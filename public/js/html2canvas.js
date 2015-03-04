@@ -2602,7 +2602,7 @@ _html2canvas.Util.Support = function (options, doc) {
     if (ctx === false) {
       return false;
     }
-    canvas.width = canvas.height = 10;
+    canvas.width = canvas.height = 40;
     img.src = [
     "data:image/svg+xml,",
     "<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'>",
