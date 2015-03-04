@@ -7,7 +7,7 @@
 }
 
 .cta-container {
-  min-height:500px;
+  margin-top: 75px;
 }
 
 body {
@@ -15,18 +15,47 @@ body {
   color:#068399;
 }
 
-.pitch {
-  padding-top: 2em;
+body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
+  font-family: 'Lato';
 }
 
-.pitch > h2, .pitch > h3, .pitch > a {
-  /*font-family: 'Eagle-Book';*/
+.pitch {
+  padding-top: 2em;
+  margin-bottom:100px;
+}
+
+.media-body {
+  margin: 1em 0 0;
+  padding-top: 0.5em;
+}
+
+.post-author {
+  margin: 1em 0 0;
+}
+
+.left {
+  width:50%;
+  background:green;
+}
+
+.right {
+  width:50%;
+  background:black;
+}
+
+a.login-btn {
+  top: 1.5em;
+  background-color: #fff;
+  color:#068399;
+  padding:0.5em 1em;
+  position: relative;
+  border:#068399 solid 1px;
 }
 
 img.brand {
   padding-top:5%;
   width:250px;
-  margin-bottom:3em;
+  margin-bottom:1em;
 }
 
 .tweet-button-disabled {

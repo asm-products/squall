@@ -6,20 +6,23 @@ block content
   link(href='/css/landing_page.css', rel='stylesheet')
 
   .container.cta-container
-    .row.text-center
-      img.brand(src="squall.svg")
     .row.col-md-10.col-md-offset-1.text-center.cta-content
-      .col-md-6.text-left.pitch
+      .col-md-6.text-center.pitch
+        img.brand(src="squall.svg")
         h2 Write beyond the usual constraints.
         h3.secondary-text-color Use Twitter to share something substantial.
         h3.secondary-text-color If a picture is worth a thousand words, then a Squall is worth a dozen tweets.
-        a.btn.btn-info.btn-lg.login-btn(href="/login") Login with Twitter
-      .col-md-6
+        a.btn-lg.login-btn(href="/login") Sign in with Twitter
+      .col-md-6.sample-squall
         .post-container
-          .post-author
-            img.author-image(src='https://pbs.twimg.com/profile_images/420314816444502016/xj5TnUsx_400x400.jpeg')
-            .author-name Elon Musk
           .post-body
+            .media
+              .post-author.pull-left
+                img.media-object.author-image(src='https://pbs.twimg.com/profile_images/420314816444502016/xj5TnUsx_400x400.jpeg')
+              .media-body
+                .author-name Elon Musk
+                .post-meta
+                  .post-time #{new Date}
             h1.post-title
               span First Day on Mars
             .post-content It's pretty Red.  Otherwise things are cool.  Getting bored actually... thinking Titan would be noice next summer.
