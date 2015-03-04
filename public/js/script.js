@@ -38,7 +38,7 @@ var editor = new MediumEditor('.editable', {
   buttonLabels: 'fontawesome',
   extensions: {
     'highlight': new Highlighter()
-  }
+  }, placeholder: "asdfasdfadf"
 });
 
 function draw() {
@@ -51,6 +51,8 @@ function draw() {
 }
 
 $(document).ready(function() {
+
+  autosize(document.querySelectorAll('textarea'));
 
   // Format date strings
   $('.post-time').map(function() {
@@ -159,7 +161,7 @@ $('#textArea').keyup(function() {
       length += splits[i].length;
     }
   }
-  $('.text-length').text( length + '/90');
+  $('.text-length').text( length + '/90 characters left');
   if($('#textArea').text().length > 90){
     $('#textArea').text($('#textArea').text().substring(0, 89));
   }
@@ -172,7 +174,7 @@ $('#textArea').keyup(function() {
     if (post_length > 2000) {
       $('#t').text($('#t').text().substring(0,1999));
     }
-    $('.post-length').text(post_length +' / 2000');
+    $('.post-length').text(post_length +' / 2000 characters left');
   });
 
   $(".upload-link").focus(function() {

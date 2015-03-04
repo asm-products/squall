@@ -6,9 +6,18 @@ body {
   background-color:#fff;
 }
 
-.editable:empty:not(:focus):before{
+/*.editable:empty:not(:focus):before{
   content: attr(data-ph);
   color: rgba(0, 0, 0, .4);
+}*/
+
+.medium-editor-placeholder:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: attr(data-placeholder)!important;
+  font-style: normal !important;
+  color:#b6b6b6 !important;
 }
 
 .container-full {
@@ -53,22 +62,28 @@ body {
   margin: 0 0 10px 5px;
 }
 
+.dashboard-feed {
+  padding-top: 3em;
+}
+
 #textArea {
   display: block;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 6px;
   width: 100%;
-  height: 65px;
+  height: auto;
   resize: vertical;
-  border: 1px solid #ffffff;
-  border-radius: 3px;
+  border:none;
+  padding: 0.5em;
+}
+
+.squall-title {
+  border-bottom: 1px solid #b6b6b6;
 }
 
 #textArea:focus {
   outline: 0;
-  border-color: #50a5e6;
-  box-shadow: inset 0 0 0 1px rgba(0,132,180,0.7);
 }
 
 .rand-bg-btn {
@@ -92,6 +107,16 @@ a:hover {
   margin-bottom: 40px;
   min-height: 50px;
 }
+
+.squall-content {
+  border:none;
+  border-bottom: 1px solid #b6b6b6;
+}
+
+.squall-content > .panel-body {
+  padding: 0em 0.9em;
+}
+
 
 .footer {
   margin-top: 80px;
