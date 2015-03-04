@@ -28,6 +28,8 @@ block content
               .editable.textBox(tabindex="1", data-placeholder="Type your text")#m
           .post-length.light-gray 0/2000 characters left
 
+          a.btn.btn-info.previewtoggle Show preview
+
           //- Tweet button
           .btn-group.pull-right
             a.btn.btn-info.tweet-button
@@ -35,6 +37,12 @@ block content
               .ripple-wrapper
 
         .row.col-md-10.col-md-offset-1
+          .panel.panel-body#preview(style="display:none")
+
+            h1.post-title#previewtitle
+            .post-content#previewcontent
+          img#image(style="display:none")
+
           //include leaderboard_component
           each val, index in posts
             .row.header
@@ -82,8 +90,7 @@ block content
         h4 You just hacked the Tweetstorm.
         .embed
 
-  img#image(style="display:none")
-  span#profileUsername(style="display:none") #{user.username}
 
+  span#profileUsername(style="display:none") #{user.username}
 
   include footer

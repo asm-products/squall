@@ -13,9 +13,10 @@
         p
           .big-number-label posts
       .col-sm-12.text-center.bottom-margin
-        .big-number #{rank}
-        p
-          .small-number-label rank
+        a(href="/leaderboard")
+          .big-number #{rank}
+          p
+            .small-number-label rank
       .col-sm-6.bottom-margin
         a.secondary-text-color(href="/#{user.username}/following")
           span.normal-font-size #{user.following.length}
