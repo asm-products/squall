@@ -444,7 +444,7 @@ router.get('/:username', function(req, res, next) {
 
   Users.findOne({ username : username }, function(err, existingUser) {
     if (existingUser) {
-      Posts.find({author: existingUser.username}, null, {sort: {created_at: -1}}, function (err, posts) {
+      Posts.find({author: existingUser.username}, null, {sort: {date: -1}}, function (err, posts) {
         var title = existingUser.name + " (@" + existingUser.username + ")";
         var description = title + " profile page";
         var image = existingUser.photo.replace(/_normal/i, '')
