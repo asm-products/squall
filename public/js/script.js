@@ -42,7 +42,7 @@ var editor = new MediumEditor('.editable', {
 });
 
 function draw() {
-  html2canvas(document.getElementById('t'), {
+  html2canvas(document.getElementById('preview'), {
     allowTaint: true,
     onrendered: function(canvas) {
       document.getElementById('image').src = canvas.toDataURL();
@@ -146,7 +146,6 @@ $('#font').click(function() {
   draw();
 });
 
-
 $('#textArea').keyup(function() {
   var text = $(this).val();
   var splits = text.split(' ');
@@ -166,8 +165,8 @@ $('#textArea').keyup(function() {
   if(length > 90){
     $('#textArea').text($('#textArea').text().substring(0, 89));
   }
-
-  draw();
+  $('#previewtitle').text($('#textArea').val());
+  draw()
 });
 
   $('#t').keyup(function() {
@@ -176,6 +175,9 @@ $('#textArea').keyup(function() {
       $('#t').text($('#t').text().substring(0,1999));
     }
     $('.post-length').text(post_length +' / 2000 characters left');
+
+    $('#previewcontent').html($('#t').html());
+    draw()
   });
 
   $(".upload-link").focus(function() {
@@ -187,7 +189,8 @@ $('#textArea').keyup(function() {
        luminosity: 'light'
     });
     $('.panel-body').css('background-color', color);
-    draw();
+  draw()
+
   });
 
   //Catching this event on the body means that we don't have to re-attach click handlers when swapping ids.
@@ -242,6 +245,9 @@ $('.unfollowuser').click(function() {
   });
 })
 
+$('.previewtoggle').click(function() {
+  $('#preview').toggle();
+})
 
 $(window).resize(function() {
   clearTimeout(timer);
