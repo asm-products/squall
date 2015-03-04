@@ -211,10 +211,9 @@ $('.followuser').click(function() {
   var username = $('#profileUsername').text()
 
   $.post("/"+username+"/follow", function() {
+    console.log('friendship')
     $('.followuser').text("Followed");
   });
-
-  $.post('twitter/createfriendship', { username: username })
 
 });
 
