@@ -15,8 +15,10 @@ block content
                 .col-lg-8.col-lg-offset-2
                   each val in following
                     .row.header
-                      a(href="/#{val}")
-                        p #{val}
+                      a(href="/#{val.username}")
+                        span
+                          img.author-image(src="#{val.photo}")
+                          p #{val.username}
 
 
 span#profileUsername(style="display:none") #{user.username}

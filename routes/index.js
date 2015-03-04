@@ -271,45 +271,27 @@ router.get('/:username/followers', function(req, res, next) {
 })
 
 router.get('/:username/following', function(req,res,next) {
-  var username = req.params.username
-  var currentUser = null;
-  if(req.isAuthenticated()){
-      currentUser = req.user;
-  }
-  console.log("following")
-  Users.findOne({ username : username }, function(err, existingUser) {
-    if (existingUser) {
-      Posts.find({author: existingUser.username}, null, {sort: {date: -1}}, function (err, posts) {
-        var title = existingUser.name + " (@" + existingUser.username + ")";
-        var description = title + " profile page";
-        var image = existingUser.photo.replace(/_normal/i, '')
-        var url = constants.BaseUrl + "/" + username;
-
-        return res.render('following', { user: existingUser,
-          following: existingUser.following,
-          large_photo: image,
-          posts: posts,
-          currentUser: currentUser,
-          title: title,
-          description: description,
-          image: image,
-          url: url,
-          twitterCreator: "@" + username,
-          openGraphType: "profile",
-          ogOtherData: {
-            "profile:username": username,
-          }
-        });
-
-      });
+    var username = req.params.username
+    var currentUser = null;
+    if(req.isAuthenticated()){
+        currentUser = req.user;
     }
 
-    if (err) {
-      // something bad happened
-      console.log(err);
-      return done(err);
-    }
-  });
+    Users.findOne({ username : username }, function(err, existingUser) {
+      if (existingUser) {
+        Users.find({username: {$in : [existingUser.following] }}, function(err, following) {
+          return res.render('following',
+            { user: existingUser,
+              following: following,
+              large_photo: existingUser.photo })
+        })
+      if (err) {
+        // something bad happened
+        console.log(err);
+        return done(err);
+      }
+    };
+    })
 })
 
 router.post('/tweetpost', isAuthenticated, function(req, res) {
