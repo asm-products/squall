@@ -1,0 +1,106 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic|Merriweather:400,300,300italic,400italic,700,700italic);
+
+body {
+  color: #1f1f1f;
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}
+
+.post-container {
+  background: #fff;
+  border: 1px solid #fff;
+  margin: 2em auto;
+  padding: 0 25px 30px;
+  -webkit-box-shadow: 0 1px 6px rgba(0,0,0,.12),0 1px 6px rgba(0,0,0,.12);
+  -moz-box-shadow: 0 1px 6px rgba(0,0,0,.12),0 1px 6px rgba(0,0,0,.12);
+  box-shadow: 0 1px 6px rgba(0,0,0,.12),0 1px 6px rgba(0,0,0,.12);
+}
+
+.post-author {
+  margin: -32px 0 30px 0;
+}
+
+.author-image {
+  border: 2px solid #2cbbd4;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+}
+
+.author-name {
+  color: #717171;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.post-title {
+  color: #2cbbd4;
+  font-size: 33px;
+  font-weight: 700;
+  letter-spacing: 1.212px;
+}
+
+.post-content, .post-content > p {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 21px;
+  letter-spacing: 0.23809px;
+  line-height: 1.4761904762;
+  margin-bottom: 21px;
+}
+
+
+.post-footer {
+  border-top: 1px solid #b6b6b6;
+  margin-top: 40px;
+  padding-top: 10px;
+}
+
+.post-meta {
+  color: #717171;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.retweets {
+  margin-right: 10px;
+}
+
+.post-social {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 40px;
+}
+
+.post-social a {
+  color: #717171;
+  text-decoration: none;
+}
+
+.tweet-button {
+  border: 1px solid #2cbbd4;
+  margin: 0 auto;
+}
+
+.tweet-button a {
+  display: block;
+  color: #2cbbd4;
+  font-size: 16px;
+  margin: 5px 60px;
+}
+
+.post-share {
+  margin-top: 5px;
+}
+
+.post-share a {
+  margin-right: 10px;
+}
+
+.post-share a:last-child {
+  margin-right: 0;
+}

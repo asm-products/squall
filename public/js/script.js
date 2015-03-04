@@ -58,6 +58,12 @@ $('.editable').on('input', function() {
   draw();
 });
 
+// Format date strings
+$('.post-time').map(function() {
+  var dateString = Date.parse($(this).text());
+  $(this).text(strftime('%b %d, %Y at %I:%M %p', new Date(dateString)));
+});
+
 
 $(window).resize(function() {
   clearTimeout(timer);

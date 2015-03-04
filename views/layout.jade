@@ -39,9 +39,11 @@ html(itemscope, itemtype='http://schema.org/'+schemaOrgType)
     link(href='/css/material-wfont.min.css', rel='stylesheet')
     link(href='/css/style.css', rel='stylesheet')
     link(href='/css/profile_component.css', rel='stylesheet')
+    link(href='/css/posts.css', rel='stylesheet')
     script(src='/js/jquery.js')
 
     block head-extras
 
   body
+    include navbar
     block content
