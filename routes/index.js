@@ -339,7 +339,7 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
   console.log(url);
   var end_message = url + " sent via @Squallapp"
   console.log(end_message)
-  var n = 138- url.length - end_message.length
+  var n = 90;
   console.log(n)
   var message = title;
   if (message.length>n) {
