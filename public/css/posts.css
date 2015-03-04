@@ -104,3 +104,14 @@ p {
 .post-share a:last-child {
   margin-right: 0;
 }
+
+.sharepost a{
+  color:white;
+}
+
+.sharepost:hover{
+  background:#36BBD2 !important;
+  color:#fff !important;
+}
+
+

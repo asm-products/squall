@@ -97,7 +97,9 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
 
       f.push(req.user.username)
       avatar_urls[req.user.username] = req.user.photo
-      Posts.find({author: { $in : f.getUnique()}}, null, {sort: {date: -1}}, function(err, result) {
+
+      Posts.find({author: { $in : f.getUnique()}}, null, {sort: {created_at: -1}}, function(err, result) {
+
         return res.render('dashboard', { user: req.user,
                                             large_photo: req.user.photo.replace(/_normal/i, ''),
                                             posts: result,
