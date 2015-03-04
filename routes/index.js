@@ -97,10 +97,14 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
 
       f.push(req.user.username)
       avatar_urls[req.user.username] = req.user.photo
+<<<<<<< HEAD
       Posts.find({author: { $in : f.getUnique()}}, null, {sort: {date: -1}}, function(err, result) {
         console.log(c)
         console.log("UNIQUE USERNAMES", f)
         console.log("POST RESULTS RAW", result)
+=======
+      Posts.find({author: { $in : f.getUnique()}}, null, {sort: {created_at: -1}}, function(err, result) {
+>>>>>>> 7070c20c03c3f2c17f91b78747828a31815a0c58
         return res.render('dashboard', { user: req.user,
                                             large_photo: req.user.photo.replace(/_normal/i, ''),
                                             posts: result,
@@ -464,7 +468,7 @@ router.get('/:username', function(req, res, next) {
 
   Users.findOne({ username : username }, function(err, existingUser) {
     if (existingUser) {
-      Posts.find({author: existingUser.username}, null, {sort: {date: -1}}, function (err, posts) {
+      Posts.find({author: existingUser.username}, null, {sort: {created_at: -1}}, function (err, posts) {
         var title = existingUser.name + " (@" + existingUser.username + ")";
         var description = title + " profile page";
         var image = existingUser.photo.replace(/_normal/i, '')
@@ -577,6 +581,7 @@ router.get('/:username/:post_id', function(request, response) {
           var author = result.author;
           var contents = result.content;
           var author_link = '../'+author;
+          var created_at = result.created_at
 
           if (isNaN(result.viewCount)) {
             var newViewCount = 1;
@@ -587,7 +592,9 @@ router.get('/:username/:post_id', function(request, response) {
           result.viewCount = newViewCount;
           result.save();
 
-          response.render('post', {title: title, contents: contents, author: author, author_link: author_link, post: result});
+          response.render('post', { author_link: author_link, 
+                                    post: result
+                                  });
         }
         else {
           //return error page

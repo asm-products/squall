@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  include navbar
   link(href='/css/style.css', rel='stylesheet')
   link(href='/css/medium-editor.min.css', rel='stylesheet')
   link(href='/css/flat.min.css', rel='stylesheet')
@@ -52,11 +53,11 @@ block content
                   .post-footer
                     .post-meta
                       .post-time #{val.created_at}
-                      //
-                        .post-stats
-                          span.retweets
-                            strong 90
-                            |  Retweets
+                      .post-stats
+                        span.retweets
+                          strong #{val.viewCount}
+                          |  Views
+                        //
                           span.favorites
                             strong 180
                             |  Favorites
