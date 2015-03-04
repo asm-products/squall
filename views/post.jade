@@ -6,16 +6,16 @@ block content
   link(href='/css/flat.min.css', rel='stylesheet')
 
   .container
-    .row.header.col-lg-10.col-lg-offset-1
-      .col-lg-12
+    .row.header.col-md-10.col-md-offset-1
+      .col-md-12
         .post-container
           .post-author
             a(href="/#{post.author}")
               img.author-image(src="#{avatar_url}")
               .author-name #{post.author}
           .post-body
-            h1.post-title #{post.title}
-            .post-content!= post.content
+            h1.post-title#t #{post.title}
+            .post-content#m !{post.content}
           .post-footer
             .post-meta
               .post-time #{post.created_at}
@@ -27,10 +27,9 @@ block content
               button.btn.btn-info.followuser
                 span Follow
                   #author_name #{post.author}
-              .tweet-button
-                a(href='#')
-                  i.fa.fa-twitter
-                  |  Tweet This
+              button.sharepost.btn.btn-info
+                i.fa.fa-twitter
+                |  Tweet This
               //
                 .post-share
                   a(href='#')
