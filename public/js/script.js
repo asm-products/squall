@@ -209,11 +209,12 @@ $("body").on("click", "#follow, #unfollow", function(event) {
 
 $('.followuser').click(function() {
   var username = $('#profileUsername').text()
-  console.log("following")
-  console.log(username)
+
   $.post("/"+username+"/follow", function() {
+    console.log('friendship')
     $('.followuser').text("Followed");
   });
+
 });
 
 $('.unfollowuser').click(function() {

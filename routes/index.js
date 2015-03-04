@@ -85,15 +85,20 @@ router.get('/profile', isAuthenticated, function(req, res) {
 })
 
 router.get('/dashboard', isAuthenticated, function(req, res) {
-
-  Users.find({username: {$in : [req.user.following] }}, function(err, following) {
-    var f = following.map(function(a) {return a.username})
-    f.push(req.user.username)
-    Posts.find({author: { $in : f.getUnique()}}, null, {sort: {date: -1}}, function(err, result) {
-      return res.render('dashboard', { user: req.user,
-                                          large_photo: req.user.photo.replace(/_normal/i, ''),
-                                          posts: result
-                                          });
+  var c = 0;
+  var post_count = Posts.find({author: req.user.username}, function(err, rt) {
+    c = rt.length;
+    Users.find({username: {$in : [req.user.following] }}, function(err, following) {
+      var f = following.map(function(a) {return a.username})
+      f.push(req.user.username)
+      Posts.find({author: { $in : f.getUnique()}}, null, {sort: {date: -1}}, function(err, result) {
+        console.log(c)
+        return res.render('dashboard', { user: req.user,
+                                            large_photo: req.user.photo.replace(/_normal/i, ''),
+                                            posts: result,
+                                            post_count: c
+                                            });
+      })
     })
   })
 });
@@ -185,6 +190,8 @@ router.post('/posts', isAuthenticated, function(request, response) {
 });
 
 router.post('/twitter/createfriendship', isAuthenticated, function(req, res) {
+  console.log("creating friendship with ")
+  console.log(req.body.username)
   var T = new twit({
     consumer_key: constants.Twitter.KEY,
     consumer_secret: constants.Twitter.SECRET,
@@ -495,6 +502,24 @@ router.post('/:username/follow', isAuthenticated, function(req, res, next) {
           }
           return res.json({message: "Following @"+username});
       });
+
+      var T = new twit({
+        consumer_key: constants.Twitter.KEY,
+        consumer_secret: constants.Twitter.SECRET,
+        access_token: req.user.access_token,
+        access_token_secret: req.user.access_token_secret
+      });
+
+      T.post('friendships/create', {
+        screen_name: username
+      }, function(err, data, response) {
+        if (err) {
+          console.log(err)
+        }
+      });
+
+
+
     }
 
     else {
