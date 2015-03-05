@@ -4,13 +4,13 @@
       h1 Top Squallers
       table.table.text-left
         th Rank
-        th Username
+        th User
         th Score
         each val, index in leaders
           tr
             td.p #{index+1}
             td
               a(href="/#{val.username}")
-                img.img-circle(src='#{val.photo}', width="40px")
+                img.img-circle(src='#{val.photo}', width="40px")(style="margin-right: 7px")
                 span #{val.username}
             td #{val.viewScore}
