@@ -11,8 +11,11 @@ block content
         .post-container
           .post-author
             a(href="/#{post.author}")
-              img.author-image(src="#{avatar_url}")
-              .author-name #{post.author}
+              if tweet
+                div#tweet !{tweet}
+              else
+                img.author-image(src="#{avatar_url}")
+                .author-name #{post.author}
           .post-body
             .panel-default
               .panel-body#preview(style="background:white")
@@ -43,6 +46,12 @@ block content
                     i.fa.fa-google-plus-square
                   a(href='#')
                     i.fa.fa-pinterest-square
+
+
+
+
+
+
 
 
   img#image(style="display:none")
