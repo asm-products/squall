@@ -18,6 +18,12 @@ block content
               .panel-body#preview(style="background:white")
                 h1.post-title #{post.title}
                 .post-content#m !{post.content}
+                .post-attribution.text-center.secondary-text-color
+                  p by #{post.author}
+                  p
+                    | Posted 
+                    span.post-time-date #{post.created_at}
+                    |  via @SquallApp
           .post-footer
             .post-meta
               .post-time #{post.created_at}
