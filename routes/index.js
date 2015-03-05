@@ -117,7 +117,8 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
 });
 
 router.get('/leaderboard', function(req, res) {
-  var top_users = Users.find({}).sort({viewScore: -1}).limit(100).exec(function(err, leaders) {
+  var leader_limit = process.env.LEADER_LIMIT;
+  var top_users = Users.find({}).sort({viewScore: -1}).limit(leader_limit).exec(function(err, leaders) {
     if (leaders) {
       var p=0;
     }
