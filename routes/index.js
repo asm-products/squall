@@ -587,32 +587,39 @@ router.get('/:username/:post_id', function(request, response) {
               result.viewCount = newViewCount;
               result.save();
 
-
-              var T = new twit({
-                consumer_key: constants.Twitter.KEY,
-                consumer_secret: constants.Twitter.SECRET,
-                access_token: request.user.access_token,
-                access_token_secret: request.user.access_token_secret
-              });
-
-
-              var tweet_id = result.tweet_ids;
-              if (tweet_id.length > 0) {   //WE HAVE A TWEET ID FOR THIS POST
-                creation_tweet_id = tweet_id[0];
-                console.log(tweet_id)
-                T.get('statuses/oembed', { id: creation_tweet_id }, function(err, data, response) {
-                  console.log(response)
-
-                  response.render('post', {author_user: author_user, avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result});
-
+              if(request.user) {
+                var T = new twit({
+                  consumer_key: constants.Twitter.KEY,
+                  consumer_secret: constants.Twitter.SECRET,
+                  access_token: request.user.access_token,
+                  access_token_secret: request.user.access_token_secret
                 });
 
 
+                var tweet_id = result.tweet_ids;
+                if (tweet_id.length > 0) {   //WE HAVE A TWEET ID FOR THIS POST
+                  creation_tweet_id = tweet_id[0];
+                  console.log(tweet_id)
+                  T.get('statuses/oembed', { id: creation_tweet_id }, function(err, data, response) {
+                    console.log(response)
+
+                    response.render('post', {author_user: author_user, avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result});
+
+                  });
+
+
+                }
+                else {   // WE DONT HAVE A TWEET ID FOR THIS POST, INCLUDE NO TWITTER CONTENT
+                  response.render('post', {author_user: author_user, avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result});
+                }
               }
-              else {   // WE DONT HAVE A TWEET ID FOR THIS POST, INCLUDE NO TWITTER CONTENT
+              else {
                 response.render('post', {author_user: author_user, avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result});
               }
-            }
+
+
+              }
+
             else {
               //return error page
               response.redirect('/error');
