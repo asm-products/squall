@@ -57,7 +57,7 @@ block content
                     h1.post-title
                       a(href="/#{val.author}/#{val.slug}")
                         span #{val.title}
-                     .post-content!= val.content.substring(0,200)
+                     .post-content!= val.content.substring(0,140)+"...."
                   .post-footer
                     .post-meta
                       .post-time #{val.created_at}
