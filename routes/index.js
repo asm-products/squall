@@ -444,10 +444,7 @@ router.get('/:username', function(req, res, next) {
     c = rt.length;
     var my_rank = Users.find({}).sort({viewScore: -1}).exec(function(err, userlist) {
       var g = userlist.map(function(q) {return q.username} );
-      console.log("userlist",g)
-      var b = g.indexOf(req.user.username) + 1;
-      console.log("me", req.user.username)
-      console.log(b)
+      var b = g.indexOf(username) + 1;
       Users.findOne({ username : username }, function(err, existingUser) {
         if (existingUser) {
           Posts.find({author: existingUser.username}, null, {sort: {created_at: -1}}, function (err, posts) {
