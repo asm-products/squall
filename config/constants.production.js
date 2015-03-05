@@ -12,7 +12,7 @@ var Constants = {
   },
   MongoURL: process.env.MONGOLAB_URI,
   RedisURL: process.env.REDISTOGO_URL,
-  BaseUrl: "http://squarrel.io"
+  BaseUrl: "http://squarr.io"
 };
 
 module.exports = Constants;
