@@ -38,7 +38,7 @@ var editor = new MediumEditor('.editable', {
   buttonLabels: 'fontawesome',
   extensions: {
     'highlight': new Highlighter()
-  }, placeholder: "asdfasdfadf"
+  }
 });
 
 function draw() {
@@ -58,6 +58,11 @@ $(document).ready(function() {
   $('.post-time').map(function() {
     var dateString = Date.parse($(this).text());
     $(this).text(strftime('%b %d, %Y at %I:%M %p', new Date(dateString)));
+  });
+
+  $('.post-time-date').map(function() {
+    var dateString = Date.parse($(this).text());
+    $(this).text(strftime('%b %d, %Y', new Date(dateString)));
   });
 
   $('.login-btn').click(function() {

@@ -58,6 +58,10 @@ body {
   margin-bottom: 30px;
 }
 
+.tweet-button:focus {
+  border:solid 2px #717171;
+}
+
 .tweet-title {
   margin: 0 0 10px 5px;
 }

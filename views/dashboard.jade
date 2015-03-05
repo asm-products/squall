@@ -18,21 +18,21 @@ block content
           .form-group
             .input-group.squall-title
               .form-control-wrapper
-               textarea#textArea(rows="1", maxLength="117", tabindex="2", autofocus, placeholder="Title/Tweet. You can tag @username, paste links or use #hashtags.")
+               textarea#textArea(rows="1", maxLength="117", tabindex="1", autofocus, placeholder="Title/Tweet. You can tag @username, paste links or use #hashtags.")
               .input-group-addon
             .text-length.light-gray 0/90 characters left
 
           //- Text editor
           .panel-default.squall-content
             .panel-body#t
-              .editable.textBox(tabindex="1", data-placeholder="Type your text")#m
+              .editable.textBox(tabindex="2", data-placeholder="Create your squall")#m
           .post-length.light-gray 0/2000 characters left
 
           a.btn.btn-info.previewtoggle Show preview
 
           //- Tweet button
           .btn-group.pull-right
-            a.btn.btn-info.tweet-button
+            a.btn.btn-info.tweet-button(tabindex="3")
               | Publish
               .ripple-wrapper
 
@@ -41,6 +41,12 @@ block content
           .panel.panel-body#preview(style="display:none")
             h1.post-title#previewtitle
             .post-content#previewcontent
+            .post-attribution.text-center.secondary-text-color
+              p #{user.name} / @#{user.username}
+              p
+                | Posted 
+                span.post-time-date #{new Date}
+                |  via @SquallApp
           img#image(style="display:none")
 
         .row.col-md-10.col-md-offset-1.dashboard-feed

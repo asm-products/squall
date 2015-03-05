@@ -48,6 +48,10 @@ p {
   letter-spacing: 1.212px;
 }
 
+h1.post-title {
+  margin-bottom: 0.5em;
+}
+
 .post-content, .post-content > p {
   font-family: 'Merriweather', Georgia, serif;
   font-size: 21px;
