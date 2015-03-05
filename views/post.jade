@@ -21,7 +21,7 @@ block content
                 .post-attribution.text-center.secondary-text-color
                   p by #{author_user.name}
                   p
-                    | Posted 
+                    | Posted
                     span.post-time-date #{post.created_at}
                     |  via @SquallApp
           .post-footer
@@ -31,10 +31,10 @@ block content
                 span.retweets
                   strong #{post.viewCount}
                   |  Views
-            .post-social
-              button.btn.btn-info.followuser
-                span Follow
-                  #author_name #{post.author}
+      //      .post-social
+    //          button.btn.btn-info.followuser
+    //            span Follow
+    //              #author_name #{post.author}
               button.sharepost.btn.btn-info
                 i.fa.fa-twitter
                 |  Tweet This
