@@ -7,7 +7,7 @@ $(document).ready(function() {
     var message = "Check out this post by @"+author_name+" "+url;
 
     $.post('/tweet', { image: $('#image').attr('src'), message: message }, function(data) {
-      $('.sharepost').text('Your Tweet is Betwotten');
+      $('.sharepost').text('Tweeted!');
     });
   });
 

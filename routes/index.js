@@ -578,6 +578,7 @@ router.get('/:username/:post_id', function(request, response) {
               var author = result.author;
               var contents = result.content;
               var author_link = '../'+author;
+              var author_user = u;
 
               if (isNaN(result.viewCount)) {
                 var newViewCount = 1;
@@ -588,7 +589,7 @@ router.get('/:username/:post_id', function(request, response) {
               result.viewCount = newViewCount;
               result.save();
 
-              response.render('post', {avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result});
+              response.render('post', {author_user: author_user, avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result});
             }
             else {
               //return error page

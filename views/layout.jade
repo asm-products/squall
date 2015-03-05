@@ -3,24 +3,24 @@ html(itemscope, itemtype='http://schema.org/'+schemaOrgType)
   head
     title #{title || 'Squall - The Tweetstorm Cometh'}
     meta(charset='UTF-8')
-    meta(name='description', content=description || 'Hacking The Tweetstorm... With Pictures of Text.')
+    meta(name='description', content=description || 'If a picture is worth a thousand words, then a Squall is worth a dozen tweets.')
     meta(name="viewport", content="width=device-width, initial-scale=1")
 
     // Twitter cards
     meta(name='twitter:card', content='summary_large_image')
-    meta(name='twitter:image', content=image || 'https://github.com/karan/Storming/raw/master/screen.png')
+    meta(name='twitter:image', content=image || 'http://squall.io/screenshot.png')
     meta(name='twitter:title', content=title || 'Squall.io')
-    meta(name='twitter:description', content=description || 'Hacking The Tweetstorm... With Pictures of Text.')
+    meta(name='twitter:description', content=description || 'If a picture is worth a thousand words, then a Squall is worth a dozen tweets.')
     if twitterCreator
       meta(name='twitter:creator', content=twitterCreator)
 
     // Facebook open graph
     meta(property='og:locale', content='en_US')
     meta(property='og:type', content=openGraphType || 'website')
-    meta(property='og:image', content=image || 'https://github.com/karan/Storming/raw/master/screen.png')
+    meta(property='og:image', content=image || 'http://squall.io/screenshot.png')
     meta(property='og:title', content=title || 'Squall.io')
-    meta(property='og:description', content=description || 'Hacking The Tweetstorm... With Pictures of Text.')
-    meta(property='og:url', content=url || 'http://www.storming.me')
+    meta(property='og:description', content=description || 'If a picture is worth a thousand words, then a Squall is worth a dozen tweets.')
+    meta(property='og:url', content=url || 'http://www.squall.io')
     if ogOtherData
       for value, key in ogOtherData
         meta(property='og:'+key, content=value)
