@@ -440,7 +440,7 @@ router.get('/:username', function(req, res, next) {
       currentUser = req.user;
   }
 
-  var post_count = Posts.find({author: req.user.username}, function(err, rt) {
+  var post_count = Posts.find({author: username}, function(err, rt) {
     c = rt.length;
     var my_rank = Users.find({}).sort({viewScore: -1}).exec(function(err, userlist) {
       var g = userlist.map(function(q) {return q.username} );

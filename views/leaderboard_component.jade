@@ -1,20 +1,20 @@
-.col-3-md
-  .panel-body
-    .post_container
+.col-10-lg
+  .panel.panel-body
+    .post_container.center.text-center
       h1 Top Squallers
-      table
-        th
-        th Rank
-        th Username
-        th Score
-        each val, index in leaders
-          tr
-            td #{index+1}
+        table
+          th
+          th Rank
+          th Username
+          th Score
+          each val, index in leaders
+            tr
+              td.p #{index+1}
 
-            td
-              a(href="/#{val.username}")
-                img.img-circle(src='#{val.photo}', width="40px")
-            td
-              a(href="/#{val.username}")
-                span #{val.username}
-            td #{val.viewScore}
+              td
+                a(href="/#{val.username}")
+                  img.img-circle(src='#{val.photo}', width="40px")
+              td
+                a(href="/#{val.username}")
+                  span #{val.username}
+              td #{val.viewScore}
