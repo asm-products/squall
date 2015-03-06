@@ -10,6 +10,10 @@ var userSchema = new Schema({
     type: String,
     unique: true
   },
+  old_username: {
+    type: String,
+    unique: true
+  },
   name: String,
   twId: String,
   photo: String,

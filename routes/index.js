@@ -136,10 +136,17 @@ router.get('/settings', isAuthenticated, function(req, res) {
 });
 
 router.post('/settings', isAuthenticated, function(req, res) {
-  req.user.email_address = req.body.email
-  req.user.alert_when_friends_join = req.body.alert_when_friends_join
-  req.user.alert_when_follow = req.body.alert_when_follow
-  req.user.save()
+  req.user.email_address = req.body.email;
+  req.user.alert_when_friends_join = req.body.alert_when_friends_join;
+  req.user.alert_when_follow = req.body.alert_when_follow;
+
+  // check to see if username has already been changed
+  if (!req.user.old_username) {
+    req.user.old_username = req.user.username;
+    req.user.username = req.body.username;
+  }
+
+  req.user.save();
   return res.json({passed: true});
 });
 
@@ -202,7 +209,7 @@ router.post('/twitter/createfriendship', isAuthenticated, function(req, res) {
 })
 
 router.get('/:username/followers', function(req, res, next) {
-  var username = req.params.username
+  var username = req.params.username;
   var currentUser = null;
   if(req.isAuthenticated()){
       currentUser = req.user;
@@ -437,7 +444,7 @@ router.post('/upload/imgur', isAuthenticated, function(req, res) {
 });
 
 router.get('/:username', function(req, res, next) {
-  var username = req.params.username
+  var username = req.params.username;
   var currentUser = null;
   if(req.isAuthenticated()){
       currentUser = req.user;
@@ -447,8 +454,13 @@ router.get('/:username', function(req, res, next) {
     c = rt.length;
     var my_rank = Users.find({}).sort({viewScore: -1}).exec(function(err, userlist) {
       var g = userlist.map(function(q) {return q.username} );
+      var g2 = userlist.map(function(q) {return q.old_username || ''} );
+
+      // merge the lists
+      g.push.apply(g, g2);
+
       var b = g.indexOf(username) + 1;
-      Users.findOne({ username : username }, function(err, existingUser) {
+      Users.findOne({ $or: [ { username : username }, { old_username : username } ]}, function(err, existingUser) {
         if (err) {
           // something bad happened
           console.log(err);
@@ -456,6 +468,12 @@ router.get('/:username', function(req, res, next) {
         }
 
         if (existingUser) {
+
+          // if the request came through old username
+          if (existingUser.old_username && username === existingUser.old_username) {
+            return res.redirect('/' + existingUser.username);
+          }
+
           Posts.find({author: existingUser.username}, null, {sort: {created_at: -1}}, function (err, posts) {
             var title = existingUser.name + " (@" + existingUser.username + ")";
             var description = title + " profile page";
@@ -568,8 +586,14 @@ router.get('/:username/:post_id', function(request, response) {
   var post_id = request.params.post_id;
   var username = request.params.username
 
-  var user = Users.findOne({username: username}, function (err, u) {
+  var user = Users.findOne({ $or: [ { username : username }, { old_username : username } ]}, function (err, u) {
     if (u) {
+
+      // if the request came through old username
+      if (u.old_username && username === u.old_username) {
+        return response.redirect('/' + u.username + '/' + post_id);
+      }
+
       var avatar_url = u.photo;
 
       u.addView();
