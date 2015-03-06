@@ -6,9 +6,18 @@ body {
   background-color:#fff;
 }
 
-.editable:empty:not(:focus):before{
+/*.editable:empty:not(:focus):before{
   content: attr(data-ph);
   color: rgba(0, 0, 0, .4);
+}*/
+
+.medium-editor-placeholder:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: attr(data-placeholder)!important;
+  font-style: normal !important;
+  color:#b6b6b6 !important;
 }
 
 .container-full {
@@ -33,6 +42,10 @@ body {
   color: #b6b6b6;
 }
 
+h1.post-title > a {
+  color:#2cbbd4;
+}
+
 .highlight {
   background-color: #CCDDED;
 }
@@ -49,8 +62,30 @@ body {
   margin-bottom: 30px;
 }
 
+.tweet-button:focus {
+  border:solid 2px #717171;
+}
+
 .tweet-title {
   margin: 0 0 10px 5px;
+}
+
+.dashboard-feed-container {
+  padding-top: 4em;
+}
+
+.dashboard-feed {
+  margin-top: 4em;
+}
+
+.dashboard-post-body p{
+  font-size:0.8em;
+  line-height: 1.5em;
+  margin-bottom: 2px;
+}
+
+.dashboard-post-body h1{
+  font-size:1.75em;
 }
 
 #textArea {
@@ -59,16 +94,18 @@ body {
   box-sizing: border-box;
   padding: 6px;
   width: 100%;
-  height: 65px;
+  height: auto;
   resize: vertical;
-  border: 1px solid #ffffff;
-  border-radius: 3px;
+  border:none;
+  padding: 0.5em;
+}
+
+.squall-title {
+  border-bottom: 1px solid #b6b6b6;
 }
 
 #textArea:focus {
   outline: 0;
-  border-color: #50a5e6;
-  box-shadow: inset 0 0 0 1px rgba(0,132,180,0.7);
 }
 
 .rand-bg-btn {
@@ -92,6 +129,16 @@ a:hover {
   margin-bottom: 40px;
   min-height: 50px;
 }
+
+.squall-content {
+  border:none;
+  border-bottom: 1px solid #b6b6b6;
+}
+
+.squall-content > .panel-body {
+  padding: 0em 0.9em;
+}
+
 
 .footer {
   margin-top: 80px;

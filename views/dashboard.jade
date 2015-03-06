@@ -13,30 +13,44 @@ block content
     .row.header
       include profile_component
 
-      .container.col-md-8
+      .container.col-md-8.dashboard-feed-container
         .row.col-md-10.col-md-offset-1
           .form-group
-            label.control-label.twwet-title(for="textArea") Title
-            .input-group
+            .input-group.squall-title
               .form-control-wrapper
-               textarea#textArea(rows="2", maxLength="117", tabindex="2", autofocus, placeholder="Introduce your tweetstorm. You can tag @username, paste links or use #hashtags.")
-              .input-group-addon.text-length 0/90
-
-            label.control-label.tweet-title(for="textArea") Post
+               textarea#textArea(rows="1", maxLength="117", tabindex="1", autofocus, placeholder="Title/Tweet. You can tag @username, paste links or use #hashtags.")
+              .input-group-addon
+            .text-length.light-gray 0/60 characters left
 
           //- Text editor
-          .panel.panel-default
+          .panel-default.squall-content
             .panel-body#t
-              .editable.textBox(tabindex="1")#m Enter your Tweetstorm here..  Write something interesting --> without character limits.
-            .label.post-length 54/2000
+              .editable.textBox(tabindex="2", data-placeholder="Create your squall")#m
+          .post-length.light-gray 0/2000 characters left
+
+          a.btn.btn-info.previewtoggle Show preview
 
           //- Tweet button
           .btn-group.pull-right
-            a.btn.btn-info.tweet-button
+            a.btn.btn-info.tweet-button(tabindex="3")
               | Publish
               .ripple-wrapper
 
+
         .row.col-md-10.col-md-offset-1
+          .panel.panel-body#preview(style="display:none")
+            h1.post-title#previewtitle
+            .post-content#previewcontent
+            .post-attribution.text-center.secondary-text-color
+              p by #{user.name}
+              p
+                | Posted
+                span.post-time-date #{new Date}
+                |  via @SquallApp
+          img#image(style="display:none")
+
+        .row.col-md-10.col-md-offset-1.dashboard-feed
+          //include leaderboard_component
           each val, index in posts
             .row.header
               .col-lg-12
@@ -45,11 +59,11 @@ block content
                     a(href="/#{val.author}")
                       img.author-image(src="#{avatar_urls[val.author]}")
                       .author-name #{val.author}
-                  .post-body
+                  .post-body.dashboard-post-body
                     h1.post-title
                       a(href="/#{val.author}/#{val.slug}")
                         span #{val.title}
-                    .post-content!= val.content
+                     .post-content!= val.content.substring(0,140)+"...."
                   .post-footer
                     .post-meta
                       .post-time #{val.created_at}
@@ -83,8 +97,7 @@ block content
         h4 You just hacked the Tweetstorm.
         .embed
 
-  img#image(style="display:none")
-  span#profileUsername(style="display:none") #{user.username}
 
+  span#profileUsername(style="display:none") #{user.username}
 
   include footer

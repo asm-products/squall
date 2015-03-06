@@ -41,21 +41,29 @@ var editor = new MediumEditor('.editable', {
   }
 });
 
-function draw() {
-  html2canvas(document.getElementById('t'), {
+function draw(callback) {
+  html2canvas(document.getElementById('preview'), {
     allowTaint: true,
     onrendered: function(canvas) {
       document.getElementById('image').src = canvas.toDataURL();
+      callback();
     }
   });
 }
 
 $(document).ready(function() {
 
+  autosize(document.querySelectorAll('textarea'));
+
   // Format date strings
   $('.post-time').map(function() {
     var dateString = Date.parse($(this).text());
     $(this).text(strftime('%b %d, %Y at %I:%M %p', new Date(dateString)));
+  });
+
+  $('.post-time-date').map(function() {
+    var dateString = Date.parse($(this).text());
+    $(this).text(strftime('%b %d, %Y', new Date(dateString)));
   });
 
   $('.login-btn').click(function() {
@@ -75,28 +83,32 @@ $(document).ready(function() {
   });
 
   $('.tweet-button').click(function() {
-    $('.tweet-button').text('Posting tweet...');
-    $('.tweetresult').css('display', 'none');
-    $('.tweet-button').addClass('disabled');
-    ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
 
-    var title = $('textArea').val();
-    if(title.length === 0) {
-      title = "My Post";
-      console.log("too short");
-      console.log(title);
-    }
+    toggler(function() {
+      $('.tweet-button').text('Tweet Posted');
+      $('.tweetresult').css('display', 'none');
+      $('.tweet-button').addClass('disabled');
+      ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
 
-    var content = document.getElementById('t').textContent;
-    var htmlcontent = $('#m').html().toString();
-    var author = $('#profileUsername').text();
+      var title = $('textArea').val();
+      if(title.length === 0) {
+        title = "My Post";
+        console.log("too short");
+        console.log(title);
+      }
 
-    $.post('/tweetpost', { image: $('#image').attr('src'), title: String(title), htmlcontent: htmlcontent, content: String(content), author: String(author) }, function(data) {
-      $('.tweetresult').css('display', 'block');
-      $('.tweetresult').find('.embed').html(data);
-      $('.tweet-button').text('Tweet');
-      $('.tweet-button').removeClass('disabled');
-    });
+      var content = document.getElementById('t').textContent;
+      var htmlcontent = $('#m').html().toString();
+      var author = $('#profileUsername').text();
+
+      $.post('/tweetpost', { image: $('#image').attr('src'), title: String(title), htmlcontent: htmlcontent, content: String(content), author: String(author) }, function(data) {
+        $('.tweetresult').css('display', 'block');
+        $('.tweetresult').find('.embed').html(data);
+        $('.tweet-button').text('Tweet');
+        $('.tweet-button').removeClass('disabled');
+      });
+    })
+
   });
 
 
@@ -144,7 +156,6 @@ $('#font').click(function() {
   draw();
 });
 
-
 $('#textArea').keyup(function() {
   var text = $(this).val();
   var splits = text.split(' ');
@@ -159,12 +170,13 @@ $('#textArea').keyup(function() {
       length += splits[i].length;
     }
   }
-  $('.text-length').text( length + '/90');
-  if($('#textArea').text().length > 90){
-    $('#textArea').text($('#textArea').text().substring(0, 89));
-  }
 
-  draw();
+  $('.text-length').text( length + '/60 characters left');
+  if(length > 60){
+    $('#textArea').text($('#textArea').text().substring(0, 59));
+  }
+  $('#previewtitle').text($('#textArea').val());
+  draw()
 });
 
   $('#t').keyup(function() {
@@ -172,7 +184,10 @@ $('#textArea').keyup(function() {
     if (post_length > 2000) {
       $('#t').text($('#t').text().substring(0,1999));
     }
-    $('.post-length').text(post_length +' / 2000');
+    $('.post-length').text(post_length +' / 2000 characters left');
+
+    $('#previewcontent').html($('#t').html());
+    draw()
   });
 
   $(".upload-link").focus(function() {
@@ -184,7 +199,8 @@ $('#textArea').keyup(function() {
        luminosity: 'light'
     });
     $('.panel-body').css('background-color', color);
-    draw();
+  draw()
+
   });
 
   //Catching this event on the body means that we don't have to re-attach click handlers when swapping ids.
@@ -239,6 +255,18 @@ $('.unfollowuser').click(function() {
   });
 })
 
+function toggler(callback) {
+  $('#preview').show(function() {
+    draw(function() {
+      callback();
+    });
+
+  });
+}
+
+$('.previewtoggle').click(function() {
+  $('#preview').toggle();
+})
 
 $(window).resize(function() {
   clearTimeout(timer);

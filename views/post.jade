@@ -15,10 +15,18 @@ block content
               .author-name #{post.author}
           .post-body
             .panel-default
-              .panel-body#t
+              .panel-body#preview(style="background:white")
                 h1.post-title #{post.title}
                 .post-content#m !{post.content}
+                .post-attribution.text-center.secondary-text-color
+                  p by #{author_user.name}
+                  p
+                    | Posted&nbsp;
+                    span.post-time-date #{post.created_at}
+                    |  via @SquallApp
           .post-footer
+            if tweet
+              div#tweet !{tweet}
             .post-meta
               .post-time #{post.created_at}
               .post-stats
@@ -26,9 +34,6 @@ block content
                   strong #{post.viewCount}
                   |  Views
             .post-social
-              button.btn.btn-info.followuser
-                span Follow
-                  #author_name #{post.author}
               button.sharepost.btn.btn-info
                 i.fa.fa-twitter
                 |  Tweet This
@@ -40,6 +45,12 @@ block content
                     i.fa.fa-google-plus-square
                   a(href='#')
                     i.fa.fa-pinterest-square
+
+
+
+
+
+
 
 
   img#image(style="display:none")

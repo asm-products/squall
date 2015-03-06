@@ -6,32 +6,40 @@ block content
   link(href='/css/landing_page.css', rel='stylesheet')
 
   .container.cta-container
-    .row.text-center
-      img.brand(src="squall.svg")
     .row.col-md-10.col-md-offset-1.text-center.cta-content
-      .col-md-6.text-left.pitch
-        h2 Express yourself on Twitter, without character limits
-        h3.secondary-text-color Create & share images of text
-        a.btn.btn-info.btn-lg.login-btn(href="/login") Login with Twitter
-      .col-md-6
-        .post-container
-          .post-author
-            img.author-image(src='https://pbs.twimg.com/profile_images/420314816444502016/xj5TnUsx_400x400.jpeg')
-            .author-name Elon Musk
-          .post-body
-            h1.post-title
-              span First Day on Mars
-            .post-content It's pretty Red.  Otherwise things are cool.  Getting bored actually... thinking Titan would be noice next summer.
-          .post-footer
-            .post-meta
-              .post-time #{new Date}
-              .post-stats
-                span.retweets
-                  strong 90
-                  |  Retweets
-                span.favorites
-                  strong 180
-                  |  Favorites
+      .col-md-6.text-center.pitch
+        img.brand(src="squall.svg")
+        h2 Write freely.  Share widely.
+        h4.secondary-text-color You're leaving stories untold.  Express yourself on Twitter with more character(s).
+        h3.signin-button
+          a.btn-lg.login-btn(href="/login") Sign in with Twitter
+        .assembly-footer.light-gray
+          p.light-gray
+            | Built with love on&nbsp;
+            a.light-gray(href="https://assembly.com", target="_blank")
+              img.asm-flag(src="/asm_flag.svg")
+              | Assembly
+
+      .col-md-6.sample-squall
+        .panel
+          img(src="/tweet.png", style="width:100%")
+          blockquote.twitter-tweet(data-cards='hidden', lang='en', style="width:100%")
+            p
+              | Introducing Squall
+              a(href='http://t.co/41rhb1AfmY') http://t.co/41rhb1AfmY
+              |  sent via
+              a(href='https://twitter.com/squallapp') @Squallapps
+              a(href='http://t.co/ELR0eNIkC4') pic.twitter.com/ELR0eNIkC4
+            | — awwstn (@awwstn)
+            a(href='https://twitter.com/awwstn/status/573663030011166722') March 6, 2015
+          script(async='', src='//platform.twitter.com/widgets.js', charset='utf-8')
+
+
+
+
+
+
+
 
 
   include footer

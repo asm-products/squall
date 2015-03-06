@@ -1,16 +1,7 @@
-Textshots
-========
+Squall.io
+=======
 
 Hacking The Tweetstorm... With Pictures of Text
-
-## Built With
-
-- Node.js
-- Express.js
-- MongoDB
-- Twitter
-- Jade
-- Jquery
 
 ## Running
 
@@ -39,7 +30,7 @@ var Constants = {
 ```
 
 Things you need to do:
-  - Go to apps.twitter.com and create a test app.  Use the KEY and SECRET they give you in your constants file.
+  - Go to [http://apps.twitter.com](http://apps.twitter.com) and create a test app.  Use the KEY and SECRET they give you in your constants file.
   - Similarly create a legitimate IMGUR app and use the keys they give you.
   - Run MONGO locally.  The URL I used should also work for you.
   - Run REDIS locally.  My URL should work for you also; the port might differ however.
@@ -87,4 +78,4 @@ Then run
 
 ## About
 
-This is a product being built by the Assembly community. You can help push this idea forward by visiting [https://assembly.com/textshots](https://assembly.com/textshots).
+This is a product being built by the Assembly community. You can help push this idea forward by visiting [https://assembly.com/squall](https://assembly.com/squall).

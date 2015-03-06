@@ -20,11 +20,18 @@ var userSchema = new Schema({
   following: [],
   alert_when_friends_join: Boolean,
   alert_when_follow: Boolean,
-  followerCount: {type: Number, default: 0}
+  followerCount: {type: Number, default: 0},
+  viewScore: {type: Number, default: 0}
 });
 
 userSchema.method("isFollowing", function(otherUser){
   return this.following.indexOf(otherUser.username) >= 0;
+});
+
+userSchema.method("addView", function() {
+  var _this = this;
+  _this.viewScore +=1;
+  _this.save();
 });
 
 userSchema.method("addFollower", function(otherUser, callback){
