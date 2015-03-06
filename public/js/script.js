@@ -42,6 +42,7 @@ var editor = new MediumEditor('.editable', {
 });
 
 
+
 function draw(callback) {
   
   $('#image-header-title').text($('#textArea').val());
@@ -50,7 +51,7 @@ function draw(callback) {
   //TODO make sure user time is correctish by using server time
   var temp_d = new Date();
   $('#image-header-timestamp').html( (strftime('%b %d, %Y at %I:%M %p', new Date())).replace(/ /g,'&nbsp;')  );
-  html2canvas(document.getElementById('preview'), {
+  html2canvas(document.getElementById('t'), {
     allowTaint: true,
     onrendered: function(canvas) {
       document.getElementById('image-body').src = canvas.toDataURL();
@@ -62,8 +63,11 @@ function draw(callback) {
 	    background: '#fff',
 	    onrendered: function(canvas) {
 	      document.getElementById('image').src = canvas.toDataURL();
-	      image_container.css('display','none');
-          callback();
+	      $('#image-container').css('display','none');
+	      if(callback){
+	    	  callback();  
+	      }
+          
 	    }
 	  });
     }
