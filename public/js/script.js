@@ -19,7 +19,7 @@ function Highlighter() {
 }
 Highlighter.prototype.onClick = function() {
     this.classApplier.toggleSelection();
-    draw();
+    //draw();
 };
 Highlighter.prototype.getButton = function() {
     return this.button;
@@ -42,9 +42,8 @@ var editor = new MediumEditor('.editable', {
 });
 
 
-
 function draw(callback) {
-  
+  console.log('draw(callback) ');
   $('#image-header-title').text($('#textArea').val());
   
   //TODO include moment.js for datetime
@@ -66,6 +65,10 @@ function draw(callback) {
 	      $('#image-container').css('display','none');
 	      if(callback){
 	    	  callback();  
+	    	  console.log('callback called');
+	      }
+	      else{
+	    	  console.log('no callback ');
 	      }
           
 	    }
@@ -103,59 +106,66 @@ $(document).ready(function() {
     ga('send', 'event', 'Homepage', 'click', 'Why Medium');
   });
 
-  $('.editable').on('input', function() {
-    draw();
-  });
+//  $('.editable').on('input', function() {
+//    draw();
+//  });
 
   $('.tweet-button').click(function() {
+	
+	draw(function(){
+		toggler(function() {
+	      $('.tweet-button').text('Tweet Posted');
+	      $('.tweetresult').css('display', 'none');
+	      $('.tweet-button').addClass('disabled');
+	      ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
 
-    toggler(function() {
-      $('.tweet-button').text('Tweet Posted');
-      $('.tweetresult').css('display', 'none');
-      $('.tweet-button').addClass('disabled');
-      ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
+	      var title = $('textArea').val();
+	      if(title.length === 0) {
+	        title = "My Post";
+	        console.log("too short");
+	        console.log(title);
+	      }
 
-      var title = $('textArea').val();
-      if(title.length === 0) {
-        title = "My Post";
-        console.log("too short");
-        console.log(title);
-      }
+	      var content = document.getElementById('t').textContent;
+	      var htmlcontent = $('#m').html().toString();
+	      var author = $('#profileUsername').text();
 
-      var content = document.getElementById('t').textContent;
-      var htmlcontent = $('#m').html().toString();
-      var author = $('#profileUsername').text();
-
-      $.post('/tweetpost', { image: $('#image').attr('src'), title: String(title), htmlcontent: htmlcontent, content: String(content), author: String(author) }, function(data) {
-        $('.tweetresult').css('display', 'block');
-        $('.tweetresult').find('.embed').html(data);
-        $('.tweet-button').text('Tweet');
-        $('.tweet-button').removeClass('disabled');
-      });
-    })
+	      $.post('/tweetpost', { image: $('#image').attr('src'), title: String(title), htmlcontent: htmlcontent, content: String(content), author: String(author) }, function(data) {
+	        $('.tweetresult').css('display', 'block');
+	        $('.tweetresult').find('.embed').html(data);
+	        $('.tweet-button').text('Tweet');
+	        $('.tweet-button').removeClass('disabled');
+	      });
+	    });
+	});
+    
 
   });
 
 
   $('.upload-imgur').click(function() {
-    $('.tweet-button').text('Uploading image...');
-    $('.tweetresult').css('display', 'none');
-    $('.tweet-button').addClass('disabled');
-    ga('send', 'event', 'Dashboard', 'Click', 'Imgur Upload');
-    $.post('/upload/imgur', { image: $('#image').attr('src') }, function(data) {
-      if (data === 'error') {
-        alert('Could not upload image');
-      } else {
-        $('.tweetresult').css('display', 'block');
-        $('.tweetresult').find('h4').text('Image Uploaded');
-        $('.tweetresult').find('.embed').html(
-            '<div class="form-control-wrapper"><input class="form-control ' +
-            'empty upload-link" readonly value="' + data + '" type="text"><span ' +
-            'class="material-input"></span></div>');
-      }
-      $('.tweet-button').text('Tweet');
-      $('.tweet-button').removeClass('disabled');
-    });
+	  
+	draw( function(){
+		$('.tweet-button').text('Uploading image...');
+	    $('.tweetresult').css('display', 'none');
+	    $('.tweet-button').addClass('disabled');
+	    ga('send', 'event', 'Dashboard', 'Click', 'Imgur Upload');
+	    $.post('/upload/imgur', { image: $('#image').attr('src') }, function(data) {
+	      if (data === 'error') {
+	        alert('Could not upload image');
+	      } else {
+	        $('.tweetresult').css('display', 'block');
+	        $('.tweetresult').find('h4').text('Image Uploaded');
+	        $('.tweetresult').find('.embed').html(
+	            '<div class="form-control-wrapper"><input class="form-control ' +
+	            'empty upload-link" readonly value="' + data + '" type="text"><span ' +
+	            'class="material-input"></span></div>');
+	      }
+	      $('.tweet-button').text('Tweet');
+	      $('.tweet-button').removeClass('disabled');
+	    });
+	});
+	
   });
 
 
@@ -178,7 +188,7 @@ $('#font').click(function() {
     font = 'Lato';
   }
   $('.panel-body').css('font-family', font);
-  draw();
+  //draw();
 });
 
 $('#textArea').keyup(function() {
@@ -201,7 +211,7 @@ $('#textArea').keyup(function() {
     $('#textArea').text($('#textArea').text().substring(0, 59));
   }
   $('#previewtitle').text($('#textArea').val());
-  draw()
+  //draw()
 });
 
   $('#t').keyup(function() {
@@ -212,7 +222,7 @@ $('#textArea').keyup(function() {
     $('.post-length').text(post_length +' / 2000 characters left');
 
     $('#previewcontent').html($('#t').html());
-    draw()
+    //draw()
   });
 
   $(".upload-link").focus(function() {
@@ -224,7 +234,7 @@ $('#textArea').keyup(function() {
        luminosity: 'light'
     });
     $('.panel-body').css('background-color', color);
-  draw()
+  //draw()
 
   });
 
@@ -293,9 +303,9 @@ $('.unfollowuser').click(function() {
 
 function toggler(callback) {
   $('#preview').show(function() {
-    draw(function() {
+//    draw(function() {
       callback();
-    });
+//    });
 
   });
 }
@@ -308,6 +318,6 @@ $(window).resize(function() {
   clearTimeout(timer);
 
   timer = setTimeout(function() {
-    draw();
+    //draw();
   }, 200); // wait for 200ms
 });
