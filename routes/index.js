@@ -316,7 +316,7 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
   console.log(url);
   var end_message = url + " sent via @Squallapp"
   console.log(end_message)
-  var n = 90;
+  var n = 60;
   console.log(n)
   var message = title;
   if (message.length>n) {

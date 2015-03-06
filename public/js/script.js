@@ -171,9 +171,9 @@ $('#textArea').keyup(function() {
     }
   }
 
-  $('.text-length').text( length + '/90 characters left');
-  if(length > 90){
-    $('#textArea').text($('#textArea').text().substring(0, 89));
+  $('.text-length').text( length + '/60 characters left');
+  if(length > 60){
+    $('#textArea').text($('#textArea').text().substring(0, 59));
   }
   $('#previewtitle').text($('#textArea').val());
   draw()
