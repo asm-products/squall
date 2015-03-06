@@ -41,15 +41,36 @@ var editor = new MediumEditor('.editable', {
   }
 });
 
+
 function draw(callback) {
+  
+  $('#image-header-title').text($('#textArea').val());
+  
+  //TODO include moment.js for datetime
+  //TODO make sure user time is correctish by using server time
+  var temp_d = new Date();
+  $('#image-header-timestamp').html( (strftime('%b %d, %Y at %I:%M %p', new Date())).replace(/ /g,'&nbsp;')  );
   html2canvas(document.getElementById('preview'), {
     allowTaint: true,
     onrendered: function(canvas) {
-      document.getElementById('image').src = canvas.toDataURL();
-      callback();
+      document.getElementById('image-body').src = canvas.toDataURL();
+      // html2canvas does not render hidden HTML -> showing then hiding image_container
+      var image_container = $('#image-container');
+      image_container.css('display','block');
+      html2canvas(image_container[0] , {
+	    allowTaint: true,
+	    background: '#fff',
+	    onrendered: function(canvas) {
+	      document.getElementById('image').src = canvas.toDataURL();
+	      image_container.css('display','none');
+          callback();
+	    }
+	  });
     }
   });
 }
+
+
 
 $(document).ready(function() {
 
@@ -253,6 +274,17 @@ $('.unfollowuser').click(function() {
     });
     e.preventDefault();
   });
+  
+  
+  //getting avatar uri by ajax
+  //TODO handle errors in AJAX
+  $.ajax('./avatar_uri').done(function(data){
+	  $('#image-header-avatar').attr('src',data);
+  });
+  // filling the header of the image to be tweeted, fixing issues of floats
+  var image_header_name = $('#image-header-name');
+  image_header_name.html(image_header_name.text().replace(/ /g,'&nbsp;'));
+  
 })
 
 function toggler(callback) {

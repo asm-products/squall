@@ -115,6 +115,36 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
   })
 });
 
+
+// this will return the user avatar as uri/base64 to solve CORS in the browser
+router.get('/avatar_uri', isAuthenticated, function(req, res) {
+	var options = {
+	    'url': req.user.photo,
+	    'encoding': 'binary',
+	    'headers': {
+	    	'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+	    	'Cache-Control':'no-cache',
+	    	'Pragma':'no-cache',
+	    	'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
+	    }
+	};
+	//TODO cache in redis or mongodb
+	request(options, function(error, response, body) {
+		
+		if (!error && response.statusCode == 200 ) {
+			return res.send("data:" + response['headers']['content-type'] + ";base64,"+ (new Buffer(body.toString(), "binary")).toString("base64"));
+		  }
+		else{
+			return res.status(404).send(404, '404 Not Found');
+			
+		}
+	  });
+  
+  
+});
+
+
+
 router.get('/leaderboard', function(req, res) {
   var leader_limit = process.env.LEADER_LIMIT;
   var top_users = Users.find({}).sort({viewScore: -1}).limit(leader_limit).exec(function(err, leaders) {
