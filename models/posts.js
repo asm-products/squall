@@ -21,7 +21,8 @@ var postSchema = new Schema({
     type: String,
     unique: true
   },
-  viewCount: Number
+  viewCount: Number,
+  tweet_link: String
 });
 
 module.exports = mongoose.model('Posts', postSchema);

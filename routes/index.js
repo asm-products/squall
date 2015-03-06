@@ -102,7 +102,6 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
         var g = userlist.map(function(q) {return q.username} );
         var b = g.indexOf(req.user.username) + 1;
         Posts.find({author: { $in : f.getUnique()}}, null, {sort: {created_at: -1}}, function(err, result) {
-          console.log(b)
           return res.render('dashboard', { user: req.user,
                                               large_photo: req.user.photo.replace(/_normal/i, ''),
                                               posts: result,
@@ -117,7 +116,8 @@ router.get('/dashboard', isAuthenticated, function(req, res) {
 });
 
 router.get('/leaderboard', function(req, res) {
-  var top_users = Users.find({}).sort({viewScore: -1}).limit(100).exec(function(err, leaders) {
+  var leader_limit = process.env.LEADER_LIMIT;
+  var top_users = Users.find({}).sort({viewScore: -1}).limit(leader_limit).exec(function(err, leaders) {
     if (leaders) {
       var p=0;
     }
@@ -289,8 +289,6 @@ router.get('/:username/following', function(req,res,next) {
       })
 
     })
-
-
 })
 
 router.post('/tweetpost', isAuthenticated, function(req, res) {
@@ -298,7 +296,6 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
   var content = req.body.content;
   var author = req.body.author;
   var htmlcontent = req.body.htmlcontent
-  console.log(htmlcontent);
   var slug = getSlug(title);
 
   // CREATE POST OBJECT
@@ -356,12 +353,20 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
       status: message || "",
       media_ids: body.media_id_string
     }, function(err, data, response) {
-      var tweet_id = data.id_str;
+      var tweet_id = data['id_str'];
       T.get('statuses/oembed', { id: tweet_id }, function(err, data, response) {
         req.user.tweet_ids.push('https://twitter.com/' + req.user.username + '/status/' + tweet_id);
-        req.user.save(function(err, u) {
-          res.send(data.html);
-        });
+
+        Posts.find({slug: slug}, function(err, pr) {
+          if (pr) {
+            if (pr.length > 0) {
+              pr[0].tweet_ids.push(tweet_id);
+              pr[0].save();
+            }
+          }
+        })
+
+
       });
     });
   });
@@ -400,9 +405,7 @@ router.post('/tweet', isAuthenticated, function(req, res) {
       var tweet_id = data.id_str;
       T.get('statuses/oembed', { id: tweet_id }, function(err, data, response) {
         req.user.tweet_ids.push('https://twitter.com/' + req.user.username + '/status/' + tweet_id);
-        req.user.save(function(err, u) {
-          res.send(data.html);
-        });
+
       });
     });
   });
@@ -446,6 +449,12 @@ router.get('/:username', function(req, res, next) {
       var g = userlist.map(function(q) {return q.username} );
       var b = g.indexOf(username) + 1;
       Users.findOne({ username : username }, function(err, existingUser) {
+        if (err) {
+          // something bad happened
+          console.log(err);
+          return res.redirect('/error');
+        }
+
         if (existingUser) {
           Posts.find({author: existingUser.username}, null, {sort: {created_at: -1}}, function (err, posts) {
             var title = existingUser.name + " (@" + existingUser.username + ")";
@@ -471,11 +480,11 @@ router.get('/:username', function(req, res, next) {
             });
           });
         }
-
-        if (err) {
-          // something bad happened
-          return done(err);
+        else {
+          // no such user
+          next(); // will 404 if no other matching route
         }
+
       });
 
 
@@ -573,6 +582,7 @@ router.get('/:username/:post_id', function(request, response) {
         else {
           if (result)
             {
+
               var title = result.title;
               var author = result.author;
               var contents = result.content;
@@ -588,8 +598,40 @@ router.get('/:username/:post_id', function(request, response) {
               result.viewCount = newViewCount;
               result.save();
 
-              response.render('post', {author_user: author_user, avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result});
-            }
+              if(request.user) {
+                var T = new twit({
+                  consumer_key: constants.Twitter.KEY,
+                  consumer_secret: constants.Twitter.SECRET,
+                  access_token: request.user.access_token,
+                  access_token_secret: request.user.access_token_secret
+                });
+
+                var tweet_id = result.tweet_ids;
+                if (tweet_id.length > 0) {   //WE HAVE A TWEET ID FOR THIS POST
+                  creation_tweet_id = tweet_id[0];
+
+                  T.get('statuses/oembed', { id: creation_tweet_id, hide_media: true, hide_thread: true }, function(err, data, reser) {
+                    if(data) {
+                      response.render('post', {author_user: author_user, avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result, tweet: data.html});
+                    }
+                    else {
+                      response.render('post', {author_user: author_user, avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result});
+                    }
+
+                  });
+
+                }
+                else {   // WE DONT HAVE A TWEET ID FOR THIS POST, INCLUDE NO TWITTER CONTENT
+                  response.render('post', {author_user: author_user, avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result});
+                }
+              }
+              else {
+                response.render('post', {author_user: author_user, avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result});
+              }
+
+
+              }
+
             else {
               //return error page
               response.redirect('/error');

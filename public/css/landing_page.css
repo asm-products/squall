@@ -29,7 +29,8 @@ img.asm-flag {
 }
 
 .pitch {
-  padding-top: 2em;
+  padding-top: 7em;
+
   margin-bottom:100px;
 }
 
@@ -91,4 +92,9 @@ img.brand {
   padding: 5px 60px;
   border: 1px solid #2cbbd4;
   margin: 0 auto;
+}
+
+iframe#twitter-widget-0.twitter-tweet.twitter-tweet-rendered{
+    box-shadow: none !important;
+    border: none !important;
 }

@@ -12,22 +12,22 @@
         .huge-number #{post_count}
         p
           .big-number-label posts
-      .col-sm-12.text-center.bottom-margin
+      .col-sm-12.bottom-margin
         a(href="/leaderboard")
           .big-number #{rank}
           p
             .small-number-label rank
-      .col-sm-6.bottom-margin
-        a.secondary-text-color(href="/#{user.username}/following")
-          span.normal-font-size #{user.following.length}
-          .big-number-label following
-      .col-sm-6.bottom-margin
-        a.secondary-text-color(href="/#{user.username}/followers")
-          span.normal-font-size #{user.followerCount}
-          .big-number-label followers
-      .col-sm-12
-        if currentUser && (user.id !== currentUser.id)
-          unless currentUser.isFollowing(user)
-            button.btn.btn-info.btn-block.followuser#follow(data-username=user.username) Follow
-          else
-            button.btn.btn-danger.btn-block.unfollowuser#unfollow(data-username=user.username) Unfollow
+//      .col-sm-6.bottom-margin
+//        a.secondary-text-color(href="/#{user.username}/following")
+//          span.normal-font-size #{user.following.length}
+//          .big-number-label following
+//      .col-sm-6.bottom-margin
+//        a.secondary-text-color(href="/#{user.username}/followers")
+//          span.normal-font-size #{user.followerCount}
+//          .big-number-label followers
+//      .col-sm-12
+//        if currentUser && (user.id !== currentUser.id)
+//          unless currentUser.isFollowing(user)
+//            button.btn.btn-info.btn-block.followuser#follow(data-username=user.username) Follow
+//          else
+//            button.btn.btn-danger.btn-block.unfollowuser#unfollow(data-username=user.username) Unfollow
