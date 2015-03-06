@@ -353,21 +353,21 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
       status: message || "",
       media_ids: body.media_id_string
     }, function(err, data, response) {
-      var tweet_id = data['id_str'];
-      T.get('statuses/oembed', { id: tweet_id }, function(err, data, response) {
-        req.user.tweet_ids.push('https://twitter.com/' + req.user.username + '/status/' + tweet_id);
+      if(data) {
+        var tweet_id = data['id_str'];
+        T.get('statuses/oembed', { id: tweet_id }, function(err, data, response) {
+          req.user.tweet_ids.push('https://twitter.com/' + req.user.username + '/status/' + tweet_id);
 
-        Posts.find({slug: slug}, function(err, pr) {
-          if (pr) {
-            if (pr.length > 0) {
-              pr[0].tweet_ids.push(tweet_id);
-              pr[0].save();
+          Posts.find({slug: slug}, function(err, pr) {
+            if (pr) {
+              if (pr.length > 0) {
+                pr[0].tweet_ids.push(tweet_id);
+                pr[0].save();
+              }
             }
-          }
-        })
-
-
-      });
+          })
+        });
+      }
     });
   });
 

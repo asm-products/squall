@@ -11,11 +11,8 @@ block content
         .post-container
           .post-author
             a(href="/#{post.author}")
-              if tweet
-                div#tweet !{tweet}
-              else
-                img.author-image(src="#{avatar_url}")
-                .author-name #{post.author}
+              img.author-image(src="#{avatar_url}")
+              .author-name #{post.author}
           .post-body
             .panel-default
               .panel-body#preview(style="background:white")
@@ -27,7 +24,9 @@ block content
                     | Posted
                     span.post-time-date #{post.created_at}
                     |  via @SquallApp
-          .post-footer
+          .post-footer   
+            if tweet
+              div#tweet !{tweet}
             .post-meta
               .post-time #{post.created_at}
               .post-stats
