@@ -9,13 +9,10 @@ block content
     .row.header.col-md-10.col-md-offset-1
       .col-md-12
         .post-container
-          a(href="/#{post.author}")
-            if tweet
-              div#tweet !{tweet}
-            else
-              .post-author
-                img.author-image(src="#{avatar_url}")
-                .author-name #{post.author}
+          .post-author
+            a(href="/#{post.author}")
+              img.author-image(src="#{avatar_url}")
+              .author-name #{post.author}
           .post-body
             .panel-default
               .panel-body#preview(style="background:white")
@@ -27,7 +24,9 @@ block content
                     | Posted
                     span.post-time-date #{post.created_at}
                     |  via @SquallApp
-          .post-footer
+          .post-footer   
+            if tweet
+              div#tweet !{tweet}
             .post-meta
               .post-time #{post.created_at}
               .post-stats
