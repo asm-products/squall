@@ -604,7 +604,7 @@ router.get('/:username/:post_id', function(request, response) {
                 if (tweet_id.length > 0) {   //WE HAVE A TWEET ID FOR THIS POST
                   creation_tweet_id = tweet_id[0];
 
-                  T.get('statuses/oembed', { id: creation_tweet_id }, function(err, data, reser) {
+                  T.get('statuses/oembed', { id: creation_tweet_id, hide_media: true, hide_thread: true }, function(err, data, reser) {
                     if(data) {
                       response.render('post', {author_user: author_user, avatar_url: avatar_url, title: title, contents: contents, author: author, author_link: author_link, post: result, tweet: data.html});
                     }
