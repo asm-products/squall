@@ -85,7 +85,7 @@ $(document).ready(function() {
   $('.tweet-button').click(function() {
 
     toggler(function() {
-      $('.tweet-button').text('Posting tweet...');
+      $('.tweet-button').text('Tweet Posted');
       $('.tweetresult').css('display', 'none');
       $('.tweet-button').addClass('disabled');
       ga('send', 'event', 'Dashboard', 'Click', 'Tweet', $('.textBox').text().length);
