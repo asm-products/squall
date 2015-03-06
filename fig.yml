@@ -14,10 +14,10 @@ redis:
 
 grunt:
   image: dockerfile/nodejs-bower-grunt
-  working_dir: /usr/src/app
+  working_dir: /opt/app
   command: grunt --force watch
   volumes:
-    - .:/usr/src/app
+    - .:/opt/app
 
 web:
   build: .
@@ -26,7 +26,7 @@ web:
     - PORT=3000
     - NODE_ENV=development
   volumes:
-    - .:/usr/src/app
+    - .:/opt/app
   ports:
     - "3000:3000"
   links:

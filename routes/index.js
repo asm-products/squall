@@ -449,6 +449,12 @@ router.get('/:username', function(req, res, next) {
       var g = userlist.map(function(q) {return q.username} );
       var b = g.indexOf(username) + 1;
       Users.findOne({ username : username }, function(err, existingUser) {
+        if (err) {
+          // something bad happened
+          console.log(err);
+          return res.redirect('/error');
+        }
+
         if (existingUser) {
           Posts.find({author: existingUser.username}, null, {sort: {created_at: -1}}, function (err, posts) {
             var title = existingUser.name + " (@" + existingUser.username + ")";
@@ -474,11 +480,11 @@ router.get('/:username', function(req, res, next) {
             });
           });
         }
-
-        if (err) {
-          // something bad happened
-          return done(err);
+        else {
+          // no such user
+          next(); // will 404 if no other matching route
         }
+
       });
 
 
