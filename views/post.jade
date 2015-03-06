@@ -9,11 +9,11 @@ block content
     .row.header.col-md-10.col-md-offset-1
       .col-md-12
         .post-container
-          .post-author
-            a(href="/#{post.author}")
-              if tweet
-                div#tweet !{tweet}
-              else
+          a(href="/#{post.author}")
+            if tweet
+              div#tweet !{tweet}
+            else
+              .post-author
                 img.author-image(src="#{avatar_url}")
                 .author-name #{post.author}
           .post-body
