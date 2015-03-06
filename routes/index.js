@@ -140,14 +140,37 @@ router.post('/settings', isAuthenticated, function(req, res) {
   req.user.alert_when_friends_join = req.body.alert_when_friends_join;
   req.user.alert_when_follow = req.body.alert_when_follow;
 
-  // check to see if username has already been changed
-  if (!req.user.old_username) {
-    req.user.old_username = req.user.username;
-    req.user.username = req.body.username;
+  var new_username = req.body.username;
+
+  if (!new_username) {
+    return res.json({errors: ['Username cannot be empty.']});
   }
 
-  req.user.save();
-  return res.json({passed: true});
+  if (req.user.old_username) {
+    return res.json({errors: ['Username cannot be changed more than once.']});
+  }
+
+  if (new_username === req.user.username) {
+    return res.json({errors: ['New Username cannot be same as existing username.']});
+  }
+
+  // make sure new username is available
+  User.findOne({ $or: [ { username : new_username }, { old_username : new_username } ]}, function(err, existingUser) {
+    if (err) {
+      return res.json({errors: ['Something went wrong.']});
+    }
+
+    if (existingUser) {
+      // send error
+      return res.json({errors: ['Username has been taken.']});
+    } else {
+      req.user.old_username = req.user.username;
+      req.user.username = req.body.username;
+      req.user.save();
+      return res.json({passed: true});
+    }
+  });
+
 });
 
 router.get('/error', function(req, res) {
