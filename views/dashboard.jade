@@ -47,7 +47,7 @@ block content
                 | Posted
                 span.post-time-date #{new Date}
                 |  via @SquallApp
-          img#image(style="display:none")
+          
 
         .row.col-md-10.col-md-offset-1.dashboard-feed
           //include leaderboard_component
@@ -82,5 +82,25 @@ block content
 
 
   span#profileUsername(style="display:none") #{user.username}
-
+  img#image(style="display:none")
+  div#image-container(style="display:none;width: 595px;background:#ffffff;")
+    div#image-header(style="display:block;text-align: center;")
+      div(style="text-align:center;")
+      
+        div(style="margin: 0 4%; display: inline-block;")
+          img#image-header-avatar(src="#{user.photo}", style="margin-top: -25px; width: 60px; height: 60px; border-radius: 30px; border: 2px solid #2CBBD4; ")
+        div(style="display: inline-block; text-align: left;")
+          div(style="margin: 0 4%;font-weight: bolder;display: inline-block; padding-top: 16px;")
+            div 
+              h3#image-header-name(style="margin: 0;font-family: 'Merriweather', Georgia, serif;font-weight: bolder; ") #{user.name}
+            div#image-header-timestamp(style="color:#727272;font-size: smaller;") 
+            
+      div(style=" direction: ltr; text-align: left; margin: 42px 5% 6px 5%; ")
+        h2#image-header-title(style="color:#0790a8;margin: 0;") 
+    img#image-body(style="display:block")
+    div#image-footer(style="display:block;")
+      div(style=" text-align: center; background-color: #0790A8; ")
+        img(src="/images/squall_image_footer.png")
+  
+  
   include footer
