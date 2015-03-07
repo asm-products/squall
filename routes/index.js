@@ -344,7 +344,7 @@ router.post('/tweetpost', isAuthenticated, function(req, res) {
   //CONSTRUCT MESSAGE
   var url = "http://squall.io/"+author+"/" + slug;
   console.log(url);
-  var end_message = url + " @Squallapp"
+  var end_message = url + " @SquallApp"
   console.log(end_message)
   var n = 60;
   console.log(n)

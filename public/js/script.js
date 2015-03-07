@@ -1,5 +1,5 @@
 var checked = true;
-var credit_text = ", Tweeted using @squallapp";
+var credit_text = ", Tweeted using @SquallApp";
 var TCO_LENGTH = 23;
 var IMAGE_LINK_LENGTH = 40;
 var font = "Lato";
