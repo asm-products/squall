@@ -1,5 +1,5 @@
 var checked = true;
-var credit_text = ", Tweeted using @squallapp";
+var credit_text = ", Tweeted using @SquallApp";
 var TCO_LENGTH = 23;
 var IMAGE_LINK_LENGTH = 40;
 var font = "Lato";
@@ -278,6 +278,7 @@ $('.unfollowuser').click(function() {
     $('#success-alert').addClass("hide");
     $('#error-alert').addClass("hide");
     var params = $('#settings-form').serializeJSON();
+    
     $.post('/settings', params, function(data) {
       if (data.passed) {
         $('#success-alert').removeClass("hide");

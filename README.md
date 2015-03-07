@@ -27,6 +27,8 @@ var Constants = {
   MongoURL: "mongodb://localhost/local",
   RedisURL: "redis://localhost:6379"
 };
+
+modules.exports = Constants;
 ```
 
 Things you need to do:
