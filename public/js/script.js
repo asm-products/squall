@@ -243,6 +243,7 @@ $('.unfollowuser').click(function() {
     $('#success-alert').addClass("hide");
     $('#error-alert').addClass("hide");
     var params = $('#settings-form').serializeJSON();
+    
     $.post('/settings', params, function(data) {
       if (data.passed) {
         $('#success-alert').removeClass("hide");
