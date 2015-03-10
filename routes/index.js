@@ -5,6 +5,8 @@ var Users = require('../models/users.js');
 var Posts = require('../models/posts.js');
 var getSlug = require('speakingurl');
 
+
+
 if (process.env.NODE_ENV === 'production') {
     var constants = require('./../config/constants.production.js');
 } else {
@@ -185,7 +187,7 @@ router.post('/settings', isAuthenticated, function(req, res) {
   }
 
   // make sure new username is available
-  User.findOne({ $or: [ { username : new_username }, { old_username : new_username } ]}, function(err, existingUser) {
+  Users.findOne({ $or: [ { username : new_username }, { old_username : new_username } ]}, function(err, existingUser) {
     if (err) {
       return res.json({errors: ['Something went wrong.']});
     }
@@ -200,7 +202,7 @@ router.post('/settings', isAuthenticated, function(req, res) {
       return res.json({passed: true});
     }
   });
-
+  return res.json({passed: true});
 });
 
 router.get('/error', function(req, res) {
@@ -722,5 +724,11 @@ router.get('/:username/:post_id', function(request, response) {
   })
 
 })
+
+// REST services
+router.get('/api/users/current', isAuthenticated, function(req, res) {
+  res.json(req.user);
+})
+
 
 module.exports = router;

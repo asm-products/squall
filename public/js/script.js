@@ -273,23 +273,6 @@ $('.unfollowuser').click(function() {
     $('.unfollowuser').text("Unfollowed")
   });
 });
-
-  $('#settings-form').submit(function(e) {
-    $('#success-alert').addClass("hide");
-    $('#error-alert').addClass("hide");
-    var params = $('#settings-form').serializeJSON();
-    
-    $.post('/settings', params, function(data) {
-      if (data.passed) {
-        $('#success-alert').removeClass("hide");
-      } else {
-        $('#error-alert').html(data.errors);
-        $('#error-alert').removeClass("hide");
-      }
-    });
-    e.preventDefault();
-  });
-  
   
   //getting avatar uri by ajax
   //TODO handle errors in AJAX

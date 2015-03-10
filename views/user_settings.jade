@@ -9,30 +9,32 @@ block content
   .container
     .row.header
       .col-lg-8
-        h2.form-signin-heading Settings
-      
-        .alert.alert-success.hide#success-alert(role="alert") Settings successfully saved!
-        .alert.alert-error.hide#error-alert(role="alert")
 
-        form#settings-form
-          .form-group
-            label(for='username') Username
-            input#username.form-control(type='text', placeholder='Enter username', name="username", value='#{user.username}')
+        div(ng-controller="UserSettingsController")
+          h2.form-signin-heading Settings
 
-          .form-group
-            label(for='email') Email address
-            input#email.form-control(type='email', placeholder='Enter email', name="email", value='#{user.email_address || ""}')
+          .alert.alert-success.hide#success-alert(role="alert") Settings successfully saved!
+          .alert.alert-error.hide#error-alert(role="alert")
 
-          .checkbox
-            label
-              input(type='checkbox', name='alert_when_friends_join', checked=(user.alert_when_follow ? "checked" : undefined))
-              |  Alert me when a friend joins
-          .checkbox
-            label
-              input(type='checkbox', name='alert_when_follow', checked=(user.alert_when_follow ? "checked" : undefined))
-              |  Alert me when someone follows me 
-          button.btn.btn-default.save-settings-button(type='submit') Save my settings
-  
+          form#settings-form(ng-submit="save()")
+            .form-group
+              label(for='username') Username
+              input#username.form-control(type='text', placeholder='Enter username', name="username", ng-model='user.username')
+
+            .form-group
+              label(for='email') Email address
+              input#email.form-control(type='email', placeholder='Enter email', name="email", ng-model='user.email_address')
+
+            .checkbox
+              label
+                input(type='checkbox', name='alert_when_friends_join', ng-model='user.alert_when_friends_join')
+                |  Alert me when a friend joins
+            .checkbox
+              label
+                input(type='checkbox', name='alert_when_follow', ng-model='user.alert_when_follow')
+                |  Alert me when someone follows me 
+            button.btn.btn-default.save-settings-button(type='submit') Save my settings
+    
   include footer
   
   

@@ -39,7 +39,9 @@ module.exports = function(grunt) {
                                                 'public/js/material.min.js',
                                                 'public/js/strftime-min.js',
                                                 'public/js/autosize.js',
-                                                'public/js/script.js']
+                                                'public/js/script.js',
+                                                'public/js/controllers/*.js'
+                                                ]
         }
       }
     },
@@ -47,7 +49,8 @@ module.exports = function(grunt) {
     watch: {
       js: {
         files: [
-          'public/js/*.js'
+          'public/js/*.js',
+          'public/js/controllers/*.js'
         ],
         tasks: ['jshint','uglify']
       }
