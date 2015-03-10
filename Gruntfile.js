@@ -28,7 +28,8 @@ module.exports = function(grunt) {
       },
       my_target: {
         files: {
-          'public/dist/js/application.min.js': ['public/js/html2canvas.js',
+          'public/dist/js/application.min.js': ['public/js/jstorage.js',
+                                                'public/js/html2canvas.js',
                                                 'public/js/randomColor.min.js',
                                                 'public/js/rangy/rangy-core.js',
                                                 'public/js/rangy/rangy-classapplier.js',
