@@ -45,7 +45,7 @@ var editor = new MediumEditor('.editable', {
 function draw(callback) {
   console.log('draw(callback) ');
   $('#image-header-title').text($('#textArea').val());
-  
+
   //TODO include moment.js for datetime
   //TODO make sure user time is correctish by using server time
   var temp_d = new Date();
@@ -64,19 +64,38 @@ function draw(callback) {
 	      document.getElementById('image').src = canvas.toDataURL();
 	      $('#image-container').css('display','none');
 	      if(callback){
-	    	  callback();  
+	    	  callback();
 	    	  console.log('callback called');
 	      }
 	      else{
 	    	  console.log('no callback ');
 	      }
-          
+  
 	    }
 	  });
     }
   });
 }
 
+function squall_get_draft(){
+	return {'title':$.jStorage.get('squall-save-draft-title', null),'body':$.jStorage.get('squall-save-draft-body', null)};
+}
+
+function squall_save_draft_title(tobe_cached){
+	console.log('title cached');
+	$.jStorage.set('squall-save-draft-title', tobe_cached);
+}
+
+function squall_save_draft_body(tobe_cached){
+	console.log('body cached');
+	$.jStorage.set('squall-save-draft-body', tobe_cached);
+}
+
+function squall_reset_draft(){
+	console.log('draft reset');
+	$.jStorage.set('squall-save-draft-title', null);
+	$.jStorage.set('squall-save-draft-body', null);
+}
 
 
 $(document).ready(function() {
@@ -106,12 +125,14 @@ $(document).ready(function() {
     ga('send', 'event', 'Homepage', 'click', 'Why Medium');
   });
 
-//  $('.editable').on('input', function() {
-//    draw();
-//  });
+  $('.editable').on('input', function() {
+    //draw();
+	squall_save_draft_body($('#m').html());
+	squall_save_draft_title($('#textArea').val());
+  });
 
   $('.tweet-button').click(function() {
-	
+
 	draw(function(){
 		toggler(function() {
 	      $('.tweet-button').text('Tweet Posted');
@@ -135,16 +156,17 @@ $(document).ready(function() {
 	        $('.tweetresult').find('.embed').html(data);
 	        $('.tweet-button').text('Tweet');
 	        $('.tweet-button').removeClass('disabled');
+			squall_reset_draft();
 	      });
 	    });
 	});
-    
+
 
   });
 
 
   $('.upload-imgur').click(function() {
-	  
+
 	draw( function(){
 		$('.tweet-button').text('Uploading image...');
 	    $('.tweetresult').css('display', 'none');
@@ -160,12 +182,13 @@ $(document).ready(function() {
 	            '<div class="form-control-wrapper"><input class="form-control ' +
 	            'empty upload-link" readonly value="' + data + '" type="text"><span ' +
 	            'class="material-input"></span></div>');
+			squall_reset_draft();
 	      }
 	      $('.tweet-button').text('Tweet');
 	      $('.tweet-button').removeClass('disabled');
 	    });
 	});
-	
+
   });
 
 
@@ -195,7 +218,7 @@ $('#textArea').keyup(function() {
   var text = $(this).val();
   var splits = text.split(' ');
   geturl = new RegExp("(^|[ \t\r\n])((ftp|http|https|gopher|mailto|news|nntp|telnet|wais|file|prospero|aim|webcal):(([A-Za-z0-9$_.+!*(),;/?:@&~=-])|%[A-Fa-f0-9]{2}){2,}(#([a-zA-Z0-9][a-zA-Z0-9$_.+!*(),;/?:@&~=%-]*))?([A-Za-z0-9$_+!*();/?:~-]))", "g");
-  var length = 0;
+  var length = (text.match(/ /g) || []).length;
 
   for (var i = 0; i < splits.length; i++) {
     if (splits[i].match(geturl) && splits[i].length > TCO_LENGTH) {
@@ -212,17 +235,20 @@ $('#textArea').keyup(function() {
   }
   $('#previewtitle').text($('#textArea').val());
   //draw()
+  squall_save_draft_title($('#textArea').val());
 });
 
   $('#t').keyup(function() {
-    var post_length = $('#t').text().length;
+    var t_element = $('#t');
+    var post_length = t_element.text().length;
     if (post_length > 2000) {
-      $('#t').text($('#t').text().substring(0,1999));
+    	t_element.text(t_element.text().substring(0,1999));
     }
     $('.post-length').text(post_length +' / 2000 characters left');
 
-    $('#previewcontent').html($('#t').html());
+    $('#previewcontent').html(t_element.html());
     //draw()
+    squall_save_draft_body($('#m').html());
   });
 
   $(".upload-link").focus(function() {
@@ -273,7 +299,24 @@ $('.unfollowuser').click(function() {
     $('.unfollowuser').text("Unfollowed")
   });
 });
-  
+
+  $('#settings-form').submit(function(e) {
+    $('#success-alert').addClass("hide");
+    $('#error-alert').addClass("hide");
+    var params = $('#settings-form').serializeJSON();
+
+    $.post('/settings', params, function(data) {
+      if (data.passed) {
+        $('#success-alert').removeClass("hide");
+      } else {
+        $('#error-alert').html(data.errors);
+        $('#error-alert').removeClass("hide");
+      }
+    });
+    e.preventDefault();
+  });
+
+
   //getting avatar uri by ajax
   //TODO handle errors in AJAX
   $.ajax('./avatar_uri').done(function(data){
@@ -282,6 +325,24 @@ $('.unfollowuser').click(function() {
   // filling the header of the image to be tweeted, fixing issues of floats
   var image_header_name = $('#image-header-name');
   image_header_name.html(image_header_name.text().replace(/ /g,'&nbsp;'));
+
+  //filling the textArea and #t #m with the draft
+  var temp_draft = squall_get_draft();
+  if(temp_draft.title && $.trim(temp_draft.title).length ){
+	  var temp_textArea = $('#textArea');
+	  temp_textArea.val(temp_draft.title);
+	  temp_textArea.trigger('input');
+	  temp_textArea.keyup();
+  }
+  if(temp_draft.body && $.trim(temp_draft.body).length){
+	  var temp_m = $('#m');
+	  temp_m.html(temp_draft.body);
+	  temp_m.focus();
+	  temp_m.removeClass('medium-editor-placeholder');
+	  var temp_t = $('#t');
+	  temp_t.trigger('input');
+	  temp_t.keyup();	  
+  }
   
 })
 
