@@ -202,7 +202,6 @@ router.post('/settings', isAuthenticated, function(req, res) {
       return res.json({passed: true});
     }
   });
-  return res.json({passed: true});
 });
 
 router.get('/error', function(req, res) {
