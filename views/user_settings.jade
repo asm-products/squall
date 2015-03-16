@@ -10,20 +10,26 @@ block content
     .row.header
       .col-lg-8
 
-        div(ng-controller="UserSettingsController")
-          h2.form-signin-heading Settings
+        div(ng-controller="UserSettingsController", ng-cloak='')
+          h2.form-signin-heading Settings2
 
-          .alert.alert-success.hide#success-alert(role="alert") Settings successfully saved!
-          .alert.alert-error.hide#error-alert(role="alert")
+          .alert.alert-success#success-alert(role="alert", ng-if="aux.showSuccess") Settings successfully saved!
+          .alert.alert-error#error-alert(role="alert", ng-if="aux.errors") {{aux.errors}}
 
           form#settings-form(ng-submit="save()")
-            .form-group
-              label(for='username') Username
-              input#username.form-control(type='text', placeholder='Enter username', name="username", ng-model='user.username')
 
+            .form-group(ng-class="{disabled:!aux.changeUsername}")
+              .checkbox(ng-if="!user.old_username")
+                label
+                  input(type='checkbox', name='alert_when_friends_join', ng-model='aux.changeUsername')
+                  |  Change username (you can do it only once)
+              label(for='username') Username
+              input#username.form-control(type='text', placeholder='Enter username', name="username", ng-model='user.username', ng-disabled='!aux.changeUsername')
+            
+            br
             .form-group
               label(for='email') Email address
-              input#email.form-control(type='email', placeholder='Enter email', name="email", ng-model='user.email_address')
+              input#email.form-control(type='email', placeholder='Enter email', ng-model='user.email_address')
 
             .checkbox
               label
