@@ -16,6 +16,7 @@ var passport = require('passport');
 
 var routes = require('./routes/index');
 
+
 var app = express();
 
 // view engine setup
@@ -47,8 +48,8 @@ require('./models/users.js');
 require('./models/posts.js');
 require('./config/pass.js')(passport);
 
-app.use('/', routes);
-
+require('./routes/index')(app, constants, passport);
+//app.use(routes);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
